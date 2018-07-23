@@ -47,7 +47,7 @@ public class ShopExecution {
      * 不含Shop的构造函数
      * @param shopStateEnum
      */
-    private ShopExecution(ShopStateEnum shopStateEnum){
+    public ShopExecution(ShopStateEnum shopStateEnum){
         this.status = shopStateEnum.getStatus();
         this.statusInfo = shopStateEnum.getStatusInfo();
 
@@ -57,7 +57,7 @@ public class ShopExecution {
      * 含单个Shop的构造函数
      * @param shopStateEnum
      */
-    private ShopExecution(ShopStateEnum shopStateEnum,Shop shop){
+    public ShopExecution(ShopStateEnum shopStateEnum,Shop shop){
         this.status = shopStateEnum.getStatus();
         this.statusInfo = shopStateEnum.getStatusInfo();
         this.shop = shop;
@@ -67,7 +67,7 @@ public class ShopExecution {
      * 含ShopList的构造函数
      * @param shopStateEnum
      */
-    private ShopExecution(ShopStateEnum shopStateEnum,List<Shop> shops){
+    public ShopExecution(ShopStateEnum shopStateEnum,List<Shop> shops){
         this.status = shopStateEnum.getStatus();
         this.statusInfo = shopStateEnum.getStatusInfo();
         shopList = shops;

@@ -19,12 +19,12 @@ public class ImageUtil {
     private static String basePath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
 
     /**
-     * 将用户上传的图片进行加水印处理
+     * 将用户上传的图片进行加水印处理,并且返回相对值路径
      * @param commonsMultipartFile   CommonsMultipartFile是Spring默认用来传输文件的组建
      * @param targetAddr String 目标0路径
-     * @return
+     * @return relativeAddr 相对路径
      */
-    public static void generateThumbnail(CommonsMultipartFile commonsMultipartFile,String targetAddr){
+    public static String generateThumbnail(CommonsMultipartFile commonsMultipartFile,String targetAddr){
         String fileName = getUnicomRandomFileName();
         String extend = getFileExtrend(commonsMultipartFile);
         makeDirPath(targetAddr);
@@ -35,6 +35,7 @@ public class ImageUtil {
         }catch (IOException iex){
             iex.getStackTrace();
         }
+        return relativeAddr;
     }
 
     /**

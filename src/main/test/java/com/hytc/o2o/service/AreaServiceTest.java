@@ -3,7 +3,6 @@ package com.hytc.o2o.service;
 import com.hytc.o2o.BaseTest;
 
 import com.hytc.o2o.entity.Area;
-import com.hytc.o2o.service.impl.AreaService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
