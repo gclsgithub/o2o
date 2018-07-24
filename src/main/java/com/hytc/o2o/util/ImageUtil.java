@@ -7,6 +7,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 import java.util.UUID;
 
@@ -24,13 +25,12 @@ public class ImageUtil {
      * @param targetAddr String 目标0路径
      * @return relativeAddr 相对路径  /Users/gcl/Documents/MyPic.jpg
      */
-    public static String generateThumbnail(File imageFile,String targetAddr){
-        String fileName = getUnicomRandomFileName();
-        String extend = getFileExtrend(imageFile);
+    public static String generateThumbnail(InputStream imageFile, String targetAddr,String fileName){
+
+        String extend = getFileExtrend(fileName);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr+fileName+extend;
         File dest = new File(PathUtil.getImgBasePth()+relativeAddr);
-        System.out.println(imageFile.exists());
         try{
             Thumbnails.of(imageFile)
                     .size(200,200).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/water.jpg")),0.25f)
@@ -57,13 +57,10 @@ public class ImageUtil {
 
     /**
      * 获取文件扩展名
-     * @param file
+     * @param fileName
      * @return
      */
-    private static String getFileExtrend(File file) {
-
-        //根据Spring的文件流获取文件名
-        String fileName = file.getName();
+    private static String getFileExtrend(String fileName) {
 
         //从最后一个.号开始截取
         return fileName.substring(fileName.lastIndexOf("."));

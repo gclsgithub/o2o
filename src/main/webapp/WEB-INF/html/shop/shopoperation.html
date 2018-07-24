@@ -29,7 +29,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">商铺名称</div>
                                 <div class="item-input">
-                                    <input type="text" id="shopName" placeholder="请输入店铺名称">
+                                    <input type="text" id="shop-name" placeholder="请输入店铺名称">
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">店铺分类</div>
                                 <div class="item-input">
-                                    <select id="shopCategoery.shopCategoeryId">
+                                    <select id="shopCategoery-shopCategoeryId">
                                         <!--   Init（）设置 -->
                                         <!--<option>Male</option>
                                         <option>Female</option>-->
@@ -58,7 +58,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">店铺区域</div>
                                 <div class="item-input">
-                                    <select id="area.areaId">
+                                    <select id="area-areaId">
                                         <!--   Init（）设置 -->
                                         <!--<option>Male</option>
                                         <option>Female</option>-->
@@ -75,7 +75,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">详细地址</div>
                                 <div class="item-input">
-                                    <input type="text" id="shopAddr" placeholder="请输入店铺详细地址">
+                                    <input type="text" id="shop-addr" placeholder="请输入店铺详细地址">
                                 </div>
                             </div>
                         </div>
@@ -98,9 +98,9 @@
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-title label">商铺图片</div>
                                 <div class="item-input">
-                                    <input type="file" id="shopFile" placeholder="请输入店铺缩略图">
+                                    <input type="file" id="shop-file" placeholder="请输入店铺缩略图">
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">商铺电弧</div>
                                 <div class="item-input">
-                                    <textarea id="shopDesc"></textarea>
+                                    <textarea id="shop-desc"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -123,9 +123,11 @@
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-password"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">密码</div>
+                                <div class="item-title label">验证码</div>
+                                <input type="text"  id="j_captchar" placeholder="验证码" class="">
                                 <div class="item-input">
-                                    <input type="password" placeholder="Password" class="">
+                                    <img  id="captchar_img" alt="点击更换" title="点击更换"
+                                        onclick="changeVerityCode(this)" src="../Kaptcha">
                                 </div>
                             </div>
                         </div>
@@ -134,8 +136,8 @@
             </div>
             <div class="content-block">
                 <div class="row">
-                    <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
-                    <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                    <div class="col-50"><a href="#" class="button button-big button-fill button-danger">返回</a></div>
+                    <div class="col-50"><a href="#" class="button button-big button-fill button-success" id="submit">提交</a></div>
                 </div>
             </div>
         </div>

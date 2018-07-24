@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -27,7 +28,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, File shopImg) {
+    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName) {
 
         if (shop == null ){
             return new ShopExecution(ShopStateEnum.NULL_SHOPID);
@@ -44,7 +45,7 @@ public class ShopServiceImpl implements ShopService {
             throw new ShopRuntimeException("插入失败");
         }else{
             //将上传的文件存储到项目之中，同时把相对对路径存储的Shop对象之中，在更新到数据库
-            addFile2Proctectand2Shop(shop,shopImg);
+            addFile2Proctectand2Shop(shop,shopImgInputStream,fileName);
 
             Integer effectUpdateNum = shopDao.updateShop(shop);
 
@@ -59,13 +60,14 @@ public class ShopServiceImpl implements ShopService {
     /**
      * 将上传的文件存储到项目之中，同时把相对对路径存储的Shop对象之中，在更新到数据库
      * @param shop
-     * @param shopImg
+     * @param shopImgInputStream
+     * @param fileName
      */
-    private void addFile2Proctectand2Shop(Shop shop, File shopImg) {
+    private void addFile2Proctectand2Shop(Shop shop, InputStream shopImgInputStream,String fileName) {
         //获取存储的相对路径
         String reativePath = PathUtil.getShopImagePath(shop.getShopId());
 
-        String showImageAddr = ImageUtil.generateThumbnail(shopImg,reativePath);
+        String showImageAddr = ImageUtil.generateThumbnail(shopImgInputStream,reativePath,fileName);
 
         shop.setShopImg(showImageAddr);
     }
