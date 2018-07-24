@@ -20,18 +20,21 @@ public class ImageUtil {
 
     /**
      * 将用户上传的图片进行加水印处理,并且返回相对值路径
-     * @param commonsMultipartFile   CommonsMultipartFile是Spring默认用来传输文件的组建
+     * @param imageFile   CommonsMultipartFile是Spring默认用来传输文件的组建
      * @param targetAddr String 目标0路径
-     * @return relativeAddr 相对路径
+     * @return relativeAddr 相对路径  /Users/gcl/Documents/MyPic.jpg
      */
-    public static String generateThumbnail(CommonsMultipartFile commonsMultipartFile,String targetAddr){
+    public static String generateThumbnail(File imageFile,String targetAddr){
         String fileName = getUnicomRandomFileName();
-        String extend = getFileExtrend(commonsMultipartFile);
+        String extend = getFileExtrend(imageFile);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr+fileName+extend;
+        File dest = new File(PathUtil.getImgBasePth()+relativeAddr);
+        System.out.println(imageFile.exists());
         try{
-            Thumbnails.of(commonsMultipartFile.getInputStream()).size(200,200).watermark(Positions.BOTTOM_RIGHT
-                    ,ImageIO.read(new File(basePath+"/watermark.jpg")),0.25f).outputQuality(0.8f).toFile(relativeAddr);
+            Thumbnails.of(imageFile)
+                    .size(200,200).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/water.jpg")),0.25f)
+                    .outputQuality(0.8f).toFile(dest);
         }catch (IOException iex){
             iex.getStackTrace();
         }
@@ -54,13 +57,13 @@ public class ImageUtil {
 
     /**
      * 获取文件扩展名
-     * @param commonsMultipartFile
+     * @param file
      * @return
      */
-    private static String getFileExtrend(CommonsMultipartFile commonsMultipartFile) {
+    private static String getFileExtrend(File file) {
 
         //根据Spring的文件流获取文件名
-        String fileName = commonsMultipartFile.getOriginalFilename();
+        String fileName = file.getName();
 
         //从最后一个.号开始截取
         return fileName.substring(fileName.lastIndexOf("."));
@@ -84,10 +87,10 @@ public class ImageUtil {
 
     }
 
-   /* public static void main(String[] args) throws IOException {
+   public static void main(String[] args) throws IOException {
 
-        Thumbnails.of(new File("/Users/gcl/Documents/image/xiaohuangren.jpg"))
-                .size(200,200).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/watermark.jpg")),0.25f)
-                .outputQuality(0.8f).toFile("/Users/gcl/Documents/image/xiaohuangrennew.jpg");
-    }*/
+        Thumbnails.of(new File("/Users/gcl/Documents/MyPic.jpg"))
+                .size(200,200).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/water.jpg")),0.25f)
+                .outputQuality(0.8f).toFile("/Users/gcl/Documents/MyPic2.jpg");
+    }
 }

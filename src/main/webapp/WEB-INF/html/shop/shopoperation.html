@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>商店</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+        <header class="bar bar-nav">
+            <h1 class='title'>商店注册</h1>
+        </header>
+        <div class="content">
+            <div class="list-block">
+                <ul>
+                    <!-- 商铺名称 input text -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">商铺名称</div>
+                                <div class="item-input">
+                                    <input type="text" id="shopName" placeholder="请输入店铺名称">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--商铺分类  select （Init（）设置） -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">店铺分类</div>
+                                <div class="item-input">
+                                    <select id="shopCategoery.shopCategoeryId">
+                                        <!--   Init（）设置 -->
+                                        <!--<option>Male</option>
+                                        <option>Female</option>-->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--店铺区域  seelect （Init（）设定）-->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">店铺区域</div>
+                                <div class="item-input">
+                                    <select id="area.areaId">
+                                        <!--   Init（）设置 -->
+                                        <!--<option>Male</option>
+                                        <option>Female</option>-->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--商铺详细地址 input text  -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">详细地址</div>
+                                <div class="item-input">
+                                    <input type="text" id="shopAddr" placeholder="请输入店铺详细地址">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--商铺联系电话 input text  -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-input">
+                                    <input type="text" id="phone" placeholder="请输入店铺电话">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--缩略图  file-->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-input">
+                                    <input type="file" id="shopFile" placeholder="请输入店铺缩略图">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <!--商铺简介  -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-name"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-input">
+                                    <textarea id="shopDesc"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--验证码  -->
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon icon-form-password"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title label">密码</div>
+                                <div class="item-input">
+                                    <input type="password" placeholder="Password" class="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <div class="row">
+                    <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
+                    <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+
+</body>
+</html>

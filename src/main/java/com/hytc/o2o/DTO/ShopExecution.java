@@ -71,7 +71,45 @@ public class ShopExecution {
         this.status = shopStateEnum.getStatus();
         this.statusInfo = shopStateEnum.getStatusInfo();
         shopList = shops;
-
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getStatusInfo() {
+        return statusInfo;
+    }
+
+    public void setStatusInfo(String statusInfo) {
+        this.statusInfo = statusInfo;
+    }
+
+    public Integer getShopCount() {
+        return shopCount;
+    }
+
+    public void setShopCount(Integer shopCount) {
+        this.shopCount = shopCount;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public List<Shop> getShopList() {
+        return shopList;
+    }
+
+    public void setShopList(List<Shop> shopList) {
+        this.shopList = shopList;
+    }
 }

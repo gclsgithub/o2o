@@ -9,7 +9,7 @@ public class PathUtil {
         if (os.toLowerCase().startsWith("win")){
             basePath = "D:/project/image/";
         }else{
-            basePath = "/home/gcl/image/";
+            basePath = "/Users/gcl/Documents/";
         }
         basePath = basePath.replace("/",seperator);
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -26,7 +27,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, CommonsMultipartFile shopImg) {
+    public ShopExecution addShop(Shop shop, File shopImg) {
 
         if (shop == null ){
             return new ShopExecution(ShopStateEnum.NULL_SHOPID);
@@ -60,7 +61,7 @@ public class ShopServiceImpl implements ShopService {
      * @param shop
      * @param shopImg
      */
-    private void addFile2Proctectand2Shop(Shop shop, CommonsMultipartFile shopImg) {
+    private void addFile2Proctectand2Shop(Shop shop, File shopImg) {
         //获取存储的相对路径
         String reativePath = PathUtil.getShopImagePath(shop.getShopId());
 

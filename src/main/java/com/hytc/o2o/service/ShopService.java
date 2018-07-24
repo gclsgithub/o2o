@@ -4,6 +4,7 @@ import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.Shop;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.File;
 
 
 /**
@@ -17,5 +18,5 @@ public interface ShopService {
      * @param shop 商品信息
      * @param shopImg 商品图片
      */
-    ShopExecution addShop(Shop shop, CommonsMultipartFile shopImg);
+    ShopExecution addShop(Shop shop, File shopImg);
 }
