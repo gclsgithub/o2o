@@ -2,9 +2,11 @@ package com.hytc.o2o.controller.shop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hytc.o2o.DTO.ShopExecution;
+import com.hytc.o2o.entity.PersonInfo;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.service.ShopService;
+import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,13 @@ public class ShopManageController {
         //1.设置输出对象
         Map<String,Object> modelMap = new HashMap<>();
 
+        //判断验证码是否正确
+        if (!CodeUtil.cheackVerfityCode(request)){
+            modelMap.put("success",false);
+            modelMap.put("errorMsg","验证码信息错误");
+            return modelMap;
+        }
+
         //获取值
         String shopStr = HttpRequestUtil.getString(request,"shopStr");
 
@@ -44,6 +53,10 @@ public class ShopManageController {
             modelMap.put("errorMsg",e.getMessage());
             return modelMap;
         }
+        String userId = (String) request.getSession().getAttribute("userId");
+        PersonInfo owner = new PersonInfo();
+        //owner.setUserId(new Long(userId));
+        shop.setOwner(owner);
         CommonsMultipartFile shopImg = null ;
         //从Servlet上下文中获取文件流
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -54,7 +67,7 @@ public class ShopManageController {
         //2.店铺注册
         if (shop != null && shopImg != null){
             try {
-                ShopExecution shopExecution = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getName());
+                ShopExecution shopExecution = shopService.addShop(shop,shopImg.getInputStream(),shopImg.getOriginalFilename());
                 if (shopExecution.getStatus().equals(ShopStateEnum.CHECK.getStatus())){
                     modelMap.put("success",true);
                 }else{

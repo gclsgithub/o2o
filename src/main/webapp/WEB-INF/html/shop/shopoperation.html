@@ -86,7 +86,7 @@
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-title label">商铺电话</div>
                                 <div class="item-input">
                                     <input type="text" id="phone" placeholder="请输入店铺电话">
                                 </div>
@@ -110,7 +110,7 @@
                         <div class="item-content">
                             <div class="item-media"><i class="icon icon-form-name"></i></div>
                             <div class="item-inner">
-                                <div class="item-title label">商铺电弧</div>
+                                <div class="item-title label">商铺简介</div>
                                 <div class="item-input">
                                     <textarea id="shop-desc"></textarea>
                                 </div>
@@ -124,10 +124,12 @@
                             <div class="item-media"><i class="icon icon-form-password"></i></div>
                             <div class="item-inner">
                                 <div class="item-title label">验证码</div>
-                                <input type="text"  id="j_captchar" placeholder="验证码" class="">
+                                <div class="item-input">
+                                    <input type="text"  id="j_captchar" placeholder="验证码" class="">
+                                </div>
                                 <div class="item-input">
                                     <img  id="captchar_img" alt="点击更换" title="点击更换"
-                                        onclick="changeVerityCode(this)" src="../Kaptcha">
+                                          onclick="changeVerityCode(this)" src="../Kaptcha">
                                 </div>
                             </div>
                         </div>
@@ -147,6 +149,8 @@
 <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='../resources/js/shop/shopoperation.js' charset='utf-8'></script>
+<script type='text/javascript' src='../resources/js/common/common.js' charset='utf-8'></script>
 
 </body>
 </html>

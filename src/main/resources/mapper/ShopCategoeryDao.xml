@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.ShopCategoeryDao">
+    <select id="findAlls" resultType="com.hytc.o2o.entity.ShopCategoery">
+        SELECT
+          shop_categoery_id,
+          shop_categoery_name,
+          shop_categoery_desc,
+          shop_categoery_img,
+          priority,
+          create_time,
+          last_edit_time,
+          parent_id
+        FROM tb_shop_categoery
+        <where>
+
+            <if test="shopCategoeryCondition.parentId!=null" >
+                 parent_id=#{shopCategoeryCondition.parentId}
+            </if>
+            and  shop_categoery_id != '-1'
+        </where>
+    </select>
+</mapper>

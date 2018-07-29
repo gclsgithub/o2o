@@ -25,7 +25,7 @@ public class AreaController {
         Map<String, Object> modelMap = new HashMap<>();
         List<Area> areaList = new ArrayList<>();
         try {
-            areaList = areaService.getAreaList();
+            areaList = areaService.findAlls();
             modelMap.put("rows",areaList);
             modelMap.put("total",areaList.size());
 

@@ -2,6 +2,7 @@ package com.hytc.o2o.service.impl;
 
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.dao.ShopDao;
+import com.hytc.o2o.entity.PersonInfo;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
@@ -33,6 +34,13 @@ public class ShopServiceImpl implements ShopService {
         if (shop == null ){
             return new ShopExecution(ShopStateEnum.NULL_SHOPID);
         }
+
+
+        //手动设置UserId
+        String userId = "1";
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(new Long(userId));
+        shop.setOwner(owner);
 
         shop.setEnableStatus(1);
         shop.setCreateTime(new Date());
