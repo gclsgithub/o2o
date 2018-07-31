@@ -15,39 +15,54 @@
         <result column="create_time" property="createTime"></result>
         <result column="last_edit_time" property="lastEditTime"></result>
         <result column="advice" property="advice"></result>
+        <result column="enable_status" property="enableStatus"></result>
         <association property="owner" column="user_id" javaType="com.hytc.o2o.entity.PersonInfo">
             <id column="user_id" property="userId"></id>
-            <result column="user_name" property="userName"></result>
+            <result column="user_name" property="name"></result>
         </association>
         <association property="area" column="area_id" javaType="com.hytc.o2o.entity.Area">
             <id column="area_id" property="areaId"></id>
-            <result column="areaName" property="areaName"></result>
+            <result column="area_name" property="areaName"></result>
         </association>
         <association property="shopCategoery" column="shop_categoery_id" javaType="com.hytc.o2o.entity.ShopCategoery">
-            <id column="shopCategoery_id" property="shopCategoeryId"></id>
+            <id column="shop_categoery_id" property="shopCategoeryId"></id>
             <result column="shop_categoery_name" property="shopCategoeryName"></result>
         </association>
     </resultMap>
 
     <select id="queryShopByShopId" resultMap="shopMap">
         SELECT
-          shop_id
-          owner_id,
-	      area_id,
-	      shop_categoery_id,
-	      shop_name,
-	      shop_desc,
-	      shop_addr,
-	      phone,
-	      shop_img,
-	      priority,
-	      create_time,
-	      last_edit_time,
-	      enable_status,
-	      advice
+          ts.shop_id as shop_id,
+          ts.owner_id as owner_id,
+          tpi.name as user_name,
+	      ts.area_id as area_id,
+	      ta.area_name as area_name,
+	      ts.shop_categoery_id as shop_categoery_id,
+	      thc.shop_categoery_name as shop_categoery_name,
+	      ts.shop_name as shop_name,
+	      ts.shop_desc as shop_desc,
+	      ts.shop_addr as shop_addr,
+	      ts.phone as phone,
+	      ts.shop_img as shop_img,
+	      ts.priority as priority,
+	      ts.create_time as create_time,
+	      ts.last_edit_time as last_edit_time,
+	      ts.enable_status as enable_status,
+	      ts.advice as advice
 	    FROM
-          tb_shop
-
+          tb_shop ts
+        LEFT JOIN
+          tb_person_info tpi
+        ON
+          ts.owner_id=tpi.user_id
+        LEFT JOIN
+          tb_area ta
+        ON
+          ts.area_id=ta.area_id
+        LEFT JOIN
+          tb_shop_categoery thc
+        ON
+          ts.shop_categoery_id=thc.shop_categoery_id
     </select>
 
 

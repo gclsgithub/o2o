@@ -24,7 +24,6 @@ $(function(){
                 $('#shop-name').val(shop.shopName);
                 $('#shop-addr').val(shop.shopAddr);
                 $('#phone').val(shop.phone);
-                $('#shop-file').val(shop.shopImg);
                 $('#shop-desc').val(shop.shopDesc);
 
                 var temHtmlShopCategoeryCompenx = '<option data-id ="'+shop.shopCategoeryId+'selected'+'">'+shop.shopCategoery.shopCategoeryName+'</option>';
@@ -33,6 +32,7 @@ $(function(){
                 $('#shopCategoery-shopCategoeryId').html(temHtmlShopCategoeryCompenx);
                 $('#area').attr('data-id',shop.areaId);
                 $('#area-areaId').html(tempHtmlAreaIdCompenx);
+                $('#shop-file').src = shop.shopImg;
             }
         })
     }
