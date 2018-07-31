@@ -1,7 +1,6 @@
 package com.hytc.o2o.service;
 
 import com.hytc.o2o.BaseTest;
-import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.PersonInfo;
 import com.hytc.o2o.entity.Shop;

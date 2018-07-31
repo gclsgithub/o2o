@@ -1,8 +1,16 @@
 package com.hytc.o2o.dao;
 
 import com.hytc.o2o.entity.Shop;
+import org.apache.ibatis.annotations.Param;
 
 public interface ShopDao {
+
+    /**
+     * 根据ShopId查询单个Shop信息
+     * @param shopId
+     * @return
+     */
+    Shop queryShopByShopId(@Param("shopId") Long shopId);
     /**
      * 新增店铺
      * @param shop

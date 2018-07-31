@@ -3,10 +3,39 @@
  */
 $(function(){
     var initUrl = '/shop/shopinit';
-    var registerShopUrl = '/shopadmin/registershop';
+    var editShopUrl = '/shopadmin/registershop';
+    //查询某一条数据的Url
+    var shopInfoUrl = '/shopadmin/queryShop?shopId=1';
+    var shopId = getQueryString('shopId');
+    var idEdit = (shopId!=null)?true:false;
+    var httpMethod = 'POST';
+    if (idEdit){
+        httpMethod = 'PUT';
+        getSpecialShop(shopId);
+        editShopUrl = '/shopadmin/updateShop';
+    }else{
+        getShopInitInfo();
+    }
+    function getSpecialShop(shopId) {
+        $.getJSON(shopInfoUrl,function (data) {
+            if (data.success) {
 
-    getShopInitInfo()
+                var shop = data.shop;
+                $('#shop-name').val(shop.shopName);
+                $('#shop-addr').val(shop.shopAddr);
+                $('#phone').val(shop.phone);
+                $('#shop-file').val(shop.shopImg);
+                $('#shop-desc').val(shop.shopDesc);
 
+                var temHtmlShopCategoeryCompenx = '<option data-id ="'+shop.shopCategoeryId+'selected'+'">'+shop.shopCategoery.shopCategoeryName+'</option>';
+                var tempHtmlAreaIdCompenx = '<option data-id ="'+shop.areaId+'selected'+'">'+shop.area.areaName+'</option>';
+                $('#shop-category').attr('disabled','disabled');
+                $('#shopCategoery-shopCategoeryId').html(temHtmlShopCategoeryCompenx);
+                $('#area').attr('data-id',shop.areaId);
+                $('#area-areaId').html(tempHtmlAreaIdCompenx);
+            }
+        })
+    }
     function getShopInitInfo() {
         $.getJSON(initUrl, function (data) {
             if (data.success) {
@@ -45,7 +74,6 @@ $(function(){
         formData.append('shopImg',shopImg);
         formData.append('shopStr',JSON.stringify(shop))
 
-
         // 获取验证码的内容
         var verifyCodeActual = $('#j_captchar').val();
         if (verifyCodeActual == null){
@@ -58,8 +86,8 @@ $(function(){
         $.ajax({
             //保证Json对象不被转码
             traditional:true,
-            url:registerShopUrl,
-            type:'POST',
+            url:editShopUrl,
+            type:httpMethod,
             data:formData,
             contentType:false,
             processData:false,
@@ -67,6 +95,11 @@ $(function(){
             success:function (data) {
                 if (data.success){
                     $.toast('提交成功！')
+                    if (idEdit) {
+                        $('#captchar_img').click();
+                    }else{
+                        window.location.href = '/shop/shoplist';
+                    }
                 }else{
                     $.toast('提交失败'+data.error)
                 }

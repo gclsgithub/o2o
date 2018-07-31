@@ -1,7 +1,8 @@
 package com.hytc.o2o.service.impl;
 
-import com.hytc.o2o.DTO.ShopExecution;
+
 import com.hytc.o2o.dao.ShopDao;
+import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.PersonInfo;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.enums.ShopStateEnum;
@@ -12,9 +13,7 @@ import com.hytc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -29,13 +28,11 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName) {
+    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
 
         if (shop == null ){
             return new ShopExecution(ShopStateEnum.NULL_SHOPID);
         }
-
-
         //手动设置UserId
         String userId = "1";
         PersonInfo owner = new PersonInfo();
@@ -64,6 +61,35 @@ public class ShopServiceImpl implements ShopService {
         return new ShopExecution(ShopStateEnum.CHECK,shop);
 
     }
+
+    @Override
+    public ShopExecution updateShop(Long shopId, Shop shop){
+        shop.setShopId(shopId);
+        int num =shopDao.updateShop(shop);
+        if (num !=1){
+            throw  new ShopRuntimeException("更新数量失败");
+        }
+        Shop updateShop = shopDao.queryShopByShopId(shopId);
+
+        if (updateShop.getEnableStatus() == -1) {
+            return new ShopExecution(ShopStateEnum.OFFLINE, shop);
+        }
+        else if (updateShop.getEnableStatus() == 0){
+            return new ShopExecution(ShopStateEnum.CHECK, shop);
+        }
+        else if (updateShop.getEnableStatus() == 1){
+            return new ShopExecution(ShopStateEnum.SUCCESS, shop);
+        }
+        else {
+            return new ShopExecution(ShopStateEnum.INNERERROR,shop);
+        }
+    }
+
+    @Override
+    public Shop findSingleShopByShopId(Long shopId) {
+        return  shopDao.queryShopByShopId(shopId);
+    }
+
 
     /**
      * 将上传的文件存储到项目之中，同时把相对对路径存储的Shop对象之中，在更新到数据库

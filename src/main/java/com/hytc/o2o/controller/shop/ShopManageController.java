@@ -29,6 +29,72 @@ public class ShopManageController {
     private ShopService shopService;
 
 
+    @RequestMapping(value="queryShop" ,method = RequestMethod.GET)
+    public Map<String,Object> findSingleShop(HttpServletRequest request){
+
+        Map<String,Object> modelMap = new HashMap<>();
+
+        Long shopId = HttpRequestUtil.getLong(request,"shopId");
+        if (shopId != null) {
+            Shop shop = shopService.findSingleShopByShopId(shopId);
+            modelMap.put("success",true);
+            modelMap.put("shop",shop);
+        }else{
+            modelMap.put("success",false);
+        }
+        return modelMap;
+    }
+
+
+    @RequestMapping(value="/updateShop",method = RequestMethod.PUT)
+    public Map<String,Object> updateShop(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+
+        //判断验证码是否正确
+        if (!CodeUtil.cheackVerfityCode(request)){
+            modelMap.put("success",false);
+            modelMap.put("errorMsg","验证码信息错误");
+            return modelMap;
+        }
+
+        Long shopId = HttpRequestUtil.getLong(request,"shopId");
+        //获取值
+        String shopStr = HttpRequestUtil.getString(request,"shopStr");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Shop shop = null;
+        try {
+            shop = objectMapper.readValue(shopStr,Shop.class);
+        } catch (IOException e) {
+            modelMap.put("success",false);
+            modelMap.put("errorMsg",e.getMessage());
+            return modelMap;
+        }
+        String userId = (String) request.getSession().getAttribute("userId");
+        PersonInfo owner = new PersonInfo();
+        //owner.setUserId(new Long(userId));
+        shop.setOwner(owner);
+        CommonsMultipartFile shopImg = null ;
+        //从Servlet上下文中获取文件流
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if (commonsMultipartResolver.isMultipart(request)){
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+        }
+        if (shop != null && userId !=null){
+            try {
+                ShopExecution shopExecution = shopService.updateShop(shopId,shop);
+                modelMap.put("success",false);
+                modelMap.put("shop",shopExecution.getShop());
+            }catch (Exception e){
+                modelMap.put("success",false);
+                modelMap.put("errorMsg",e.getMessage());
+            }
+        }
+        return modelMap;
+    }
+
+
     @RequestMapping(value = "/registershop" , method = RequestMethod.POST)
     public Map<String ,Object> registerShop(HttpServletRequest request){
         //1.设置输出对象
