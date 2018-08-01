@@ -21,5 +21,7 @@
             </if>
             and  shop_categoery_id != '-1'
         </where>
+        ORDER BY
+          priority ASC
     </select>
 </mapper>

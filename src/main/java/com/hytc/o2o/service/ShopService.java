@@ -13,6 +13,15 @@ import java.io.InputStream;
 public interface ShopService {
 
     /**
+     * 获取商品的DTO
+     * @param ShopCondition
+     * @param indexNum
+     * @param pageSize
+     * @return
+     */
+    ShopExecution getShopList(Shop ShopCondition,int indexNum,int pageSize);
+
+    /**
      *添加商店
      * @param shop 商品信息
      * @param shopImgInputStream 商品图片

@@ -9,6 +9,7 @@ import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.ShopService;
 import com.hytc.o2o.util.ImageUtil;
+import com.hytc.o2o.util.PageCalculator;
 import com.hytc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author hytc
@@ -25,6 +27,21 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopDao shopDao;
+
+    @Override
+    public ShopExecution getShopList(Shop ShopCondition, int indexNum, int pageSize) {
+        ShopExecution shopExecution = new ShopExecution();
+        Integer currentPageIndex = PageCalculator.caculatateNowPageIndex(indexNum,pageSize);
+        Integer count = shopDao.queryShopCount(ShopCondition);
+        List<Shop>  shopList = shopDao.queryShopBySomeCondition(ShopCondition,currentPageIndex,pageSize);
+        if (shopList!=null){
+            shopExecution.setShopList(shopList);
+            shopExecution.setShopCount(count);
+        }else{
+            shopExecution.setStatus(ShopStateEnum.INNERERROR.getStatus());
+        }
+        return shopExecution;
+    }
 
     @Override
     @Transactional

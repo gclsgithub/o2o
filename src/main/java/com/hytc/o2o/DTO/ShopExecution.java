@@ -40,7 +40,7 @@ public class ShopExecution {
     /**
      * 默认构造函数
      */
-    private ShopExecution(){ }
+    public ShopExecution(){ }
 
 
     /**

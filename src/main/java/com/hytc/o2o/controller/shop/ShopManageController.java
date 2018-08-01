@@ -2,8 +2,10 @@ package com.hytc.o2o.controller.shop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hytc.o2o.DTO.ShopExecution;
+import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.PersonInfo;
 import com.hytc.o2o.entity.Shop;
+import com.hytc.o2o.entity.ShopCategoery;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.service.ShopService;
 import com.hytc.o2o.util.CodeUtil;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,7 +32,56 @@ public class ShopManageController {
     private ShopService shopService;
 
 
-    @RequestMapping(value="queryShop" ,method = RequestMethod.GET)
+    @RequestMapping(value = "/getshopmanageinfo",method = RequestMethod.GET)
+    public Map<String,Object> getShopManageInfo(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        //获取ShopId判定是否登陆从而控制用户查看某个店铺信息
+        Long shopId = HttpRequestUtil.getLong(request,"shopId");
+        if (shopId <=0 ){
+            Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+            if (currentShop == null ){
+                modelMap.put("redirect",true);
+                modelMap.put("url","/shopadmin/shoplist");
+            }else {
+                modelMap.put("redirect",false);
+                modelMap.put("shopId",currentShop.getShopId());
+            }
+        }else{
+            Shop shop = new Shop();
+            shop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop",shop);
+        }
+        return modelMap;
+    }
+
+
+    @RequestMapping(value = "/shoplist" ,method = RequestMethod.GET)
+    public Map<String,Object> findShopListByOwnerId(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+        //从Session中获取UserId
+        PersonInfo user = (PersonInfo) request.getSession().getAttribute("user");
+
+        Area area = new Area();
+        ShopCategoery  shopCategoery= new ShopCategoery();
+        Shop shopCondition  = new Shop();
+        shopCondition.setOwner(user);
+        shopCondition.setShopCategoery(shopCategoery);
+        shopCondition.setArea(area);
+
+        try{
+           ShopExecution shopExecution = shopService.getShopList(shopCondition,0,100);
+           modelMap.put("shopList",shopExecution.getShopList());
+           modelMap.put("user",user);
+           modelMap.put("success",true);
+        }catch (Exception ex){
+            modelMap.put("success",false);
+            modelMap.put("errMsg",ex.getMessage());
+        }
+        return modelMap;
+    }
+
+
+    @RequestMapping(value="/queryShop" ,method = RequestMethod.GET)
     public Map<String,Object> findSingleShop(HttpServletRequest request){
 
         Map<String,Object> modelMap = new HashMap<>();

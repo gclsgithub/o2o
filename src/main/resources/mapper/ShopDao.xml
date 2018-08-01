@@ -30,8 +30,8 @@
         </association>
     </resultMap>
 
-    <select id="queryShopByShopId" resultMap="shopMap">
-        SELECT
+    <sql id="selectSql">
+         SELECT
           ts.shop_id as shop_id,
           ts.owner_id as owner_id,
           tpi.name as user_name,
@@ -51,6 +51,70 @@
 	      ts.advice as advice
 	    FROM
           tb_shop ts
+    </sql>
+
+    <select id="queryShopCount" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        FROM
+          tb_shop ts
+        <where>
+            <if test="ShopCondition.shopName!=null">
+                ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
+            </if>
+            <if test="ShopCondition.shopCategoery.shopCategoeryId!=null">
+                AND ts.shop_categoery_id = #{ShopCondition.shopCategoery.shopCategoeryId}
+            </if>
+            <if test="ShopCondition.area.areaId!=null">
+                AND ts.area_id = #{ShopCondition.area.areaId}
+            </if>
+            <if test="ShopCondition.owner.userId!=null">
+                AND ts.owner_id = #{ShopCondition.owner.userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryShopBySomeCondition" resultType="com.hytc.o2o.entity.Shop">
+        SELECT
+        ts.shop_id as shop_id,
+        ts.owner_id as owner_id,
+        ts.area_id as area_id,
+        ts.shop_categoery_id as shop_categoery_id,
+        ts.shop_name as shop_name,
+        ts.shop_desc as shop_desc,
+        ts.shop_addr as shop_addr,
+        ts.phone as phone,
+        ts.shop_img as shop_img,
+        ts.priority as priority,
+        ts.create_time as create_time,
+        ts.last_edit_time as last_edit_time,
+        ts.enable_status as enable_status,
+        ts.advice as advice
+        FROM
+        tb_shop ts
+        <where>
+            <if test="ShopCondition.shopName!=null">
+                ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
+            </if>
+            <if test="ShopCondition.shopCategoery.shopCategoeryId!=null">
+                AND ts.shop_categoery_id = #{ShopCondition.shopCategoery.shopCategoeryId}
+            </if>
+            <if test="ShopCondition.area.areaId!=null">
+                AND ts.area_id = #{ShopCondition.area.areaId}
+            </if>
+            <if test="ShopCondition.owner.userId!=null">
+                AND ts.owner_id = #{ShopCondition.owner.userId}
+            </if>
+        </where>
+        ORDER BY
+          ts.priority DESC
+        LIMIT
+          #{indexNum},#{pageSize}
+
+    </select>
+
+    <select id="queryShopByShopId" resultMap="shopMap">
+       <include refid="selectSql" />
         LEFT JOIN
           tb_person_info tpi
         ON
