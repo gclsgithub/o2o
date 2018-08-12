@@ -20,7 +20,7 @@ public interface ShopDao {
      */
     List<Shop> queryShopBySomeCondition(@Param("ShopCondition") Shop shop,
                                        @Param("indexNum") int indexNum,
-                                       @Param("PageSize") int pageSize);
+                                       @Param("pageSize") int pageSize);
 
     /**
      * 根据ShopId查询单个Shop信息

@@ -4,9 +4,10 @@
 $(function(){
     var initUrl = '/shop/shopinit';
     var editShopUrl = '/shopadmin/registershop';
-    //查询某一条数据的Url
-    var shopInfoUrl = '/shopadmin/queryShop?shopId=1';
+
     var shopId = getQueryString('shopId');
+    //查询某一条数据的Url
+    var shopInfoUrl = '/shopadmin/queryShop?shopId='+shopId;
     var idEdit = (shopId!=null)?true:false;
     var httpMethod = 'POST';
     if (idEdit){

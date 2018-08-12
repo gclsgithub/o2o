@@ -96,14 +96,20 @@
             <if test="ShopCondition.shopName!=null">
                 ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
             </if>
-            <if test="ShopCondition.shopCategoery.shopCategoeryId!=null">
-                AND ts.shop_categoery_id = #{ShopCondition.shopCategoery.shopCategoeryId}
+            <if test="ShopCondition.shopCategoery!=null">
+                <if test="ShopCondition.shopCategoery.shopCategoeryId!=null">
+                    AND ts.shop_categoery_id = #{ShopCondition.shopCategoery.shopCategoeryId}
+                </if>
             </if>
-            <if test="ShopCondition.area.areaId!=null">
-                AND ts.area_id = #{ShopCondition.area.areaId}
+            <if test="ShopCondition.area!=null">
+              <if test="ShopCondition.area.areaId!=null">
+                  AND ts.area_id = #{ShopCondition.area.areaId}
+              </if>
             </if>
-            <if test="ShopCondition.owner.userId!=null">
-                AND ts.owner_id = #{ShopCondition.owner.userId}
+            <if test="ShopCondition.owner!=null">
+              <if test="ShopCondition.owner.userId!=null">
+                  AND ts.owner_id = #{ShopCondition.owner.userId}
+              </if>
             </if>
         </where>
         ORDER BY
@@ -127,6 +133,8 @@
           tb_shop_categoery thc
         ON
           ts.shop_categoery_id=thc.shop_categoery_id
+        WHERE
+          ts.shop_id=#{shopId}
     </select>
 
 
