@@ -51,12 +51,20 @@ public class ShopMapperController {
         return "/shop/shopoperation";
     }
 
+    /**
+     * 跳转 managershopfunction
+     * @return
+     */
     @GetMapping("/mappershopfunction")
     public String mapperShopFuncion(){
         //String shopId = HttpRequestUtil.getString(request,"shopId");
         //向Session中存放ShopId
         //request.getSession().setAttribute("shopId",shopId);
         return "/shop/shopmanage";
+    }
+    @GetMapping("/productmanage")
+    public String jumpProductmanage(){
+        return "/shop/productmanage";
     }
     /**
      * 初始化

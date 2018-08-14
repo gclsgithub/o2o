@@ -4,6 +4,7 @@ package com.hytc.o2o.service.impl;
 import com.hytc.o2o.dao.ShopDao;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.PersonInfo;
+import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
@@ -105,6 +106,11 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop findSingleShopByShopId(Long shopId) {
         return  shopDao.queryShopByShopId(shopId);
+    }
+
+    @Override
+    public List<Product> showShopProductionList(Integer shopId) {
+        return shopDao.queryProductionList(shopId);
     }
 
 

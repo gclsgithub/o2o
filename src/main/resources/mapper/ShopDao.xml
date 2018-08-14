@@ -195,6 +195,17 @@
         </set>
         WHERE
           shop_id=#{shopId}
-
     </update>
+
+    <select id="queryProductionList" resultType="com.hytc.o2o.entity.Product">
+        SELECT
+            t1.product_id,
+            t1.product_name,
+            t1.priority
+        FROM
+            tb_product t1
+        WHERE
+            t1.shop_id=#{shopId}
+
+    </select>
 </mapper>

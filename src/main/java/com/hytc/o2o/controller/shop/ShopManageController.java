@@ -2,18 +2,12 @@ package com.hytc.o2o.controller.shop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hytc.o2o.DTO.ShopExecution;
-import com.hytc.o2o.entity.Area;
-import com.hytc.o2o.entity.PersonInfo;
-import com.hytc.o2o.entity.Shop;
-import com.hytc.o2o.entity.ShopCategoery;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.service.ShopService;
 import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
-import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +29,16 @@ public class ShopManageController {
     @Autowired
     private ShopService shopService;
 
+
+    @RequestMapping(value = "/productmanageinit",method = RequestMethod.GET)
+    public Map<String,Object> getShopProduction(HttpServletRequest request){
+        Map<String, Object> modelMap = new HashMap<>();
+        Integer shopId = HttpRequestUtil.getInt(request,"shopId");
+        List<Product> productList = shopService.showShopProductionList(shopId);
+        modelMap.put("productList",productList);
+        modelMap.put("success",true);
+        return modelMap;
+    }
 
     @RequestMapping(value = "/getshopmanageinfo", method = RequestMethod.GET)
     public Map<String, Object> getShopManageInfo(HttpServletRequest request) {

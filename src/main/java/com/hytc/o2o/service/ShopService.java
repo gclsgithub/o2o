@@ -1,9 +1,11 @@
 package com.hytc.o2o.service;
 
 import com.hytc.o2o.DTO.ShopExecution;
+import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.Shop;
 
 import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -42,4 +44,11 @@ public interface ShopService {
      * @return
      */
     Shop findSingleShopByShopId(Long shopId);
+
+    /**
+     * 查询Product列表
+     * @param shopId
+     * @return 商品List
+     */
+    List<Product> showShopProductionList(Integer shopId);
 }
