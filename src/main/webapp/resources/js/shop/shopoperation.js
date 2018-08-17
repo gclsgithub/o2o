@@ -37,6 +37,7 @@ $(function(){
             }
         })
     }
+
     function getShopInitInfo() {
         $.getJSON(initUrl, function (data) {
             if (data.success) {
@@ -53,6 +54,7 @@ $(function(){
             }
         })
     }
+
     $('#submit').click(function(){
         var shop = {};
         shop.shopName = $("#shop-name").val();
@@ -108,5 +110,10 @@ $(function(){
                 $('#captchar_img').click();
             }
         })
+    })
+
+    $("#back").on("click",function(){
+        var backUrl = window.parent.document.referrer;
+        $("#back").attr("href",backUrl);
     })
 })

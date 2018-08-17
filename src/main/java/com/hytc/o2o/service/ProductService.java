@@ -1,5 +1,6 @@
 package com.hytc.o2o.service;
 
+import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.entity.ProductCategory;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface ProductService {
      * @return List<ProductCategory>
      */
     List<ProductCategory> getProductCategoeryList(String shopId);
+
 }
