@@ -1,4 +1,4 @@
-package main.java.com.hytc.o2o.entity;
+package com.hytc.o2o.entity;
 
 import java.util.Date;
 

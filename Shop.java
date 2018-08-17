@@ -1,4 +1,4 @@
-package main.java.com.hytc.o2o.entity;
+package com.hytc.o2o.entity;
 
 import java.util.Date;
 
@@ -36,6 +36,14 @@ public class Shop  {
     private  Area area;
 
     private PersonInfo owner;
+
+    private ShopCategoery shopCategoery;
+
+
+
+    public Long getShopId() {
+        return shopId;
+    }
 
     public void setShopId(Long shopId) {
         this.shopId = shopId;
@@ -93,11 +101,9 @@ public class Shop  {
         this.shopCategoery = shopCategoery;
     }
 
-    private ShopCategoery shopCategoery;
 
-    public Long getShopId() {
-        return shopId;
-    }
+
+
 
     public String getShopName() {
         return shopName;

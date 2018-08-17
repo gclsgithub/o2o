@@ -1,4 +1,4 @@
-package main.java.com.hytc.o2o.entity;
+package com.hytc.o2o.entity;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class PersonInfo {
     //Id
-    private Long id;
+    private Long userId;
 
     //姓名
     private String name;
@@ -28,8 +28,12 @@ public class PersonInfo {
 
     private Date lastEditTime;
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {
@@ -64,9 +68,7 @@ public class PersonInfo {
         this.lastEditTime = lastEditTime;
     }
 
-    public Long getId() {
-        return id;
-    }
+
 
     public String getName() {
         return name;

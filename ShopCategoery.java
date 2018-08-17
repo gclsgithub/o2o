@@ -1,4 +1,4 @@
-package main.java.com.hytc.o2o.entity;
+package com.hytc.o2o.entity;
 
 import java.util.Date;
 
@@ -21,7 +21,20 @@ public class ShopCategoery {
 
     private Date LastEditTime;
 
-    private ShopCategoery shopCategoery;
+    private Long parentId;
+
+    /**
+     * 保存父类对象
+     */
+   private ShopCategoery shopCategoery;
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
     public void setShopCategoeryId(Long shopCategoeryId) {
         this.shopCategoeryId = shopCategoeryId;
