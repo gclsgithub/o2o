@@ -1,12 +1,18 @@
 package com.hytc.o2o.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 商品类别
  * @author  hytc
  */
-public class ProductCategory {
+public class ProductCategory implements Serializable {
+
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 8541661596024281832L;
 
     private Long productionCategoryId;
 
@@ -14,48 +20,51 @@ public class ProductCategory {
 
     private String productionCategoryName;
 
-    private Integer priority;
+    private int priority;
 
     private Date createTime;
 
-    public void setProductionCategoryId(Long productionCategoryId) {
-        this.productionCategoryId = productionCategoryId;
-    }
-
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
-    }
-
-    public void setProductionCategoryName(String productionCategoryName) {
-        this.productionCategoryName = productionCategoryName;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public Long getProductionCategoryId() {
-
         return productionCategoryId;
+    }
+
+    public void setProductionCategoryId(Long productionCategoryId) {
+        this.productionCategoryId = productionCategoryId;
     }
 
     public Long getShopId() {
         return shopId;
     }
 
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
     public String getProductionCategoryName() {
         return productionCategoryName;
     }
 
-    public Integer getPriority() {
+    public void setProductionCategoryName(String productionCategoryName) {
+        this.productionCategoryName = productionCategoryName;
+    }
+
+    public int getPriority() {
         return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
