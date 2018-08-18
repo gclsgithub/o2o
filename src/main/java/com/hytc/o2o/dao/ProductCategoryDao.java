@@ -14,5 +14,5 @@ public interface ProductCategoryDao {
      * @param productCategoryList
      * @return
      */
-    Integer insertProductCategoryList(@Param("productCategoryList") List<ProductCategory> productCategoryList);
+    void insertProductCategoryList(@Param("productCategoryList") List<ProductCategory> productCategoryList);
 }

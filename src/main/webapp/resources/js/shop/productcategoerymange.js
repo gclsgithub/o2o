@@ -48,13 +48,12 @@ $(function() {
         //申请一个数组存放新增的对象
         var productCategoryList=[];
         tempArr.map(function(index,item) {
-            alert(item);
-            alert(index);
-            //申请一个数组存放对象属性
-            var tmpObj=[];
+
+            //申请一个JSON对象存放对象属性
+            var tmpObj={};
             tmpObj.productionCategoryName=$(item).val();
             tmpObj.priority=$(item).val();
-            if (tmpObj.productCategoeryName!=null && tmpObj.priority!=null){
+            if (tmpObj.productionCategoryName!=null && tmpObj.priority!=null){
                 productCategoryList.push(tmpObj);
             }
         });

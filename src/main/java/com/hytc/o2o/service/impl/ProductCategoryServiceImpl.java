@@ -8,6 +8,7 @@ import com.hytc.o2o.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -18,11 +19,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public ProductCategoryEnum batchAndProductCategoery(List<ProductCategory> productCategoryList) {
-        Integer count = productCategoryDao.insertProductCategoryList(productCategoryList);
 
-        if (count == productCategoryList.size()){
-            return ProductCategoryEnum.SUCCESS;
+        try {
+            productCategoryDao.insertProductCategoryList(productCategoryList);
+        }catch (Exception ex1){
+            return ProductCategoryEnum.INSERT_ERROR;
         }
-        return ProductCategoryEnum.INSERT_ERROR;
+        return ProductCategoryEnum.SUCCESS;
+
+
     }
 }

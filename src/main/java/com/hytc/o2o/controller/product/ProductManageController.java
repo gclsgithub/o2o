@@ -3,6 +3,7 @@ package com.hytc.o2o.controller.product;
 import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.DTO.ResultSource;
 import com.hytc.o2o.entity.ProductCategory;
+import com.hytc.o2o.enums.ProductCategoryEnum;
 import com.hytc.o2o.service.ProductCategoryService;
 import com.hytc.o2o.service.ProductService;
 import com.hytc.o2o.util.HttpRequestUtil;
@@ -35,12 +36,13 @@ public class ProductManageController {
      */
     @RequestMapping(value = "/insertlist" ,method = {RequestMethod.POST})
     public ResultSource insertList2Database(HttpServletRequest request, @RequestBody List<ProductCategory> productCategoryList){
-        String shopId = HttpRequestUtil.getString(request,"shopId");
+        //String shopId = HttpRequestUtil.getString(request,"shopId");
+        String shopId = (String) request.getSession().getAttribute("shopId");
         for (ProductCategory pc:productCategoryList){
             pc.setShopId(Long.valueOf(shopId));
         }
         if (null != productCategoryList &&  productCategoryList.size() > 0) {
-            ProductCategoryExcution productCategoryExcution = productCategoryService.batchAndProductCategoery(productCategoryList);
+            ProductCategoryEnum productCategoryEnum = productCategoryService.batchAndProductCategoery(productCategoryList);
         }
         return null;
     }
