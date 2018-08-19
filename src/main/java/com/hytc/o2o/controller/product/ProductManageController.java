@@ -28,6 +28,33 @@ public class ProductManageController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
+    @RequestMapping(value = "initproductedit" ,method = {RequestMethod.GET})
+    public ResultSource initProductEdit(HttpServletRequest request){
+        ResultSource output = null;
+        Long productId = HttpRequestUtil.getLong(request,"productId");
+        ProductCategoryExcution productCategoryExcution = productService.getProduct(productId);
+
+        return output;
+    }
+
+    /**
+     * 非逻辑删除，物理删除类别
+     * @param request
+     * @return
+     */
+    @RequestMapping(path = "delproductcategoery" , method = {RequestMethod.POST})
+    public ResultSource delProductCategoery(HttpServletRequest request, @RequestBody ProductCategory productCategory){
+        ResultSource output = null;
+        Long productId = productCategory.getProductionCategoryId();
+        ProductCategoryExcution productCategoryExcution = productCategoryService.delProductCategoery(productId);
+        if(productCategoryExcution.getProductCategoryEnum()==ProductCategoryEnum.SUCCESS){
+            output= new ResultSource(true,null);
+        }else{
+            output= new ResultSource(false,null);
+        }
+        return output;
+    }
+
     /**
      *
      * @param request HttpServletRequest
@@ -36,15 +63,21 @@ public class ProductManageController {
      */
     @RequestMapping(value = "/insertlist" ,method = {RequestMethod.POST})
     public ResultSource insertList2Database(HttpServletRequest request, @RequestBody List<ProductCategory> productCategoryList){
-        //String shopId = HttpRequestUtil.getString(request,"shopId");
-        String shopId = (String) request.getSession().getAttribute("shopId");
+        ResultSource output = null;
+        String shopId = HttpRequestUtil.getString(request,"shopId");
+
         for (ProductCategory pc:productCategoryList){
             pc.setShopId(Long.valueOf(shopId));
         }
         if (null != productCategoryList &&  productCategoryList.size() > 0) {
-            ProductCategoryEnum productCategoryEnum = productCategoryService.batchAndProductCategoery(productCategoryList);
+            ProductCategoryExcution productCategoryExcution = productCategoryService.batchAndProductCategoery(productCategoryList);
+            if(productCategoryExcution.getProductCategoryEnum()==ProductCategoryEnum.SUCCESS){
+                output= new ResultSource(true,null);
+            }
+        }else{
+            output= new ResultSource(false,null);
         }
-        return null;
+        return output;
     }
 
     @RequestMapping(value = "/productinit",method = {RequestMethod.GET})

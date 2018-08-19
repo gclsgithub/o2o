@@ -28,4 +28,8 @@ public class ResultSource  <T> implements Serializable {
         this.success = success;
         this.data=data;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
 }

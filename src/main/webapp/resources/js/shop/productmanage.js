@@ -19,7 +19,7 @@ $(function() {
                         '<div class="col-20">'+item.productName+'</div>'+
                         '<div class="col-30">'+item.priority+'</div>'+
                         '<div class="col-50">'+
-                        '<a href='+"/product/editproduct?productId="+item.productId+'>编辑</a>'+
+                        '<a href='+"/productmapper/productaddmapper?productId="+item.productId+'>编辑</a>'+
                         '<a href='+"/product/delproduct?productId="+item.productId+'>删除</a>'+
                         '<a href='+"/product/showproduct?productId="+item.productId+'>预览</a>'+
                         '<input type="hidden" name="productId" value="item.productId" />'+

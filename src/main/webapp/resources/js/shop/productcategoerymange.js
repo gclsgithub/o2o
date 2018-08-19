@@ -7,21 +7,21 @@ $(function() {
         initproduction();
     }
     var addUrl = "/productmanage/insertlist"+shopId;
-
+    var deleteUrl = "/productmanage/delproductcategoery"
 	function initproduction() {
     	var initUrl="/productmanage/productinit"+shopId;
     	var initHtml="";
     	$.getJSON(initUrl,function (data) {
 			if(data.success){
                 data.productCategoeryList.map(function(item ,index){
-                    initHtml+='<div class="row row-product">'+
+                    initHtml+='<div class="row row-product now">'+
                         '<div class="col-20">'+item.productionCategoryName+'</div>'+
                         '<div class="col-30">'+item.priority+'</div>'+
                         '<div class="col-50">'+
                         '<a href='+"/productmapper/editproductcategoery?productId="+item.productionCategoryId+'>编辑</a>'+'&nbsp&nbsp&nbsp&nbsp'+
-                        '<a href='+"/productmanage/delproductcategoery?productId="+item.productionCategoryId+'>删除</a>'+'&nbsp&nbsp&nbsp&nbsp'+
+                        '<a href="javascript:void(0);" class="delete" onclick="js_delNow(this)" data-id="'+item.productionCategoryId+'" >删除</a>'+'&nbsp&nbsp&nbsp&nbsp'+
                         '<a href='+"/productmanage/showproductcategoery?productId="+item.productionCategoryId+'>预览</a>'+'&nbsp&nbsp&nbsp&nbsp'+
-                        '<input type="hidden" name="productId" value=item.productionCategoryId />'+
+                        '<input type="hidden" name="productId" value="item.productionCategoryId" />'+
                         '</div>'+
                         '</div>';
 				})
@@ -29,14 +29,20 @@ $(function() {
 			}
         })
     }
+
+    js_delTemp = function(line){
+        console.log(line.parentElement.parentElement);
+        line.parentElement.parentElement.remove();
+    }
+
     $('#new').on("click",function(){
         var initHtml="";
-        initHtml+='<div class="row row-product new">' +
-            '<input class="col-20 productCategoery tmp" type="text" placeholder="分类名" />' +
-            '<input class="col-30 priority temp" type="number" placeholder="优先级" />'+
+        initHtml+='<div class="row row-product temp">' +
+            '<input class="col-20 productCategoery" type="text" placeholder="分类名" />' +
+            '<input class="col-30 priority" type="number" placeholder="优先级" />'+
             '<div class="col-50">'+
             '<a href="#" disabled="disabled" >编辑</a>'+'&nbsp&nbsp&nbsp&nbsp'+
-            '<a href="#" disabled="disabled" >删除</a>'+'&nbsp&nbsp&nbsp&nbsp'+
+            '<a href="javascript:void(0);"class="delete" onclick="js_delTemp(this)">删除</a>'+'&nbsp&nbsp&nbsp&nbsp'+
             '<a href="#" disabled="disabled" >预览</a>'+'&nbsp&nbsp&nbsp&nbsp'+
             '</div>'+
             '</div>';
@@ -51,9 +57,9 @@ $(function() {
 
             //申请一个JSON对象存放对象属性
             var tmpObj={};
-            tmpObj.productionCategoryName=$(item).val();
-            tmpObj.priority=$(item).val();
-            if (tmpObj.productionCategoryName!=null && tmpObj.priority!=null){
+            tmpObj.productionCategoryName=$(item).find('.productCategoery').val();
+            tmpObj.priority=$(item).find('.priority').val();
+            if (tmpObj.productionCategoryName && tmpObj.priority){
                 productCategoryList.push(tmpObj);
             }
         });
@@ -64,13 +70,35 @@ $(function() {
             contentType:'application/json',
             success:function (data) {
                 if(data.success){
-                    $.total('提交成功');
+                    //$.total('提交成功');
                     initproduction();
                 } else{
-                    $.total('提交失败')
+                   // $.total('提交失败')
+                    alert("提交失败")
                 }
             }
         })
-
     })
+    js_delNow = function(line){
+        var productionCategoryId = line.dataset.id;
+        var  parseDate = {
+                productionCategoryId : productionCategoryId,
+            };
+        $.confirm('确定么?', function() {
+            $.ajax({
+                url : deleteUrl,
+                type : 'POST',
+                data : JSON.stringify(parseDate),
+                contentType:'application/json',
+                success : function(data) {
+                    if (data.success) {
+                        alert("删除成功");
+                        initproduction();
+                    } else {
+                        alert("删除失败")
+                    }
+                }
+            });
+        });
+    }
 });

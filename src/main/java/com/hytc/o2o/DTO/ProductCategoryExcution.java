@@ -20,8 +20,6 @@ public class ProductCategoryExcution implements Serializable {
      */
     private String statusInfo;
 
-
-
     private ProductCategoryEnum productCategoryEnum;
 
     public Integer getStatus() {

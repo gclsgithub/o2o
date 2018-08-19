@@ -13,4 +13,10 @@ public interface ProductService {
      */
     List<ProductCategory> getProductCategoeryList(String shopId);
 
+    /**
+     * 按照条件查询Product
+     * @param productId
+     * @return
+     */
+    ProductCategoryExcution getProduct(Long productId);
 }

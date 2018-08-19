@@ -3,16 +3,102 @@
         PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hytc.o2o.dao.ProductDao">
+
+
+    <resultMap id="initView" type="com.hytc.o2o.entity.Product">
+        <id column="product_id" property="productId"></id>
+        <result column="product_name" property="productName"></result>
+        <result column="product_desc" property="productDesc"></result>
+        <result column="img_addr" property="imgAddr"></result>
+        <result column="normal_price" property="normalPrice"></result>
+        <result column="promotion_price" property="promotionPrice"></result>
+        <result column="priority" property="priority"></result>
+        <association property="productCategory" javaType="com.hytc.o2o.entity.ProductCategory"  >
+            <id column="product_category_id" property="productionCategoryId"></id>
+        </association>
+        <association property="shop" javaType="com.hytc.o2o.entity.Shop">
+            <id column="shop_id" property="shopId"></id>
+        </association>
+    </resultMap>
+
     <select id="getProductCategoryList" resultType="com.hytc.o2o.entity.ProductCategory">
         SELECT
-            t1.product_id as productionCategoryId,
-            t1.product_name as productionCategoryName,
+            t1.shop_categoery_id as productionCategoryId,
+            t1.shop_categoery_name as productionCategoryName,
             t1.priority as priority
         FROM
-            tb_product t1
+            tb_shop_categoery t1
         WHERE
-            t1.shop_id=#{shopId}
+            t1.parent_id=#{shopId}
+        ORDER BY
+            t1.priority DESC
 
     </select>
 
+    <insert id="insertPrdouctIntoDb" useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id" >
+        INSERT INTO
+            tb_product(
+            product_name,
+            product_desc,
+            img_addr,
+            normal_price,
+            promotion_price,
+            priority,
+            create_time,
+            last_edit_time,
+            enable_status,
+            product_category_id,
+            shop_id
+            )VALUES(
+            #{product.productName},
+            #{product.productDesc},
+            <!--缩略图 -->
+            #{product.imgAddr},
+            #{product.normalPrice},
+            #{product.promotionPrice},
+            NOW(),
+            NOW(),
+            '0',
+            #{product.productCategory.productionCategoryId},
+            #{product.shop.shopId}
+            )
+    </insert>
+
+    <insert id="insertIntoProductImgDb">
+        INSERT INTO
+            tb_product_img(
+            img_addr,
+            img_desc,
+            priority,
+            create_time,
+            product_id
+            )
+        VALUES
+        <foreach collection="productImgList" index="index" item="img" separator="," open="(" close=")">
+            #(img.imgAddr),
+            #(img.imgDesc),
+            #(img.priority),
+            NOW(),
+            #(img.productId)
+        </foreach>
+    </insert>
+    
+    <select id="getProductInfo" resultMap="initView" resultType="com.hytc.o2o.entity.Product">
+        SELECT
+            product_id,
+            product_name,
+            product_desc,
+            img_addr,
+            normal_price,
+            promotion_price,
+            priority,
+            product_category_id,
+            shop_id
+        FROM
+            tb_product
+        WHERE
+            product_id=#{productId}
+        AND
+            enable_status='0'
+    </select>
 </mapper>
