@@ -31,6 +31,9 @@ public class Product {
 
     private Integer enableStatus;
 
+    /**
+     * 一对多
+     */
     private List<ProductImg> productImgList;
 
     private ProductCategory productCategory;
