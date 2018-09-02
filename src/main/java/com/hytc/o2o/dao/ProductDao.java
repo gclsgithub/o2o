@@ -14,7 +14,7 @@ public interface ProductDao {
      * @param shopId
      * @return
      */
-    List<ProductCategory> getProductCategoryList(@Param("shopId") String shopId);
+    List<ProductCategory> getShopProductCategoryList(@Param("shopId") Long shopId);
 
     /**
      * 插入到数据库

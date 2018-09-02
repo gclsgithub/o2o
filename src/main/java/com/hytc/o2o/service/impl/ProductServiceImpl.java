@@ -1,6 +1,6 @@
 package com.hytc.o2o.service.impl;
 
-import com.hytc.o2o.DTO.ProductCategoryExcution;
+import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.dao.ProductDao;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
@@ -20,17 +20,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductCategory> getProductCategoeryList(String shopId) {
 
-        return productDao.getProductCategoryList(shopId);
+        return productDao.getShopProductCategoryList(Long.valueOf(shopId));
     }
 
     @Override
-    public ProductCategoryExcution getProduct(Long productId) {
+    public ProductAndCategoeryDto getProduct(Long productId, Long shopId) {
+
+        ProductAndCategoeryDto output = new  ProductAndCategoeryDto();
         if (productId != null) {
             Product product = productDao.getProductInfo(productId);
+            output.setProduct(product);
         }
+        List<ProductCategory> productCategoryList = productDao.getShopProductCategoryList(shopId);
 
+        output.setProductCategoryList(productCategoryList);
 
-
-        return null;
+        return output;
     }
 }

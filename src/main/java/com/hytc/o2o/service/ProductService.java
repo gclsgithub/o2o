@@ -1,6 +1,6 @@
 package com.hytc.o2o.service;
 
-import com.hytc.o2o.DTO.ProductCategoryExcution;
+import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.entity.ProductCategory;
 
 import java.util.List;
@@ -16,7 +16,8 @@ public interface ProductService {
     /**
      * 按照条件查询Product
      * @param productId
+     * @Param shopId 商品Id
      * @return
      */
-    ProductCategoryExcution getProduct(Long productId);
+    ProductAndCategoeryDto getProduct(Long productId, Long shopId);
 }

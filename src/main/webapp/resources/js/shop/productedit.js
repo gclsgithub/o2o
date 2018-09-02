@@ -1,17 +1,21 @@
 $(function() {
-    var productId ;
+    var productId ='';
     getProductId();
-    var initUrl = "productmanage/initproductedit";
     function getProductId() {
         productId = "?productId="+getQueryString('productId');
         initproduction();
     }
     function initproduction() {
+        var intitProductUrl = "http://localhost:8081/productmanage/initproductedit"+productId;
         $.ajax({
-            url:initUrl+productId,
+            url:intitProductUrl,
             type:'GET',
-            success:function (data) {
-                if(data.success){
+            success:function (output) {
+                if(output.success){
+                    var product = output.Product;
+                    var productList = output.ProductList;
+                    $('#product-name').attr("value",product.productName);
+                    $('#category').attr("value",product.productName);
 
                 }
             }

@@ -1,5 +1,6 @@
 package com.hytc.o2o.controller.product;
 
+import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.DTO.ResultSource;
 import com.hytc.o2o.entity.ProductCategory;
@@ -8,10 +9,7 @@ import com.hytc.o2o.service.ProductCategoryService;
 import com.hytc.o2o.service.ProductService;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -29,12 +27,17 @@ public class ProductManageController {
     private ProductCategoryService productCategoryService;
 
     @RequestMapping(value = "initproductedit" ,method = {RequestMethod.GET})
-    public ResultSource initProductEdit(HttpServletRequest request){
-        ResultSource output = null;
-        Long productId = HttpRequestUtil.getLong(request,"productId");
-        ProductCategoryExcution productCategoryExcution = productService.getProduct(productId);
+    public Map<String,Object> initProductEdit(HttpServletRequest request, @RequestParam("productId")String productId){
 
-        return output;
+        Map<String,Object> outDate = new HashMap<>();
+
+        String shopId = (String) request.getSession().getAttribute("shopId");
+        ProductAndCategoeryDto serviceOutput = productService.getProduct(Long.valueOf(productId),Long.valueOf(shopId));ResultSource output = new ResultSource(true,serviceOutput);
+
+        outDate.put("Product",serviceOutput.getProduct());
+        outDate.put("ProductList",serviceOutput.getProductCategoryList());
+        outDate.put("success",true);
+       return  outDate;
     }
 
     /**

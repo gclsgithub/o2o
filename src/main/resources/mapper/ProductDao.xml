@@ -21,7 +21,7 @@
         </association>
     </resultMap>
 
-    <select id="getProductCategoryList" resultType="com.hytc.o2o.entity.ProductCategory">
+    <select id="getShopProductCategoryList" resultType="com.hytc.o2o.entity.ProductCategory">
         SELECT
             t1.shop_categoery_id as productionCategoryId,
             t1.shop_categoery_name as productionCategoryName,

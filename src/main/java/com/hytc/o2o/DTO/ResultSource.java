@@ -21,6 +21,7 @@ public class ResultSource  <T> implements Serializable {
         this.success=false;
     }
 
+
     /**
      * 成功时候的构造函数
      */
