@@ -1,6 +1,7 @@
 package com.hytc.o2o.entity;
 
-import javax.xml.crypto.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * 详情图片
@@ -9,15 +10,18 @@ import javax.xml.crypto.Data;
 public class ProductImg {
     private Long productImgId;
 
+    //详情图地址
     private String imgAddr;
 
     private String imgDesc;
 
     private Integer priority;
 
-    private Data createTime;
+    private LocalDateTime createTime;
 
     private Long productId;
+
+    //0下架 1.可以在前台系统展示
 
     public void setProductImgId(Long productImgId) {
         this.productImgId = productImgId;
@@ -35,7 +39,7 @@ public class ProductImg {
         this.priority = priority;
     }
 
-    public void setCreateTime(Data createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
@@ -60,7 +64,7 @@ public class ProductImg {
         return priority;
     }
 
-    public Data getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 

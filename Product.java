@@ -1,6 +1,6 @@
 package com.hytc.o2o.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,6 +18,7 @@ public class Product {
     private String imgAddr;
 
     private String normalPrice;
+
     /**
      * 折扣价格
      */
@@ -25,9 +26,9 @@ public class Product {
 
     private Integer priority;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date lastEditTime;
+    private LocalDateTime lastEditTime;
 
     private Integer enableStatus;
 
@@ -96,19 +97,19 @@ public class Product {
         this.priority = priority;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getLastEditTime() {
+    public LocalDateTime getLastEditTime() {
         return lastEditTime;
     }
 
-    public void setLastEditTime(Date lastEditTime) {
+    public void setLastEditTime(LocalDateTime lastEditTime) {
         this.lastEditTime = lastEditTime;
     }
 
