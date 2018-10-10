@@ -42,6 +42,29 @@ public class ImageUtil {
     }
 
     /**
+     * 改变了size和压缩率
+     * 将用户上传的图片进行加水印处理,并且返回相对值路径
+     * @param imageFile   CommonsMultipartFile是Spring默认用来传输文件的组建
+     * @param targetAddr String 目标0路径
+     * @return relativeAddr 相对路径  /Users/gcl/Documents/MyPic.jpg
+     */
+    public static String generateNormalThumbnail(InputStream imageFile, String targetAddr,String fileName){
+
+        String extend = getFileExtrend(fileName);
+        makeDirPath(targetAddr);
+        String relativeAddr = targetAddr+fileName+extend;
+        File dest = new File(PathUtil.getImgBasePth()+relativeAddr);
+        try{
+            Thumbnails.of(imageFile)
+                    .size(337,640).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/water.jpg")),0.25f)
+                    .outputQuality(0.9f).toFile(dest);
+        }catch (IOException iex){
+            iex.getStackTrace();
+        }
+        return relativeAddr;
+    }
+
+    /**
      * 判断文件是否存在不存在的话就创建文件
      * @param targetAddr
      */

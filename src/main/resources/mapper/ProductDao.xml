@@ -32,10 +32,9 @@
             t1.parent_id=#{shopId}
         ORDER BY
             t1.priority DESC
-
     </select>
 
-    <insert id="insertPrdouctIntoDb" useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id" >
+    <insert id="insertPrdouctIntoDb"  useGeneratedKeys="true" keyProperty="product.productId" keyColumn="product_id" >
         INSERT INTO
             tb_product(
             product_name,
@@ -56,6 +55,7 @@
             #{product.imgAddr},
             #{product.normalPrice},
             #{product.promotionPrice},
+            #{product.priority},
             NOW(),
             NOW(),
             '0',
@@ -64,25 +64,41 @@
             )
     </insert>
 
-    <insert id="insertIntoProductImgDb">
+    <!-- 批量插入-->
+    <insert id="insertIntoProductImgDb"  >
         INSERT INTO
-            tb_product_img(
+            tb_product(
+            product_name,
+            product_desc,
             img_addr,
-            img_desc,
+            normal_price,
+            promotion_price,
             priority,
             create_time,
-            product_id
-            )
-        VALUES
-        <foreach collection="productImgList" index="index" item="img" separator="," open="(" close=")">
-            #(img.imgAddr),
-            #(img.imgDesc),
-            #(img.priority),
+            last_edit_time,
+            enable_status,
+            product_category_id,
+            shop_id
+        )VALUES
+        <foreach collection="productlist" item="product" index="index" separator=",">
+            (
+            #{product.productName},
+            #{product.productDesc},
+            <!--缩略图 -->
+            #{product.imgAddr},
+            #{product.normalPrice},
+            #{product.promotionPrice},
+            #{product.priority},
             NOW(),
-            #(img.productId)
+            NOW(),
+            '0',
+            #{product.productCategory.productionCategoryId},
+            #{product.shop.shopId}
+            )
         </foreach>
     </insert>
-    
+
+
     <select id="getProductInfo" resultMap="initView" resultType="com.hytc.o2o.entity.Product">
         SELECT
             product_id,

@@ -3,13 +3,19 @@ package com.hytc.o2o.DTO;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.enums.ShopStateEnum;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Shop的DTO
  * @author  hytc
  */
-public class ShopExecution {
+public class ShopExecution implements Serializable {
+
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = -8883231660525431403L;
 
     /**
      * Enum的状态码

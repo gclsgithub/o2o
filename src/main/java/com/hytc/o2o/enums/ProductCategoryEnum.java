@@ -6,6 +6,11 @@ public enum ProductCategoryEnum {
 
     private String staeInfo;
 
+    /**
+     * 私有构造方法
+     * @param state
+     * @param stateInfo
+     */
     private ProductCategoryEnum(int state,String stateInfo){
         this.state = state;
         this.staeInfo = stateInfo;

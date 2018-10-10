@@ -1,5 +1,6 @@
 package com.hytc.o2o.service;
 
+import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.Shop;
@@ -28,7 +29,7 @@ public interface ShopService {
      * @param shop 商品信息
      * @param shopImgInputStream 商品图片
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName);
+    ShopExecution addShop(Shop shop, ImageHolder shopImgInputStream);
 
     /**
      * 根据shopId查询Shop实体

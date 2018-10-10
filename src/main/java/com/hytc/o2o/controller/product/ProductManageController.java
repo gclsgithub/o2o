@@ -1,14 +1,18 @@
 package com.hytc.o2o.controller.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.DTO.ResultSource;
+import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.enums.ProductCategoryEnum;
 import com.hytc.o2o.service.ProductCategoryService;
 import com.hytc.o2o.service.ProductService;
+import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +26,9 @@ public class ProductManageController {
 
     @Autowired
     private ProductService productService;
+
+    @Value("${imageFileMaxFileUploadCount}")
+    private static  int IMAGEMAXCOUNT;
 
     @Autowired
     private ProductCategoryService productCategoryService;
@@ -95,4 +102,24 @@ public class ProductManageController {
 
         return output;
     }
+
+    @RequestMapping(value = "/addproduct" ,method = {RequestMethod.POST})
+    public Map<String,Object> addProduct(HttpServletRequest request){
+        Map<String,Object> modelMap = new HashMap<>();
+
+        //验证码校验
+        if (!CodeUtil.cheackVerfityCode(request)){
+            modelMap.put("success",false);
+            modelMap.put("errorMsg","输入了错误的验证码");
+            return modelMap;
+        }
+
+        //接受前段参数的变量的初始化数据
+        //包括商品信息，缩略图，详情图列表实体
+        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = null;
+        String productStr = HttpRequestUtil.getString(request,"productStr");
+        return modelMap;
+    }
+
 }

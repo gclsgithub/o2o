@@ -29,6 +29,7 @@ public interface ShopDao {
      * @return
      */
     Shop queryShopByShopId(@Param("shopId") Long shopId);
+
     /**
      * 新增店铺
      * @param shop
@@ -49,4 +50,15 @@ public interface ShopDao {
      * @return
      */
     List<Product> queryProductionList(@Param("shopId") Integer shopId);
+
+    /**
+     * 插入一个商品信息
+     * @param product
+     * @return
+     */
+    int insertProduct(Product product);
+
+    /**
+     *
+     */
 }

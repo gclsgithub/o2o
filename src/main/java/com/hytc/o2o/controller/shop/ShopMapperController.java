@@ -28,8 +28,6 @@ import java.util.Map;
 @RequestMapping(value = {"/shop"})
 public class ShopMapperController {
 
-
-
     @Autowired
     private ShopCategoeryService shopCategoeryService;
 
@@ -66,6 +64,7 @@ public class ShopMapperController {
     public String jumpProductmanage(){
         return "/shop/productmanage";
     }
+
     /**
      * 初始化
      * @return

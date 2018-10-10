@@ -1,6 +1,7 @@
 package com.hytc.o2o.service.impl;
 
 
+import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.dao.ShopDao;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.PersonInfo;
@@ -46,7 +47,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
+    public ShopExecution addShop(Shop shop, ImageHolder shopImgInputStream) {
 
         if (shop == null ){
             return new ShopExecution(ShopStateEnum.NULL_SHOPID);
@@ -68,7 +69,7 @@ public class ShopServiceImpl implements ShopService {
             throw new ShopRuntimeException("插入失败");
         }else{
             //将上传的文件存储到项目之中，同时把相对对路径存储的Shop对象之中，在更新到数据库
-            addFile2Proctectand2Shop(shop,shopImgInputStream,fileName);
+            addFile2Proctectand2Shop(shop,shopImgInputStream.getImage(),shopImgInputStream.getImageName());
 
             Integer effectUpdateNum = shopDao.updateShop(shop);
 

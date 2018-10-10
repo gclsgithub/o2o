@@ -1,6 +1,7 @@
 package com.hytc.o2o.controller.shop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.*;
 import com.hytc.o2o.enums.ShopStateEnum;
@@ -193,7 +194,8 @@ public class ShopManageController {
         //2.店铺注册
         if (shop != null && shopImg != null) {
             try {
-                ShopExecution shopExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHolder holder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+                ShopExecution shopExecution = shopService.addShop(shop,holder);
                 if (shopExecution.getStatus().equals(ShopStateEnum.CHECK.getStatus())) {
                     modelMap.put("success", true);
                     // 若shop创建成功，则加入session中，作为权限使用

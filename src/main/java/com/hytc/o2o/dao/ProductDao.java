@@ -17,17 +17,17 @@ public interface ProductDao {
     List<ProductCategory> getShopProductCategoryList(@Param("shopId") Long shopId);
 
     /**
-     * 插入到数据库
+     * 商品信息插入到数据库
      * @param product
      * @return
      */
-    Product insertPrdouctIntoDb(@Param("product") Product product);
+    Integer insertPrdouctIntoDb(@Param("product") Product product);
 
     /**
-     * 批量插入图片到数据库
-     * @param productImgList
+     * 批量插入商品信息到数据库
+     * @param products
      */
-    void insertIntoProductImgDb(@Param("productImgList")List<ProductImg> productImgList);
+    Integer insertIntoProductImgDb(@Param("productlist")List<Product> products);
 
     /**
      * 查询关于Product的信息
