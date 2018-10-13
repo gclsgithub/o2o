@@ -21,15 +21,30 @@
         </association>
     </resultMap>
 
-    <select id="getShopProductCategoryList" resultType="com.hytc.o2o.entity.ProductCategory">
+    <!-- 获取商店商品的所有分类  按照权限排序-->
+    <select id="getShopCategoryList" resultType="com.hytc.o2o.entity.ShopCategoery">
         SELECT
-            t1.shop_categoery_id as productionCategoryId,
-            t1.shop_categoery_name as productionCategoryName,
+            t1.shop_categoery_id as shopCategoeryId,
+            t1.shop_categoery_name as shopCategoeryName,
             t1.priority as priority
         FROM
             tb_shop_categoery t1
         WHERE
             t1.parent_id=#{shopId}
+        ORDER BY
+            t1.priority DESC
+    </select>
+
+    <!-- 获取商店商品的所有分类  按照权限排序-->
+    <select id="getProductCategoryList" resultType="com.hytc.o2o.entity.ProductCategory">
+        SELECT
+            t1.product_category_id as productionCategoryId,
+            t1.product_category_name as productionCategoryName,
+            t1.priority as priority
+        FROM
+            tb_product_category t1
+        WHERE
+            t1.product_id=#{shopId}
         ORDER BY
             t1.priority DESC
     </select>

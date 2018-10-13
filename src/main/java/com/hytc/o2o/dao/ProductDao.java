@@ -10,11 +10,11 @@ import java.util.List;
 public interface ProductDao {
 
     /**
-     * 获取产品分类List
+     * 获取商店商品的所有分类  按照权限排序
      * @param shopId
      * @return
      */
-    List<ProductCategory> getShopProductCategoryList(@Param("shopId") Long shopId);
+    List<ProductCategory> getShopCategoryList(@Param("shopId") Long shopId);
 
     /**
      * 商品信息插入到数据库
@@ -35,4 +35,10 @@ public interface ProductDao {
      * @return
      */
     Product getProductInfo(@Param("productId")Long productId);
+
+    /**
+     * 获取商品分类
+     * @return
+     */
+    List<ProductCategory> getProductCategoryList(@Param("productId")Long productId);
 }

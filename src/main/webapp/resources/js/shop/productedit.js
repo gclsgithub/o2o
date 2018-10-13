@@ -5,6 +5,8 @@ $(function() {
         productId = "?productId="+getQueryString('productId');
         initproduction();
     }
+
+
     function initproduction() {
         var intitProductUrl = "http://localhost:8081/productmanage/initproductedit"+productId;
         $.ajax({
@@ -15,6 +17,7 @@ $(function() {
                     var product = output.Product;
                     var productList = output.ProductList;
                     var temHtmlShopCategoeryCompenx = '';
+                    if (product)
                     productList.map(function(item ,index){
                          temHtmlShopCategoeryCompenx += '<option data-id ="'+item.productionCategoryId+'selected'+'">'+item.productionCategoryName+'</option>';
 

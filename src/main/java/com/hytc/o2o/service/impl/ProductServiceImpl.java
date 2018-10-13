@@ -39,20 +39,25 @@ public class ProductServiceImpl implements ProductService {
     private ProductImgDao productImgDao;
 
     @Override
-    public List<ProductCategory> getProductCategoeryList(String shopId) {
+    public List<ProductCategory> getProductCategoeryList() {
 
-        return productDao.getShopProductCategoryList(Long.valueOf(shopId));
+        return productDao.getProductCategoryList(null);
     }
 
+    /**
+     * 查询初期化信息
+     * @param productId
+     * @return
+     */
     @Override
-    public ProductAndCategoeryDto getProduct(Long productId, Long shopId) {
+    public ProductAndCategoeryDto getProduct(Long productId) {
 
         ProductAndCategoeryDto output = new  ProductAndCategoeryDto();
         if (productId != null) {
             Product product = productDao.getProductInfo(productId);
             output.setProduct(product);
         }
-        List<ProductCategory> productCategoryList = productDao.getShopProductCategoryList(shopId);
+        List<ProductCategory> productCategoryList = productDao.getProductCategoryList(productId);
 
         output.setProductCategoryList(productCategoryList);
 

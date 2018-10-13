@@ -60,4 +60,23 @@ public class ProductExcution implements Serializable {
         this.productList = productList;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getStateInfo() {
+        return stateInfo;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
 }
