@@ -57,11 +57,12 @@ public class ProductManageController {
         ProductAndCategoeryDto serviceOutput = null;
         if (!StringUtils.isEmpty(shopId)) {
             serviceOutput = productService.getProduct(Long.valueOf(productId));
+            outDate.put("Product",serviceOutput.getProduct());
+            outDate.put("ProductList",serviceOutput.getProductCategoryList());
+            outDate.put("success",true);
         }
-        outDate.put("Product",serviceOutput.getProduct());
-        outDate.put("ProductList",serviceOutput.getProductCategoryList());
-        outDate.put("success",true);
-       return  outDate;
+        outDate.put("shopId",shopId);
+        return  outDate;
     }
 
     /**
