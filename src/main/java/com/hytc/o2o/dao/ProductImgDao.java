@@ -34,4 +34,10 @@ public interface ProductImgDao {
      * @return
      */
     List<ProductImg> searchProductImg(@Param("productId") Long productId);
+
+    /**
+     * 更新商品信息
+     * @param productImg
+     */
+    void updateProductCategoery(@Param("productImg") ProductImg productImg);
 }

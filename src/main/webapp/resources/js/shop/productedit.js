@@ -117,7 +117,7 @@ $(function() {
                         $('#shopId').attr("value",output.shopId);
                         $('#product-desc').html(product.productDesc);
                         productList.map(function(item ,index){
-                            $('#category').html("");
+                            $('#category').html('');
                             if (product.productCategory.productionCategoryId != null  || product.productCategory.productionCategoryId !='') {
                                 if (product.productCategory.productionCategoryId == item.productionCategoryId) {
                                     temHtmlShopCategoeryCompenx += '<option data-id ="' + item.productionCategoryId + '" selected>' + item.productionCategoryName + '</option>';
@@ -126,6 +126,7 @@ $(function() {
                                 }
                             }
                         })
+                        $('#category').html(temHtmlShopCategoeryCompenx);
                     }
                 }
             }

@@ -9,7 +9,7 @@ public class ImageHolder implements Serializable {
     private static final long serialVersionUID = 6694954546980669373L;
 
     /** 图片名称 */
-    private  String  imageName;
+    private  String imageName;
 
     /** 图片流 */
     private InputStream image;

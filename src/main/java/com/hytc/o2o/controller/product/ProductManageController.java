@@ -58,7 +58,7 @@ public class ProductManageController {
         if (!StringUtils.isEmpty(shopId)) {
 
             Long productIdL= null;
-            if (StringUtils.isEmpty(productId)){
+            if (!StringUtils.isEmpty(productId)){
                 productIdL = Long.valueOf(productId);
             }
             serviceOutput = productService.getProduct(productIdL);
@@ -135,7 +135,7 @@ public class ProductManageController {
     }
 
     /**
-     * 新增加商品信息
+     * 新增加商品信息 (修正商品的信息)
      * @param request
      * @return
      */

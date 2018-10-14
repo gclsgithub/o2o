@@ -37,9 +37,8 @@
 
         SELECT
             product_img_id AS productImgId,
-
         FROM
-            tb_shop_categoery
+            tb_product_img
         WHERE
             product_id = #{productId}
 

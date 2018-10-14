@@ -137,17 +137,32 @@
 
     <update id="updateProduct" >
         UPDATE
-          tb_product
+            tb_product
         SET
-          product_name = #{product.productName},
-          product_desc = #{product.productDesc},
-          <!--缩略图 -->
-          img_addr = #{product.imgAddr},
-          normal_price =  #{product.normalPrice},
-          promotion_price = #{product.promotionPrice},
-          priority = #{product.priority},
-          last_edit_time = now(),
-          enable_status = '1',
-          product_category_id = #{product.productCategory.productionCategoryId},
+            product_name = #{product.productName},
+            product_desc = #{product.productDesc},
+            <!--缩略图 -->
+            img_addr = #{product.imgAddr},
+            normal_price =  #{product.normalPrice},
+            promotion_price = #{product.promotionPrice},
+            priority = #{product.priority},
+            last_edit_time = now(),
+            enable_status = #{product.enableStatus},
+            product_category_id = #{product.productCategory.productionCategoryId}
+        WHERE
+            product_id = #{product.productId}
+    </update>
+
+    <update id="updateProductCategoery" >
+        UPDATE
+            tb_product_img
+        SET
+            img_addr = #{productImg.product_category_name}
+        WHERE
+            product_img_id = #{productImg.productImgId}
+        AND
+            product_id = #{productImg.productId}
+
+
     </update>
 </mapper>

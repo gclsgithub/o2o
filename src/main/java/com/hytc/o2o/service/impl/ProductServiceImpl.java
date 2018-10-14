@@ -65,6 +65,14 @@ public class ProductServiceImpl implements ProductService {
         return output;
     }
 
+    /**
+     * 添加或者修正一条商品信息
+     * @param product 商品信息
+     * @param thumnail 缩略图
+     * @param productImgList 详情图
+     * @return
+     * @throws ProductRuntimeException
+     */
     @Override
     @Transactional
     public ProductExcution addProduct(Product product, ImageHolder thumnail, List<ImageHolder> productImgList) throws ProductRuntimeException {
@@ -89,7 +97,25 @@ public class ProductServiceImpl implements ProductService {
                     if (effectedNum < 0) {
                         throw new ProductRuntimeException("商品更新失败");
                     }
-                    List<ProductImg> productImgs = productImgDao.searchProductImg(product.getProductId());
+
+                    String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
+
+                    //遍历图片，并添加到productImgs
+                    for (ImageHolder imageHolder:productImgList){
+
+                        String fileName =  imageHolder.getImageName();
+
+                        //非压缩的方式生成图片
+                        String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
+
+                        List<ProductImg> productImgSearchList = productImgDao.searchProductImg(product.getProductId());
+                        for (ProductImg img:productImgSearchList){
+                            img.setImgAddr(imgAddr);
+                            img.setProductId(product.getProductId());
+                            img.setCreateTime(LocalDateTime.now());
+                            productImgDao.updateProductCategoery(img);
+                        }
+                    }
                 }catch (Exception ex){
                     throw new ProductRuntimeException("商品更新失败");
                 }
