@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class ProductImg {
     private Long productImgId;
 
+
+
     //详情图地址
     private String imgAddr;
 
