@@ -41,4 +41,11 @@ public interface ProductDao {
      * @return
      */
     List<ProductCategory> getProductCategoryList(@Param("productId")Long productId);
+
+    /**
+     * 更新商品信息
+     * @param product
+     * @return
+     */
+    int updateProduct(@Param("product") Product product);
 }

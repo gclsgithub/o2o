@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = productDao.getProductInfo(productId);
             output.setProduct(product);
         }
-        List<ProductCategory> productCategoryList = productDao.getProductCategoryList(productId);
+        List<ProductCategory> productCategoryList = productDao.getProductCategoryList(null);
 
         output.setProductCategoryList(productCategoryList);
 
@@ -68,7 +68,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductExcution addProduct(Product product, ImageHolder thumnail, List<ImageHolder> productImgList) throws ProductRuntimeException {
         //1.处理缩略图，获取缩略图相对路径并赋值给product
-
         if(!ObjectUtils.isEmpty(product) && !ObjectUtils.isEmpty(product.getShop())
                 && !StringUtils.isEmpty(product.getShop().getShopId())){
             product.setCreateTime(LocalDateTime.now());
@@ -82,28 +81,42 @@ public class ProductServiceImpl implements ProductService {
                 addThumbnail(product,thumnail);
             }
 
-            try {
-                int effectedNum = productDao.insertPrdouctIntoDb(product);
-                if (effectedNum < 0){
-                    throw  new ProductRuntimeException("创建商品失败");
+            //如果传入的productId为空，则是需要添加的信息，如果不为空则是应该修改的信息
+            if (!StringUtils.isEmpty(product.getProductId())){
+                try {
+                    int effectedNum = productDao.updateProduct(product);
+                    if (effectedNum < 0) {
+                        throw new ProductRuntimeException("商品更新失败");
+                    }
+                    List<ProductImg> productImgs = productImgDao.searchProductImg(product.getProductId());
+                }catch (Exception ex){
+                    throw new ProductRuntimeException("商品更新失败");
                 }
-            } catch (Exception e) {
-                throw  new ProductRuntimeException("创建商品失败"+e.toString());
+
+            }else {
+                try {
+                    int effectedNum = productDao.insertPrdouctIntoDb(product);
+                    if (effectedNum < 0){
+                        throw  new ProductRuntimeException("创建商品失败");
+                    }
+                } catch (Exception e) {
+                    throw  new ProductRuntimeException("创建商品失败"+e.toString());
+                }
+
+                //2.向tb_product写入商品信息（商品信息+缩略图地址）
+                if (!ObjectUtils.isEmpty(productImgList)){
+                    addProductImgList(product,productImgList);
+                }
+
+                //3.结合product_id 批量插入商品详情图片
+                return new ProductExcution(ProductStateEnum.SUCCESS,product);
             }
-
-            //2.向tb_product写入商品信息（商品信息+缩略图地址）
-            if (!ObjectUtils.isEmpty(productImgList)){
-                addProductImgList(product,productImgList);
-            }
-
-            //3.结合product_id 批量插入商品详情图片
-            return new ProductExcution(ProductStateEnum.SUCCESS,product);
-
         }else {
             //失败的时候
             return new ProductExcution(ProductStateEnum.EMPTY);
         }
-
+        //失败的时候
+        return new ProductExcution(ProductStateEnum.EMPTY);
     }
 
     /**
@@ -128,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (!CollectionUtils.isEmpty(productImgs)){
             try{
+
                 int effectedNum = productImgDao.batchInsertProductImg(productImgs);
                 if (effectedNum < 0){
                     throw  new ProductRuntimeException("添加失败");

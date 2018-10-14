@@ -32,4 +32,17 @@
         WHERE
             shop_categoery_id=#{productId}
     </delete>
+
+    <select id="searchProductImg" resultType="com.hytc.o2o.entity.ProductImg">
+
+        SELECT
+            product_img_id AS productImgId,
+
+        FROM
+            tb_shop_categoery
+        WHERE
+            product_id = #{productId}
+
+
+    </select>
 </mapper>

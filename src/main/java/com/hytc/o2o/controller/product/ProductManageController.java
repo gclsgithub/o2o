@@ -37,7 +37,7 @@ public class ProductManageController {
     private ProductService productService;
 
     @Value("${imageFileMaxFileUploadCount}")
-    private static  int IMAGEMAXCOUNT;
+    private int IMAGEMAXCOUNT;
 
     @Autowired
     private ProductCategoryService productCategoryService;
@@ -56,12 +56,18 @@ public class ProductManageController {
         String shopId = (String) request.getSession().getAttribute("shopId");
         ProductAndCategoeryDto serviceOutput = null;
         if (!StringUtils.isEmpty(shopId)) {
-            serviceOutput = productService.getProduct(Long.valueOf(productId));
+
+            Long productIdL= null;
+            if (StringUtils.isEmpty(productId)){
+                productIdL = Long.valueOf(productId);
+            }
+            serviceOutput = productService.getProduct(productIdL);
             outDate.put("Product",serviceOutput.getProduct());
             outDate.put("ProductList",serviceOutput.getProductCategoryList());
             outDate.put("success",true);
         }
         outDate.put("shopId",shopId);
+        outDate.put("imageMaxLength",IMAGEMAXCOUNT);
         return  outDate;
     }
 

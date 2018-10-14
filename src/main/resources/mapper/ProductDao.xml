@@ -43,8 +43,10 @@
             t1.priority as priority
         FROM
             tb_product_category t1
+        <if test="productId neq null">
         WHERE
             t1.product_id=#{productId}
+        </if>
         ORDER BY
             t1.priority DESC
     </select>
@@ -132,4 +134,20 @@
         AND
             enable_status='0'
     </select>
+
+    <update id="updateProduct" >
+        UPDATE
+          tb_product
+        SET
+          product_name = #{product.productName},
+          product_desc = #{product.productDesc},
+          <!--缩略图 -->
+          img_addr = #{product.imgAddr},
+          normal_price =  #{product.normalPrice},
+          promotion_price = #{product.promotionPrice},
+          priority = #{product.priority},
+          last_edit_time = now(),
+          enable_status = '1',
+          product_category_id = #{product.productCategory.productionCategoryId},
+    </update>
 </mapper>
