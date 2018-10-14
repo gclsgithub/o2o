@@ -45,7 +45,7 @@ public class ProductManageController {
     /**
      * 初期化方法 查询商品信息
      * @param request
-     * @param productId
+     * @param productId 商品信息
      * @return
      */
     @RequestMapping(value = "initproductedit" ,method = {RequestMethod.GET})

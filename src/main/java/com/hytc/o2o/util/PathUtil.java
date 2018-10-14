@@ -1,15 +1,20 @@
 package com.hytc.o2o.util;
 
+
 public class PathUtil {
     private static String seperator =System.getProperty("file.separator");
+
+    private static String WINDOWSBASEDPATH = PropertiesUtil.getPropertiesKey("pathUtil.windowsBasedPath");
+
+    private static String LINUXSBASEDPATH = PropertiesUtil.getPropertiesKey("pathUtil.linuxBasedPath");
 
     public static String getImgBasePth(){
         String os = System.getProperty("os.name");
         String basePath="";
         if (os.toLowerCase().startsWith("win")){
-            basePath = "D:/project/image/";
+            basePath = WINDOWSBASEDPATH;
         }else{
-            basePath = "/Users/gcl/Documents/";
+            basePath = LINUXSBASEDPATH;
         }
         basePath = basePath.replace("/",seperator);
 

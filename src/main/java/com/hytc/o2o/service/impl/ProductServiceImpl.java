@@ -24,6 +24,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -131,8 +132,9 @@ public class ProductServiceImpl implements ProductService {
         //遍历图片，并添加到productImgs
         for (ImageHolder imageHolder:productImgList){
 
+            String fileName =  imageHolder.getImageName();
             //非压缩的方式生成图片
-            String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,imageHolder.getImageName());
+            String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
             ProductImg img = new ProductImg();
             img.setImgAddr(imgAddr);
             img.setProductId(product.getProductId());
@@ -159,7 +161,9 @@ public class ProductServiceImpl implements ProductService {
      */
     private void addThumbnail(Product product, ImageHolder thumnail) {
         String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
-        String thumnnailAddr = ImageUtil.generateThumbnail(thumnail.getImage(),dest,thumnail.getImageName());
+
+        String fileName = thumnail.getImageName();
+        String thumnnailAddr = ImageUtil.generateThumbnail(thumnail.getImage(),dest,fileName);
         product.setImgAddr(thumnnailAddr);
     }
 }

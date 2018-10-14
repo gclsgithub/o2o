@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
@@ -27,9 +28,9 @@ public class ImageUtil {
      */
     public static String generateThumbnail(InputStream imageFile, String targetAddr,String fileName){
 
-        String extend = getFileExtrend(fileName);
-        makeDirPath(targetAddr);
-        String relativeAddr = targetAddr+fileName+extend;
+        String  relativeAddr = makeDirPath(targetAddr);
+        fileName = UUID.randomUUID()+fileName;
+        relativeAddr += (fileName);
         File dest = new File(PathUtil.getImgBasePth()+relativeAddr);
         try{
             Thumbnails.of(imageFile)
@@ -50,9 +51,9 @@ public class ImageUtil {
      */
     public static String generateNormalThumbnail(InputStream imageFile, String targetAddr,String fileName){
 
-        String extend = getFileExtrend(fileName);
-        makeDirPath(targetAddr);
-        String relativeAddr = targetAddr+fileName+extend;
+        String  relativeAddr = makeDirPath(targetAddr);
+        fileName = UUID.randomUUID()+fileName;
+        relativeAddr += (fileName);
         File dest = new File(PathUtil.getImgBasePth()+relativeAddr);
         try{
             Thumbnails.of(imageFile)
@@ -68,14 +69,24 @@ public class ImageUtil {
      * 判断文件是否存在不存在的话就创建文件
      * @param targetAddr
      */
-    private static void makeDirPath(String targetAddr) {
+    private static String makeDirPath(String targetAddr) {
         String realFileName = PathUtil.getImgBasePth()+targetAddr;
+
+
+        int year = LocalDateTime.now().getYear();
+
+        int month = LocalDateTime.now().getMonthValue();
+
+        realFileName +=year+month;
+
         File file =new File(realFileName);
 
         //迭代创建文件夹
         if (!file.exists()){
             file.mkdirs();
         }
+
+        return targetAddr;
     }
 
     /**
