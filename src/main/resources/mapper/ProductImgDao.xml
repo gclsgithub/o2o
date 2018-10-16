@@ -33,15 +33,25 @@
             shop_categoery_id=#{productId}
     </delete>
 
+    <update id="updateProductCategoery" >
+        UPDATE
+        tb_product_img
+        SET
+            img_addr=#{productImg.imgAddr}
+        WHERE
+            product_img_id=#{productImg.productImgId}
+        AND
+            product_id=#{productImg.productId}
+    </update>
+
     <select id="searchProductImg" resultType="com.hytc.o2o.entity.ProductImg">
 
         SELECT
             product_img_id AS productImgId,
+            img_addr AS imgAddr
         FROM
             tb_product_img
         WHERE
             product_id = #{productId}
-
-
     </select>
 </mapper>

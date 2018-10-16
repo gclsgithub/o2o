@@ -34,4 +34,10 @@ public interface ProductService {
      * @throws ProductRuntimeException
      */
     ProductExcution addProduct(Product product, ImageHolder thumnail, List<ImageHolder> productImgList)throws ProductRuntimeException;
+
+    /**
+     * 删除商品信息
+     * @param productId
+     */
+    void delProduct(String productId);
 }

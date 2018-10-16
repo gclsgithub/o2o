@@ -24,6 +24,7 @@ public class ProductDaoTest extends BaseTest {
     @Test
     public void TestAinsertPrdouctIntoDb(){
 
+
        /* List<Product> products = new ArrayList<>();
         Shop shop = new Shop();
         shop.setShopId(2L);

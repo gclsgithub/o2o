@@ -31,6 +31,7 @@ $(function() {
         }
 
         var formData = new FormData();
+
         var product = {};
 
         product.productName = $('#product-name').val();
@@ -65,6 +66,9 @@ $(function() {
 
         formData.append("verifyCodeActual",verifyCodeActual);
 
+        productId = $('#productId').val();
+        formData.append("productId",productId);
+
         $.ajax({
             url:"http://localhost:8081/productmanage/addproduct",
             type:'POST',
@@ -73,18 +77,17 @@ $(function() {
             contentType:false,
             processData:false,
             success:function (output) {
+                $('#productId').val(output.productId);
                 if(output.success){
                     $.toast('添加成功');
                     $('#captcha_img').click();
                 }else {
                     $.toast('添加失败');
+                    $.toast(output.errMsg);
                     $('#captcha_img').click();
                 }
             }
         })
-
-
-
 
     })
 
@@ -96,7 +99,7 @@ $(function() {
             success:function (output) {
 
                 $('#img_detial_max_length').val(output.imageMaxLength);
-
+                $('#productId').val(output.productId);
                 if(output.success){
                     var product = output.Product;
                     var productList = output.ProductList;

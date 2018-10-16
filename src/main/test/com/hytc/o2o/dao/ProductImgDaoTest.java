@@ -22,23 +22,30 @@ public class ProductImgDaoTest extends BaseTest {
 
     @Test
     public void TestABatchInsertImg(){
-        List<ProductImg> productImgList = new ArrayList<>();
-        ProductImg productImg = new ProductImg();
-        productImg.setCreateTime(LocalDateTime.now());
-        productImg.setImgAddr("wwwww");
-        productImg.setImgDesc("双");
-        productImg.setPriority(10);
-        productImg.setProductId(1L);
-        ProductImg productImg2 = new ProductImg();
-        productImg2.setCreateTime(LocalDateTime.now());
-        productImg2.setImgAddr("wwwww");
-        productImg2.setImgDesc("双");
-        productImg2.setPriority(10);
-        productImg2.setProductId(1L);
-        productImgList.add(productImg);
-        productImgList.add(productImg2);
-        Integer count  = productImgDao.batchInsertProductImg(productImgList);
-        assertEquals(Integer.valueOf(2),count);
+        ProductImg  img = new ProductImg();
+        img.setImgAddr("sadasd");
+        img.setProductId(12L);
+        img.setCreateTime(LocalDateTime.now());
+        img.setProductImgId(21L);
+        productImgDao.updateProductCategoery(img);
+
+//        List<ProductImg> productImgList = new ArrayList<>();
+//        ProductImg productImg = new ProductImg();
+//        productImg.setCreateTime(LocalDateTime.now());
+//        productImg.setImgAddr("wwwww");
+//        productImg.setImgDesc("双");
+//        productImg.setPriority(10);
+//        productImg.setProductId(1L);
+//        ProductImg productImg2 = new ProductImg();
+//        productImg2.setCreateTime(LocalDateTime.now());
+//        productImg2.setImgAddr("wwwww");
+//        productImg2.setImgDesc("双");
+//        productImg2.setPriority(10);
+//        productImg2.setProductId(1L);
+//        productImgList.add(productImg);
+//        productImgList.add(productImg2);
+//        Integer count  = productImgDao.batchInsertProductImg(productImgList);
+//        assertEquals(Integer.valueOf(2),count);
     }
 
 /*    @Test

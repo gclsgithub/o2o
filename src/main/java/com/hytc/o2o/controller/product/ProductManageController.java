@@ -14,6 +14,8 @@ import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -53,6 +57,7 @@ public class ProductManageController {
 
         Map<String,Object> outDate = new HashMap<>();
 
+        outDate.put("productId",productId);
         String shopId = (String) request.getSession().getAttribute("shopId");
         ProductAndCategoeryDto serviceOutput = null;
         if (!StringUtils.isEmpty(shopId)) {
@@ -143,6 +148,9 @@ public class ProductManageController {
     public Map<String,Object> addProduct(HttpServletRequest request){
         Map<String,Object> modelMap = new HashMap<>();
 
+        String productId = HttpRequestUtil.getString(request,"productId");
+
+        modelMap.put("productId",productId);
         //验证码校验
         if (!CodeUtil.cheackVerfityCode(request)){
             modelMap.put("success",false);
@@ -241,5 +249,6 @@ public class ProductManageController {
         }
         return modelMap;
     }
+
 
 }

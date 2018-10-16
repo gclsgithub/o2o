@@ -39,6 +39,16 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductImgDao productImgDao;
 
+    /**
+     * 逻辑商品信息
+     * 逻辑删除
+     * @param productId
+     */
+    @Override
+    public void delProduct(String productId) {
+        productDao.delProductByProductId(productId);
+    }
+
     @Override
     public List<ProductCategory> getProductCategoeryList() {
 
@@ -83,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
             product.setLastEditTime(LocalDateTime.now());
 
             //设置商品属性为上架商品
-            product.setEnableStatus(1);
+            product.setEnableStatus(0);
 
             //判断是否存在缩略图，如果存在的话处理文件流
             if(thumnail!=null){
@@ -100,21 +110,42 @@ public class ProductServiceImpl implements ProductService {
 
                     String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
 
+                    boolean flag = Boolean.FALSE;
                     //遍历图片，并添加到productImgs
                     for (ImageHolder imageHolder:productImgList){
 
                         String fileName =  imageHolder.getImageName();
 
-                        //非压缩的方式生成图片
-                        String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
 
+
+                        //查询是否有
                         List<ProductImg> productImgSearchList = productImgDao.searchProductImg(product.getProductId());
-                        for (ProductImg img:productImgSearchList){
-                            img.setImgAddr(imgAddr);
-                            img.setProductId(product.getProductId());
-                            img.setCreateTime(LocalDateTime.now());
-                            productImgDao.updateProductCategoery(img);
+
+                        if (CollectionUtils.isEmpty(productImgSearchList)){
+                            addProductImgList(product,productImgList);
+                            break;
+                        }else{
+
+                            //非压缩的方式生成图片
+                            ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
+
+                            flag = Boolean.TRUE;
+                            for (ProductImg img:productImgSearchList){
+
+                                String file = null;
+
+                                file = PathUtil.getImgBasePth() + img.getImgAddr();
+
+                                //删除的路径
+                                ImageUtil.delImgFileOrPath(file);
+
+                                img.setImgAddr(file);
+                                img.setProductId(product.getProductId());
+                                img.setCreateTime(LocalDateTime.now());
+                                productImgDao.updateProductCategoery(img);
+                            }
                         }
+
                     }
                 }catch (Exception ex){
                     throw new ProductRuntimeException("商品更新失败");
@@ -142,8 +173,9 @@ public class ProductServiceImpl implements ProductService {
             //失败的时候
             return new ProductExcution(ProductStateEnum.EMPTY);
         }
+
         //失败的时候
-        return new ProductExcution(ProductStateEnum.EMPTY);
+        return new ProductExcution(ProductStateEnum.SUCCESS,product);
     }
 
     /**

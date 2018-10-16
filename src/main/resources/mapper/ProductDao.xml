@@ -153,16 +153,12 @@
             product_id = #{product.productId}
     </update>
 
-    <update id="updateProductCategoery" >
+    <update id="delProductByProductId">
         UPDATE
-            tb_product_img
+          tb_product
         SET
-            img_addr = #{productImg.product_category_name}
+          enable_status = '1'
         WHERE
-            product_img_id = #{productImg.productImgId}
-        AND
-            product_id = #{productImg.productId}
-
-
+          product_id=#{productId}
     </update>
 </mapper>

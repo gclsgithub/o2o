@@ -48,4 +48,10 @@ public interface ProductDao {
      * @return
      */
     int updateProduct(@Param("product") Product product);
+
+    /**
+     * 逻辑删除
+     * @param productId
+     */
+    int delProductByProductId(@Param("productId") String productId);
 }

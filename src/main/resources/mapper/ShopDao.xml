@@ -206,6 +206,7 @@
             tb_product t1
         WHERE
             t1.shop_id=#{shopId}
-
+        AND
+            t1.enable_status='0'
     </select>
 </mapper>
