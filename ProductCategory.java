@@ -24,6 +24,16 @@ public class ProductCategory implements Serializable {
 
     private Date createTime;
 
+    private String enableStatus;
+
+    public String getEnableStatus() {
+        return enableStatus;
+    }
+
+    public void setEnableStatus(String enableStatus) {
+        this.enableStatus = enableStatus;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
