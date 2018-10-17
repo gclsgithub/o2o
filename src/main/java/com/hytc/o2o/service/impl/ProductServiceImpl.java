@@ -45,8 +45,8 @@ public class ProductServiceImpl implements ProductService {
      * @param productId
      */
     @Override
-    public void delProduct(String productId) {
-        productDao.delProductByProductId(productId);
+    public void delProduct(String productId,String status) {
+        productDao.delProductByProductId(productId,status);
     }
 
     @Override

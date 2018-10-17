@@ -39,5 +39,5 @@ public interface ProductService {
      * 删除商品信息
      * @param productId
      */
-    void delProduct(String productId);
+    void delProduct(String productId,String status);
 }

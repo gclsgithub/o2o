@@ -83,7 +83,9 @@ $(function() {
                     $('#captcha_img').click();
                 }else {
                     $.toast('添加失败');
-                    $.toast(output.errMsg);
+                    if (output.errMsg != null && output.errMsg != '') {
+                        $.toast(output.errMsg);
+                    }
                     $('#captcha_img').click();
                 }
             }

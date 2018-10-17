@@ -53,5 +53,5 @@ public interface ProductDao {
      * 逻辑删除
      * @param productId
      */
-    int delProductByProductId(@Param("productId") String productId);
+    int delProductByProductId(@Param("productId") String productId,@Param("status")String status);
 }

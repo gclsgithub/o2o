@@ -36,7 +36,7 @@ public class ShopManageController {
         Map<String, Object> modelMap = new HashMap<>();
         Integer shopId = HttpRequestUtil.getInt(request,"shopId");
         if (shopId == -1 ){
-           String sessionShopId = (String) request.getSession().getAttribute("shopId");
+            String sessionShopId = (String) request.getSession().getAttribute("shopId");
             shopId = Integer.valueOf(sessionShopId);
         }
         List<Product> productList = shopService.showShopProductionList(shopId);

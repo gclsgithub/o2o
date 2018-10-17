@@ -201,12 +201,13 @@
         SELECT
             t1.product_id,
             t1.product_name,
-            t1.priority
+            t1.priority,
+            t1.enable_status
         FROM
             tb_product t1
         WHERE
             t1.shop_id=#{shopId}
-        AND
-            t1.enable_status='0'
+        ORDER BY
+            t1.enable_status,t1.priority ASC
     </select>
 </mapper>

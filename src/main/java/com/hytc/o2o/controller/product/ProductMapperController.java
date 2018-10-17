@@ -31,13 +31,15 @@ public class ProductMapperController {
     public String  jumpProductAdd(){return  "/shop/productedit";}
 
     @RequestMapping(value = "/delproduct" ,method = {RequestMethod.GET})
-    public String  redictProductDel(HttpServletRequest request, @RequestParam("productId")String productId){
+    public String  redictProductDel(HttpServletRequest request,
+                                    @RequestParam("productId")String productId,
+                                    @RequestParam("enableStatus")String enableStatus){
 
 
         String shopId = (String) request.getSession().getAttribute("shopId");
 
         //逻辑删除
-        productService.delProduct(productId);
+        productService.delProduct(productId,enableStatus);
 
         return  "redirect:/shop/productmanage";
     }

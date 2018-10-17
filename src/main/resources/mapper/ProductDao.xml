@@ -126,13 +126,12 @@
             promotion_price,
             priority,
             product_category_id,
-            shop_id
+            shop_id,
+            enable_status
         FROM
             tb_product
         WHERE
             product_id=#{productId}
-        AND
-            enable_status='0'
     </select>
 
     <update id="updateProduct" >
@@ -157,7 +156,7 @@
         UPDATE
           tb_product
         SET
-          enable_status = '1'
+          enable_status=#{status}
         WHERE
           product_id=#{productId}
     </update>
