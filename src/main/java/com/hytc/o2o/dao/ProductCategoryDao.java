@@ -18,10 +18,15 @@ public interface ProductCategoryDao {
 
     /**
      * 物理删除类别
-     * @param productId
+     * @param productCategoeryId
      */
-    void delProductCategoeryByProductId(@Param("productId") Long productId);
+    void delProductCategoeryByProductCategoeryId(@Param("productCategoeryId") Long productCategoeryId);
 
 
-
+    /**
+     * 根据Id查询categ详细信息
+     * @param productionCategoryId
+     * @return
+     */
+    ProductCategory searchProductCategoeryIdByProductCategoeryId(@Param("productionCategoryId")Long productionCategoryId);
 }

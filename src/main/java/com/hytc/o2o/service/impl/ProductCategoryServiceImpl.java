@@ -40,15 +40,22 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     @Transactional
     @Override
-    public ProductCategoryExcution delProductCategoery(Long productId) {
+    public ProductCategoryExcution delProductCategoery(Long productCategoeryId) {
         ProductCategoryExcution productCategoryExcution = new ProductCategoryExcution();
         try {
-            productCategoryDao.delProductCategoeryByProductId(productId);
+            //逻辑删除
+            productCategoryDao.delProductCategoeryByProductCategoeryId(productCategoeryId);
         }catch (Exception e){
             productCategoryExcution.setProductCategoryEnum(ProductCategoryEnum.DELETE_ERROR);
             return productCategoryExcution;
         }
         productCategoryExcution.setProductCategoryEnum(ProductCategoryEnum.SUCCESS);
         return productCategoryExcution;
+    }
+
+    @Override
+    public ProductCategory searchProductCategoeryByProductCategoeryId(Long productionCategoryId) {
+
+        return productCategoryDao.searchProductCategoeryIdByProductCategoeryId(productionCategoryId);
     }
 }

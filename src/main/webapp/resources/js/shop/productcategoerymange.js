@@ -11,6 +11,8 @@ $(function() {
 	function initproduction() {
     	var initUrl="/productmanage/productinit"+shopId;
     	var initHtml="";
+    	//初期化情况
+        $('.category-wrap').html(initHtml);
     	$.getJSON(initUrl,function (data) {
 			if(data.success){
                 data.productCategoeryList.map(function(item ,index){
@@ -70,11 +72,10 @@ $(function() {
             contentType:'application/json',
             success:function (data) {
                 if(data.success){
-                    //$.total('提交成功');
+                    $.toast('提交成功');
                     initproduction();
                 } else{
-                   // $.total('提交失败')
-                    alert("提交失败")
+                    $.toast('提交失败');
                 }
             }
         })
@@ -92,10 +93,10 @@ $(function() {
                 contentType:'application/json',
                 success : function(data) {
                     if (data.success) {
-                        alert("删除成功");
+                        $.toast('删除成功');
                         initproduction();
                     } else {
-                        alert("删除失败")
+                        $.toast('删除失败');
                     }
                 }
             });

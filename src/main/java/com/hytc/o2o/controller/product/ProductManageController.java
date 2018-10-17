@@ -46,6 +46,18 @@ public class ProductManageController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
+
+    @PostMapping("showPeoductCategoey")
+    public Map<String,Object> showPeoductCategoey(@RequestBody ProductCategory productCategory){
+        Map<String,Object> dataMap = new HashMap<>();
+        Long productionCategoryId = productCategory.getProductionCategoryId();
+        ProductCategory outPut = productCategoryService.searchProductCategoeryByProductCategoeryId(productionCategoryId);
+        dataMap.put("product",outPut);
+        dataMap.put("success",true);
+
+        return dataMap;
+    }
+
     /**
      * 初期化方法 查询商品信息
      * @param request

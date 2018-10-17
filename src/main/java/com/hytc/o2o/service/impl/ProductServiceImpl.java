@@ -46,6 +46,11 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public void delProduct(String productId,String status) {
+        if ("1".equals(status)){
+            status = "0";
+        }else if ("0".equals(status)){
+            status = "1";
+        }
         productDao.delProductByProductId(productId,status);
     }
 

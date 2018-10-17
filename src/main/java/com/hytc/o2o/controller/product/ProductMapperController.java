@@ -30,6 +30,11 @@ public class ProductMapperController {
     @RequestMapping(value = "/productaddmapper" ,method = {RequestMethod.GET})
     public String  jumpProductAdd(){return  "/shop/productedit";}
 
+    @RequestMapping(value = "/editproductcategoery",method = {RequestMethod.GET})
+    public String jumProductCategoery(){
+        return "/shop/productCateoery";
+    }
+
     @RequestMapping(value = "/delproduct" ,method = {RequestMethod.GET})
     public String  redictProductDel(HttpServletRequest request,
                                     @RequestParam("productId")String productId,

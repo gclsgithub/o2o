@@ -43,12 +43,14 @@
             t1.priority as priority
         FROM
             tb_product_category t1
-        <if test="productId neq null">
         WHERE
+        <if test="productId neq null">
             t1.product_id=#{productId}
+        AND
         </if>
+            t1.enable_status='0'
         ORDER BY
-            t1.priority DESC
+            t1.priority ASC
     </select>
 
     <insert id="insertPrdouctIntoDb"  useGeneratedKeys="true" keyProperty="product.productId" keyColumn="product_id" >

@@ -19,4 +19,11 @@ public interface ProductCategoryService {
      * @return
      */
     ProductCategoryExcution delProductCategoery(Long productId);
+
+    /**
+     * 查询Categoery的详细信息
+     * @param productionCategoryId
+     * @return
+     */
+    ProductCategory searchProductCategoeryByProductCategoeryId(Long productionCategoryId);
 }

@@ -12,7 +12,8 @@
               priority,
               create_time,
               last_edit_time,
-              parent_id
+              parent_id,
+              enable_status
               )
           VALUES
               <foreach collection="list" item="productCategory" index="index" separator=",">
@@ -22,16 +23,29 @@
                       #{productCategory.priority},
                       NOW(),
                       NOW(),
-                      #{productCategory.shopId}
+                      #{productCategory.shopId},
+                      '0'
                   )
               </foreach>
     </insert>
 
-    <delete id="delProductCategoeryByProductId" >
-        DELETE
-        FROM
-            tb_shop_categoery
+    <update id="delProductCategoeryByProductCategoeryId" >
+        UPDATE
+            tb_product_category
+        SET
+            enable_status='1'
         WHERE
-            shop_categoery_id=#{productId}
-    </delete>
+            product_category_id=#{productCategoeryId}
+    </update>
+
+    <select id="searchProductCategoeryIdByProductCategoeryId" resultType="com.hytc.o2o.entity.ProductCategory">
+        SELECT
+            product_category_name AS productionCategoryName,
+            priority
+        FROM
+            tb_product_category
+        WHERE
+            product_category_id=#{productionCategoryId}
+
+    </select>
 </mapper>
