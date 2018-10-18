@@ -7,7 +7,9 @@ $(function() {
         initproduction();
     }
     var addUrl = "/productmanage/insertlist"+shopId;
-    var deleteUrl = "/productmanage/delproductcategoery"
+    var deleteUrl = "/productmanage/delproductcategoery";
+
+
 	function initproduction() {
     	var initUrl="/productmanage/productinit"+shopId;
     	var initHtml="";
@@ -20,7 +22,7 @@ $(function() {
                         '<div class="col-20">'+item.productionCategoryName+'</div>'+
                         '<div class="col-30">'+item.priority+'</div>'+
                         '<div class="col-50">'+
-                        '<a href='+"/productmapper/editproductcategoery?productId="+item.productionCategoryId+'>编辑</a>'+'&nbsp&nbsp&nbsp&nbsp'+
+                        '<a href='+"/productmapper/editproductcategoery?productionCategoryId="+item.productionCategoryId+'>编辑</a>'+'&nbsp&nbsp&nbsp&nbsp'+
                         '<a href="javascript:void(0);" class="delete" onclick="js_delNow(this)" data-id="'+item.productionCategoryId+'" >删除</a>'+'&nbsp&nbsp&nbsp&nbsp'+
                         '<a href='+"/productmanage/showproductcategoery?productId="+item.productionCategoryId+'>预览</a>'+'&nbsp&nbsp&nbsp&nbsp'+
                         '<input type="hidden" name="productId" value="item.productionCategoryId" />'+

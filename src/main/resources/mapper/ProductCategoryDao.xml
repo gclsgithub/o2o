@@ -6,24 +6,18 @@
 
     <insert id="insertProductCategoryList" parameterType="java.util.List">
           INSERT INTO
-              tb_shop_categoery(
-              shop_categoery_name,
-              shop_categoery_img,
-              priority,
-              create_time,
-              last_edit_time,
-              parent_id,
-              enable_status
+              tb_product_category(
+                  product_category_name,
+                  priority,
+                  create_time,
+                  enable_status
               )
           VALUES
               <foreach collection="list" item="productCategory" index="index" separator=",">
                   (
                       #{productCategory.productionCategoryName},
-                      '',
                       #{productCategory.priority},
                       NOW(),
-                      NOW(),
-                      #{productCategory.shopId},
                       '0'
                   )
               </foreach>
@@ -41,7 +35,9 @@
     <select id="searchProductCategoeryIdByProductCategoeryId" resultType="com.hytc.o2o.entity.ProductCategory">
         SELECT
             product_category_name AS productionCategoryName,
-            priority
+            priority,
+            product_category_id AS productionCategoryId,
+            enable_status AS enableStatus
         FROM
             tb_product_category
         WHERE

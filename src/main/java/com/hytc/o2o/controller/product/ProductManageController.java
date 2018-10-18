@@ -47,11 +47,18 @@ public class ProductManageController {
     private ProductCategoryService productCategoryService;
 
 
+    /**
+     * 搜索商品分类信息
+     * @param request
+     * @return
+     */
     @PostMapping("showPeoductCategoey")
-    public Map<String,Object> showPeoductCategoey(@RequestBody ProductCategory productCategory){
+    public Map<String,Object> showPeoductCategoey(HttpServletRequest request){
         Map<String,Object> dataMap = new HashMap<>();
-        Long productionCategoryId = productCategory.getProductionCategoryId();
-        ProductCategory outPut = productCategoryService.searchProductCategoeryByProductCategoeryId(productionCategoryId);
+
+        String productCategoryId = HttpRequestUtil.getString(request,"productCategoryId");
+
+        ProductCategory outPut = productCategoryService.searchProductCategoeryByProductCategoeryId(Long.valueOf(productCategoryId));
         dataMap.put("product",outPut);
         dataMap.put("success",true);
 

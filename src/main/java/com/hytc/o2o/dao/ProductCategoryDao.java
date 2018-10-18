@@ -14,7 +14,7 @@ public interface ProductCategoryDao {
      * @param productCategoryList
      * @return
      */
-    void insertProductCategoryList(List<ProductCategory> productCategoryList);
+    void insertProductCategoryList(@Param("list") List<ProductCategory> productCategoryList);
 
     /**
      * 物理删除类别

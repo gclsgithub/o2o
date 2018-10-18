@@ -69,8 +69,8 @@ function changeStatus(ahref) {
             }
         }
         var href = "http://localhost:8081/productmapper/delproduct?productId="+productId+"&enableStatus="+enableStatus;
-
         window.location.href=href;
+        $.toast('操作成功');
     })
 }
 

@@ -44,10 +44,6 @@
         FROM
             tb_product_category t1
         WHERE
-        <if test="productId neq null">
-            t1.product_id=#{productId}
-        AND
-        </if>
             t1.enable_status='0'
         ORDER BY
             t1.priority ASC

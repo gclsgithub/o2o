@@ -9,6 +9,7 @@ import com.hytc.o2o.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategoryExcution batchAndProductCategoery(List<ProductCategory> productCategoryList) {
         ProductCategoryExcution productCategoryExcution = new ProductCategoryExcution();
         try {
+            String productId = null;
+
+            if (!CollectionUtils.isEmpty(productCategoryList)){
+                productId = productCategoryList.get(0).getProductId();
+            }
             productCategoryDao.insertProductCategoryList(productCategoryList);
         }catch (Exception ex1){
             productCategoryExcution.setProductCategoryEnum(ProductCategoryEnum.INSERT_ERROR);
@@ -34,8 +40,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     /**
-     *
-     * @param productId
+     * 逻辑删除某个分类
+     * @param productCategoeryId
      * @return
      */
     @Transactional
@@ -53,6 +59,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         return productCategoryExcution;
     }
 
+    /**
+     * 搜索一个分类信息
+     * @param productionCategoryId
+     * @return
+     */
     @Override
     public ProductCategory searchProductCategoeryByProductCategoeryId(Long productionCategoryId) {
 
