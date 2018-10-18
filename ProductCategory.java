@@ -26,6 +26,16 @@ public class ProductCategory implements Serializable {
 
     private String enableStatus;
 
+    private String productId;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
     public String getEnableStatus() {
         return enableStatus;
     }
