@@ -13,8 +13,42 @@
     <link rel="stylesheet" href="http://localhost:8081/resources/css/shop/productcategorymanage.css">
 </head>
 <body>
-
-
+    <header class="bar bar-nav">
+        <h1 class="title">商品分类管理详细</h1>
+    </header>
+    <div class="content">
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-title label">目录名</div>
+                    <div class="item-input">
+                        <input type="text" id="productionCategoryName" placeholder="目录名">
+                    </div>
+                </li>
+                <li>
+                    <div class="item-title label">优先级</div>
+                    <div class="item-input">
+                        <input type="number" id="priority" placeholder="优先级">
+                    </div>
+                </li>
+                <li>
+                    <div class="item-input">
+                        <input type="hidden" id="productionCategoryId" placeholder="优先级">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-50">
+                    <a class="button button-big button-fill button-danger" id="back">返回</a>
+                </div>
+                <div class="col-50">
+                    <a href="javascript:void(0)" class="button button-big button-fill" id="submit">提交</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>

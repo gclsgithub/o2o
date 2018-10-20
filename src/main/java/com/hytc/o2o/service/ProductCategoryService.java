@@ -26,4 +26,11 @@ public interface ProductCategoryService {
      * @return
      */
     ProductCategory searchProductCategoeryByProductCategoeryId(Long productionCategoryId);
+
+    /**
+     * 更新商品类别
+     * @param productCategory
+     * @return
+     */
+    void updateProductCategoery(ProductCategory productCategory);
 }

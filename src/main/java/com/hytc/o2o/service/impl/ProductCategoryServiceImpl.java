@@ -5,6 +5,7 @@ import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.dao.ProductCategoryDao;
 import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.enums.ProductCategoryEnum;
+import com.hytc.o2o.exceptions.ProductRuntimeException;
 import com.hytc.o2o.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,19 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategory searchProductCategoeryByProductCategoeryId(Long productionCategoryId) {
 
         return productCategoryDao.searchProductCategoeryIdByProductCategoeryId(productionCategoryId);
+    }
+
+    /**
+     * 更新商品分类信息
+     * @param productCategory
+     * @return
+     */
+    @Override
+    public void updateProductCategoery(ProductCategory productCategory) {
+        Integer count = productCategoryDao.updateProductCategoery(productCategory);
+
+        if ( count < 0 ){
+            throw new ProductRuntimeException("更新失败");
+        }
     }
 }

@@ -46,6 +46,22 @@ public class ProductManageController {
     @Autowired
     private ProductCategoryService productCategoryService;
 
+    @RequestMapping("updateProductCategoery")
+    public Map<String,Object> updateProductCategoery(@RequestBody ProductCategory productCategory){
+
+        Map<String,Object> dataMap = new HashMap<>();
+        try {
+            productCategoryService.updateProductCategoery(productCategory);
+            dataMap.put("productCategory",productCategory);
+            dataMap.put("success",true);
+        }catch (ProductRuntimeException ex){
+            dataMap.put("message",ex.getMessage());
+        }
+
+
+        return dataMap;
+    }
+
 
     /**
      * 搜索商品分类信息

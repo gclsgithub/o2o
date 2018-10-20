@@ -4,6 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hytc.o2o.dao.ProductCategoryDao">
 
+    <update id="updateProductCategoery">
+        UPDATE
+            tb_product_category
+        SET
+            product_category_name=#{productCategory.productionCategoryName},
+            priority=#{productCategory.priority}
+        WHERE
+            product_category_id=#{productCategory.productionCategoryId}
+    </update>
+
     <insert id="insertProductCategoryList" parameterType="java.util.List">
           INSERT INTO
               tb_product_category(

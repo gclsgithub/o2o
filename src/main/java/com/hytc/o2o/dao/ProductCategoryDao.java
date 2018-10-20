@@ -29,4 +29,10 @@ public interface ProductCategoryDao {
      * @return
      */
     ProductCategory searchProductCategoeryIdByProductCategoeryId(@Param("productionCategoryId")Long productionCategoryId);
+
+    /**
+     * 更新商品分类信息
+     * @param productCategory
+     */
+    Integer updateProductCategoery(@Param("productCategory") ProductCategory productCategory);
 }
