@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * 商品
+ *
  * @author hytc
  */
 public class Product {
