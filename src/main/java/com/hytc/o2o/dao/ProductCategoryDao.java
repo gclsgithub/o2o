@@ -11,6 +11,7 @@ public interface ProductCategoryDao {
 
     /**
      * 一扩插入
+     *
      * @param productCategoryList
      * @return
      */
@@ -18,6 +19,7 @@ public interface ProductCategoryDao {
 
     /**
      * 物理删除类别
+     *
      * @param productCategoeryId
      */
     void delProductCategoeryByProductCategoeryId(@Param("productCategoeryId") Long productCategoeryId);
@@ -25,13 +27,15 @@ public interface ProductCategoryDao {
 
     /**
      * 根据Id查询categ详细信息
+     *
      * @param productionCategoryId
      * @return
      */
-    ProductCategory searchProductCategoeryIdByProductCategoeryId(@Param("productionCategoryId")Long productionCategoryId);
+    ProductCategory searchProductCategoeryIdByProductCategoeryId(@Param("productionCategoryId") Long productionCategoryId);
 
     /**
      * 更新商品分类信息
+     *
      * @param productCategory
      */
     Integer updateProductCategoery(@Param("productCategory") ProductCategory productCategory);

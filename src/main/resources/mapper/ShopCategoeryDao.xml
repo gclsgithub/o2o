@@ -5,24 +5,24 @@
 <mapper namespace="com.hytc.o2o.dao.ShopCategoeryDao">
     <select id="findAlls" resultType="com.hytc.o2o.entity.ShopCategoery">
         SELECT
-          shop_categoery_id,
-          shop_categoery_name,
-          shop_categoery_desc,
-          shop_categoery_img,
-          priority,
-          create_time,
-          last_edit_time,
-          parent_id
+        shop_categoery_id,
+        shop_categoery_name,
+        shop_categoery_desc,
+        shop_categoery_img,
+        priority,
+        create_time,
+        last_edit_time,
+        parent_id
         FROM tb_shop_categoery
         <where>
 
-            <if test="shopCategoeryCondition.parentId!=null" >
-                 parent_id=#{shopCategoeryCondition.parentId}
+            <if test="shopCategoeryCondition.parentId!=null">
+                parent_id=#{shopCategoeryCondition.parentId}
             </if>
-            and  shop_categoery_id != '-1'
+            and shop_categoery_id != '-1'
         </where>
         ORDER BY
-          priority ASC
+        priority ASC
     </select>
 
     <insert id="insertIntoShopCategoery" parameterType="java.util.List">
@@ -48,5 +48,17 @@
         </foreach>
     </insert>
 
+    <select id="queryShopCategoeryById" resultType="com.hytc.o2o.entity.ShopCategoery">
+        SELECT
+            shop_categoery_id AS shopCategoeryId,
+            shop_categoery_name AS shopCategoeryName,
+            shop_categoery_desc AS shopCategoeryDesc,
+            shop_categoery_img AS shopCateGoeryImg,
+            priority AS priority
+        FROM
+            tb_shop_categoery
+        WHERE
+            parent_id=#{parentId}
+    </select>
 
 </mapper>

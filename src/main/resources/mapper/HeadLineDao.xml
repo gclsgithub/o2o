@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 查询头条信息 -->
+<mapper namespace="com.hytc.o2o.dao.HeadLineDao">
+    
+    <select id="queryHeadLineNotDel" resultType="com.hytc.o2o.entity.HeadLine">
+        SELECT
+            line_id,
+            line_name,
+            line_link,
+            line_img,
+            priority,
+            enable_status
+        FROM
+            tb_head_line
+        <if test="headLine neq null and headLine.enableStatus neq null">
+        WHERE
+            enable_status=#{headLine.enableStatus}
+        </if>
+        ORDER BY
+        priority DESC
+    </select>
+
+    <select id="queryHeadLineById" resultType="com.hytc.o2o.entity.HeadLine">
+        SELECT
+            line_id,
+            line_name,
+            line_link,
+            line_img,
+            priority,
+            enable_status
+        FROM
+            tb_head_line
+        WHERE
+            line_id=#{headLine.lineId}
+    </select>
+
+    <select id="queryHeadLineByIds" resultType="com.hytc.o2o.entity.HeadLine">
+        SELECT
+            line_id,
+            line_name,
+            line_link,
+            line_img,
+            priority,
+            enable_status
+        FROM
+            tb_head_line
+        WHERE
+            line_id IN 
+            <foreach collection="list" item="lineId" open="(" separator="," close=")">
+                #{lineId}
+            </foreach>
+    </select>
+
+</mapper>

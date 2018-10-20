@@ -4,6 +4,7 @@ import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.Shop;
+import com.hytc.o2o.entity.ShopCategoery;
 
 import java.io.InputStream;
 import java.util.List;
@@ -52,4 +53,10 @@ public interface ShopService {
      * @return 商品List
      */
     List<Product> showShopProductionList(Integer shopId);
+
+    /**
+     * 获取所有以及商品分类的表
+     * @return
+     */
+    List<ShopCategoery> getShopCategoeryList();
 }

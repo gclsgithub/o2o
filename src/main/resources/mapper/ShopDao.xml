@@ -55,9 +55,9 @@
 
     <select id="queryShopCount" resultType="java.lang.Integer">
         SELECT
-          count(1)
+        count(1)
         FROM
-          tb_shop ts
+        tb_shop ts
         <where>
             <if test="ShopCondition.shopName!=null">
                 ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
@@ -102,46 +102,45 @@
                 </if>
             </if>
             <if test="ShopCondition.area!=null">
-              <if test="ShopCondition.area.areaId!=null">
-                  AND ts.area_id = #{ShopCondition.area.areaId}
-              </if>
+                <if test="ShopCondition.area.areaId!=null">
+                    AND ts.area_id = #{ShopCondition.area.areaId}
+                </if>
             </if>
             <if test="ShopCondition.owner!=null">
-              <if test="ShopCondition.owner.userId!=null">
-                  AND ts.owner_id = #{ShopCondition.owner.userId}
-              </if>
+                <if test="ShopCondition.owner.userId!=null">
+                    AND ts.owner_id = #{ShopCondition.owner.userId}
+                </if>
             </if>
         </where>
         ORDER BY
-          ts.priority DESC
+        ts.priority DESC
         LIMIT
-          #{indexNum},#{pageSize}
+        #{indexNum},#{pageSize}
 
     </select>
 
     <select id="queryShopByShopId" resultMap="shopMap">
-       <include refid="selectSql" />
+        <include refid="selectSql"/>
         LEFT JOIN
-          tb_person_info tpi
+        tb_person_info tpi
         ON
-          ts.owner_id=tpi.user_id
+        ts.owner_id=tpi.user_id
         LEFT JOIN
-          tb_area ta
+        tb_area ta
         ON
-          ts.area_id=ta.area_id
+        ts.area_id=ta.area_id
         LEFT JOIN
-          tb_shop_categoery thc
+        tb_shop_categoery thc
         ON
-          ts.shop_categoery_id=thc.shop_categoery_id
+        ts.shop_categoery_id=thc.shop_categoery_id
         WHERE
-          ts.shop_id=#{shopId}
+        ts.shop_id=#{shopId}
     </select>
 
 
-
-
     <!--useGeneratedKeys 使用JDBC获取数据库的自增主键值 -->
-   <insert id="insertShop" parameterType="com.hytc.o2o.entity.Shop" useGeneratedKeys="true" keyColumn="shop_id" keyProperty="shopId">
+    <insert id="insertShop" parameterType="com.hytc.o2o.entity.Shop" useGeneratedKeys="true" keyColumn="shop_id"
+            keyProperty="shopId">
       INSERT INTO
 	      tb_shop (
 	      owner_id,
@@ -178,7 +177,7 @@
 
     <update id="updateShop" parameterType="com.hytc.o2o.entity.Shop">
         UPDATE
-          tb_shop
+        tb_shop
         <set>
             <if test="shopName!=null">shop_name=#{shopName},</if>
             <if test="shopDesc!=null">shop_desc=#{shopDesc},</if>
@@ -194,8 +193,9 @@
             <if test="shopCategoery!=null">shop_categoery_id=#{shopCategoery.shopCategoeryId}</if>
         </set>
         WHERE
-          shop_id=#{shopId}
+        shop_id=#{shopId}
     </update>
+
 
     <select id="queryProductionList" resultType="com.hytc.o2o.entity.Product">
         SELECT
@@ -210,4 +210,6 @@
         ORDER BY
             t1.enable_status,t1.priority ASC
     </select>
+
+
 </mapper>

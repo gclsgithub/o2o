@@ -8,7 +8,16 @@ import java.util.List;
 public interface ShopCategoeryDao {
     /**
      * 查找所有店铺分类
+     *
      * @return ShopCategoeryLists
      */
     List<ShopCategoery> findAlls(@Param("shopCategoeryCondition") ShopCategoery shopCategoery);
+
+    /**
+     * 查询所有一级父类的分类 tb_shopCategoery
+     *
+     * @param parentId
+     * @return
+     */
+    List<ShopCategoery> queryShopCategoeryById(@Param("parentId") String parentId);
 }
