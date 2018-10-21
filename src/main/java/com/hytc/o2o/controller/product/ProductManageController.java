@@ -98,7 +98,7 @@ public class ProductManageController {
         if (!StringUtils.isEmpty(shopId)) {
 
             Long productIdL= null;
-            if (!StringUtils.isEmpty(productId)){
+            if (!StringUtils.isEmpty(productId) && !"null".equals(productId)){
                 productIdL = Long.valueOf(productId);
             }
             serviceOutput = productService.getProduct(productIdL);

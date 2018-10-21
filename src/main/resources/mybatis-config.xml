@@ -7,6 +7,9 @@
             <setting name="useGeneratedKeys" value="true"/>
             <setting name="useColumnLabel" value="true"/>
             <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+            <!-- 打印查询语句 -->
+            <setting name="logImpl" value="LOG4J" />
         </settings>
     
 </configuration>

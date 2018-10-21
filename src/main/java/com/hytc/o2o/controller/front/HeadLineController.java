@@ -7,6 +7,7 @@ import com.hytc.o2o.service.HeadLineService;
 import com.hytc.o2o.service.ProductCategoryService;
 import com.hytc.o2o.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 前台的界面全是Rest请求
  */
 @RestController
-@RequestMapping("front")
+@RequestMapping("frontend")
 public class HeadLineController {
 
     @Autowired
@@ -31,12 +33,18 @@ public class HeadLineController {
     @Autowired
     private ShopService shopService;
 
-    @RequestMapping(value = "showhead" ,method = RequestMethod.GET)
+    @Value("${ImageBasePath}")
+    private String basePath;
+
+    @Value("${filePath}")
+    private String filePath;
+
+    @RequestMapping(value = "showIndex" ,method = RequestMethod.POST)
     public Map<String, Object> showMainMenu() {
         Map<String, Object> mapMap = new HashMap<>();
 
+        // 取出头条
         try {
-            // 取出头条
             List<HeadLine> headLineList = headLineService.getHeadLine();
             mapMap.put("headLineList", headLineList);
         } catch (Exception ex) {
@@ -45,9 +53,9 @@ public class HeadLineController {
         }
 
         //取出一级分类信息
-
         try {
             List<ShopCategoery> shopCategoerieList = shopService.getShopCategoeryList();
+
             mapMap.put("shopCategoerieList", shopCategoerieList);
         } catch (Exception e) {
             e.printStackTrace();

@@ -131,24 +131,45 @@ public class ProductServiceImpl implements ProductService {
                             break;
                         }else{
 
-                            //非压缩的方式生成图片
-                            ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
+                            if (productImgSearchList.size() == productImgList.size()){
 
-                            flag = Boolean.TRUE;
-                            for (ProductImg img:productImgSearchList){
+                                //非压缩的方式生成图片
+                                String relativeAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
 
-                                String file = null;
 
-                                file = PathUtil.getImgBasePth() + img.getImgAddr();
+                                for (ProductImg img : productImgSearchList) {
 
-                                //删除的路径
-                                ImageUtil.delImgFileOrPath(file);
+                                    String file = null;
 
-                                img.setImgAddr(file);
-                                img.setProductId(product.getProductId());
-                                img.setCreateTime(LocalDateTime.now());
-                                productImgDao.updateProductCategoery(img);
+                                    file = PathUtil.getImgBasePth() + img.getImgAddr();
+
+                                    //删除的路径
+                                    ImageUtil.delImgFileOrPath(file);
+
+
+                                    img.setImgAddr(relativeAddr);
+                                    img.setProductId(product.getProductId());
+                                    img.setCreateTime(LocalDateTime.now());
+                                    productImgDao.updateProductCategoery(img);
+                                }
+                            }else {
+
+                                for (ProductImg img : productImgSearchList) {
+                                    String file = null;
+                                    file = PathUtil.getImgBasePth() + img.getImgAddr();
+                                    //删除的路径
+                                    ImageUtil.delImgFileOrPath(file);
+                                }
+
+                                //删除先前的数据
+                                productImgDao.deleteProductImgByProductId(product.getProductId());
+                                List<ImageHolder> imageHolders = new ArrayList<>();
+                                imageHolders.add(imageHolder);
+                                addProductImgList(product,imageHolders);
+                                break;
                             }
+
+
                         }
 
                     }

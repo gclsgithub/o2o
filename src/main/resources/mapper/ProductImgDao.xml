@@ -54,4 +54,10 @@
         WHERE
             product_id = #{productId}
     </select>
+
+    <delete id="deleteProductImgByProductId">
+        DELETE FROM  tb_product_img
+        where product_id=#{productId}
+
+    </delete>
 </mapper>
