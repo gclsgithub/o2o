@@ -45,8 +45,8 @@ $(function(){
 })
 
 function openOverLay() {
-    $.openPanel("#panel-js");
+    $.openPanel("#panel-left-demo");
 }
 function closeOverLay() {
-    $.closePanel("#panel-js");
+    $.closePanel("#panel-left-demo");
 }

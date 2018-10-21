@@ -23,13 +23,13 @@
     <div class="page">
         <!-- 标题栏 -->
         <header class="bar bar-nav">
-            <a class="icon icon-me pull-left open-panel"></a>
+            <!--<a class="icon icon-me pull-left open-panel"></a>-->
             <h1 class="title">淮阴师范学院校园商品平台</h1>
         </header>
 
         <!-- 工具栏 -->
         <nav class="bar bar-tab">
-            <a class="tab-item external active" href="#">
+            <a class="tab-item external active" href="javascript:void(0)">
                 <span class="icon icon-home"></span>
                 <span class="tab-label">首页</span>
             </a>
@@ -56,20 +56,27 @@
             <div class="row">
 
             </div>
-            </div>
-            </div>
-    </div>
+        </div>
 
-<!-- popup, panel 等放在这里 -->
-<div class="panel-overlay"></div>
-<!-- Left Panel with Reveal effect -->
-<div class="panel panel-right panel-reveal" id="panel-js">
-    <div class="content-block">
-        <p><a href="/frontend/myrecord" class="close-panel">消费记录</a></p>
-        <p><a href="/frontend/mypoint" class="close-panel">我的积分</a></p>
-        <p><a href="/frontend/pointrecord" class="close-panel">积分兑换记录</a></p>
-        <!-- Click on link with "close-panel" class will close panel -->
-        <p><a href="javascript:void(0)" onclick="closeOverLay()" class="close-panel">关闭</a></p>
+        <!--侧边栏  -->
+        <div class="panel-overlay"></div>
+        <div class="panel panel-left panel-reveal" id="panel-left-demo">
+            <div class="content-block">
+                <p>
+                    <a href="/myo2o/frontend/myrecord" class="close-panel">消费记录</a>
+                </p>
+                <p>
+                    <a href="/myo2o/frontend/mypoint" class="close-panel">我的积分</a>
+                </p>
+                <p>
+                    <a href="/myo2o/frontend/pointrecord" class="close-panel">积分兑换记录</a>
+                </p>
+                <p>
+                    <a href="/jump/index" class="close-panel">返回</a>
+                </p>
+                <!-- Click on link with "close-panel" class will close panel -->
+            </div>
+        </div>
     </div>
 </div>
 </body>
