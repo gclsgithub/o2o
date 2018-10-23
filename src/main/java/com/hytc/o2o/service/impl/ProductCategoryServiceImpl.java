@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,5 +84,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         if ( count < 0 ){
             throw new ProductRuntimeException("更新失败");
         }
+    }
+
+    @Override
+    public List<ProductCategory> searchProductCategoeryList(Long shopCategoeryId) {
+        List<ProductCategory> list = new ArrayList<>();
+        if (shopCategoeryId == -1L) {
+           list =  productCategoryDao.ListProductCategoeryList(null);
+        }
+        return  list;
     }
 }

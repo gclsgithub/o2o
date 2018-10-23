@@ -33,4 +33,11 @@ public interface ProductCategoryService {
      * @return
      */
     void updateProductCategoery(ProductCategory productCategory);
+
+    /**
+     * 获取
+     * @param shopCategoeryId
+     * @return
+     */
+    List<ProductCategory> searchProductCategoeryList(Long shopCategoeryId);
 }

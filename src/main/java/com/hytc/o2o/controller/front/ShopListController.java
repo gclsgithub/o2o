@@ -5,6 +5,7 @@ import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.entity.ShopCategoery;
 import com.hytc.o2o.service.AreaService;
+import com.hytc.o2o.service.ProductCategoryService;
 import com.hytc.o2o.service.ShopService;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class ShopListController {
 
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    private ProductCategoryService productCategoryService;
 
     @RequestMapping(value = "/init" ,method = RequestMethod.POST)
     public Map<String,Object> initShopList(HttpServletRequest request){
@@ -52,6 +56,7 @@ public class ShopListController {
 
             shopList = shopExectionOutput.getShopList();
             areaList = areaService.findAlls();
+            productCategoryService.searchProductCategoeryList(shopCategoeryId);
             outputMap.put("success", true);
             outputMap.put("shopList", shopList);
             outputMap.put("areaList", areaList);

@@ -15,25 +15,25 @@
     </update>
 
     <insert id="insertProductCategoryList" parameterType="java.util.List">
-          INSERT INTO
-              tb_product_category(
-                  product_category_name,
-                  priority,
-                  create_time,
-                  enable_status
-              )
-          VALUES
-              <foreach collection="list" item="productCategory" index="index" separator=",">
-                  (
-                      #{productCategory.productionCategoryName},
-                      #{productCategory.priority},
-                      NOW(),
-                      '0'
-                  )
-              </foreach>
+        INSERT INTO
+        tb_product_category(
+        product_category_name,
+        priority,
+        create_time,
+        enable_status
+        )
+        VALUES
+        <foreach collection="list" item="productCategory" index="index" separator=",">
+            (
+            #{productCategory.productionCategoryName},
+            #{productCategory.priority},
+            NOW(),
+            '0'
+            )
+        </foreach>
     </insert>
 
-    <update id="delProductCategoeryByProductCategoeryId" >
+    <update id="delProductCategoeryByProductCategoeryId">
         UPDATE
             tb_product_category
         SET
@@ -52,6 +52,20 @@
             tb_product_category
         WHERE
             product_category_id=#{productionCategoryId}
+    </select>
 
+    <select id="ListProductCategoeryList" resultType="com.hytc.o2o.entity.ProductCategory">
+        SELECT
+        product_category_name AS productionCategoryName,
+        priority,
+        product_category_id AS productionCategoryId,
+        enable_status AS enableStatus
+        FROM
+        tb_product_category
+        WHERE
+        product_category_id != '-1'
+        <if test="productCategoeryId != null">
+            AND product_category_id = #{productCategoeryId}
+        </if>
     </select>
 </mapper>

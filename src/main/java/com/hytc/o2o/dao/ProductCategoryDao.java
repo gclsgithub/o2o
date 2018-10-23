@@ -39,4 +39,12 @@ public interface ProductCategoryDao {
      * @param productCategory
      */
     Integer updateProductCategoery(@Param("productCategory") ProductCategory productCategory);
+
+
+    /**
+     *
+     * @param productCategoeryId
+     * @return
+     */
+    List<ProductCategory> ListProductCategoeryList(@Param("productCategoeryId") String productCategoeryId);
 }
