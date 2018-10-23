@@ -59,4 +59,6 @@ public interface ShopService {
      * @return
      */
     List<ShopCategoery> getShopCategoeryList();
+
+    ShopExecution getFrontShopList(Shop shop, int index, int pageSize);
 }

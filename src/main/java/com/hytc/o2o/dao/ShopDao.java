@@ -24,6 +24,16 @@ public interface ShopDao {
      */
     List<Shop> queryShopBySomeCondition(@Param("ShopCondition") Shop shop,
                                         @Param("indexNum") int indexNum,
+                                        @Param("pageSize") int pageSize);    /**
+     * 查询条件：店铺名（模糊）,店铺状态，店铺类别， 区域Id，OwnerId
+     * 查询商店列表
+     *
+     * @Param shop 查询条件
+     * @Param indexNum 开始条
+     * @Param pageSize 一页查询多少条
+     */
+    List<Shop> showFrontShopList(@Param("ShopCondition") Shop shop,
+                                        @Param("indexNum") int indexNum,
                                         @Param("pageSize") int pageSize);
 
     /**

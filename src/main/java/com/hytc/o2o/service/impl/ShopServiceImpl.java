@@ -35,6 +35,35 @@ public class ShopServiceImpl implements ShopService {
     @Autowired
     private ShopCategoeryDao shopCategoeryDao;
 
+    /**
+     * 查询前段界面的ShopLit
+     * @param shop
+     * @param index
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ShopExecution getFrontShopList(Shop shop, int index, int pageSize) {
+        ShopExecution shopExecution = new ShopExecution();
+        Integer currentPageIndex = PageCalculator.caculatateNowPageIndex(index, pageSize);
+        Integer count = shopDao.queryShopCount(shop);
+        List<Shop> shopList = shopDao.showFrontShopList(shop, currentPageIndex, pageSize);
+        if (shopList != null) {
+            shopExecution.setShopList(shopList);
+            shopExecution.setShopCount(count);
+        } else {
+            shopExecution.setStatus(ShopStateEnum.INNERERROR.getStatus());
+        }
+        return shopExecution;
+    }
+
+    /**
+     * 查询后端界面的ShopList
+     * @param ShopCondition
+     * @param indexNum
+     * @param pageSize
+     * @return
+     */
     @Override
     public ShopExecution getShopList(Shop ShopCondition, int indexNum, int pageSize) {
         ShopExecution shopExecution = new ShopExecution();
@@ -126,7 +155,6 @@ public class ShopServiceImpl implements ShopService {
         String parentId = "-1";
         return shopCategoeryDao.queryShopCategoeryById(parentId);
     }
-
 
     /**
      * 将上传的文件存储到项目之中，同时把相对对路径存储的Shop对象之中，在更新到数据库
