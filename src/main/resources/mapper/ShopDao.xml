@@ -164,6 +164,15 @@
                     parent_id = #{ShopCondition.shopCategoery.shopCategoeryId}
                     AND
                     shop_categoery_id != '-1'
+                    Union ALL
+                    SELECT
+                    shop_categoery_id
+                    FROM
+                    tb_shop_categoery
+                    WHERE
+                    shop_categoery_id = #{ShopCondition.shopCategoery.shopCategoeryId}
+                    AND
+                    shop_categoery_id != '-1'
                     )
                 </if>
             </if>

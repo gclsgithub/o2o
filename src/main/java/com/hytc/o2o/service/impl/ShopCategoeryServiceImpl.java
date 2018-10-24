@@ -24,4 +24,9 @@ public class ShopCategoeryServiceImpl implements ShopCategoeryService {
         return shopCategoeryList;
 
     }
+
+    @Override
+    public List<ShopCategoery> findShopCategoeryByParentId(Long shopCategoeryId) {
+        return shopCategoeryDao.queryShopCategoeryById(String.valueOf(shopCategoeryId));
+    }
 }

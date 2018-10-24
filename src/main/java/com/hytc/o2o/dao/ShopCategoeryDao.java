@@ -20,4 +20,6 @@ public interface ShopCategoeryDao {
      * @return
      */
     List<ShopCategoery> queryShopCategoeryById(@Param("parentId") String parentId);
+
+
 }

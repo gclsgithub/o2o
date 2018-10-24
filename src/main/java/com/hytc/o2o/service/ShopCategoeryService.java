@@ -13,4 +13,10 @@ public interface ShopCategoeryService {
      * @return ShopCategoeryLists
      */
     List<ShopCategoery> findAlls(ShopCategoery parentCategoeryId);
+
+    /**
+     *
+     * @param shopCategoeryId 父类Id
+     */
+    List<ShopCategoery>  findShopCategoeryByParentId(Long shopCategoeryId);
 }

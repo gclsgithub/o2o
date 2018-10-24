@@ -50,15 +50,18 @@
 
     <select id="queryShopCategoeryById" resultType="com.hytc.o2o.entity.ShopCategoery">
         SELECT
-            shop_categoery_id AS shopCategoeryId,
-            shop_categoery_name AS shopCategoeryName,
-            shop_categoery_desc AS shopCategoeryDesc,
-            shop_categoery_img AS shopCateGoeryImg,
-            priority AS priority
+        shop_categoery_id AS shopCategoeryId,
+        shop_categoery_name AS shopCategoeryName,
+        shop_categoery_desc AS shopCategoeryDesc,
+        shop_categoery_img AS shopCateGoeryImg,
+        priority AS priority
         FROM
-            tb_shop_categoery
+        tb_shop_categoery
         WHERE
-            parent_id=#{parentId}
+        shop_categoery_id != '-1'
+        <if test="parentId != null">
+            AND parent_id=#{parentId}
+        </if>
     </select>
 
 </mapper>

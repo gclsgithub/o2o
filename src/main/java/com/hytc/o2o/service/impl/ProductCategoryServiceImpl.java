@@ -86,12 +86,4 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
     }
 
-    @Override
-    public List<ProductCategory> searchProductCategoeryList(Long shopCategoeryId) {
-        List<ProductCategory> list = new ArrayList<>();
-        if (shopCategoeryId == -1L) {
-           list =  productCategoryDao.ListProductCategoeryList(null);
-        }
-        return  list;
-    }
 }

@@ -2,6 +2,7 @@ package com.hytc.o2o.service;
 
 import com.hytc.o2o.DTO.ProductCategoryExcution;
 import com.hytc.o2o.entity.ProductCategory;
+import com.hytc.o2o.entity.ShopCategoery;
 
 import java.util.List;
 
@@ -34,10 +35,4 @@ public interface ProductCategoryService {
      */
     void updateProductCategoery(ProductCategory productCategory);
 
-    /**
-     * 获取
-     * @param shopCategoeryId
-     * @return
-     */
-    List<ProductCategory> searchProductCategoeryList(Long shopCategoeryId);
 }
