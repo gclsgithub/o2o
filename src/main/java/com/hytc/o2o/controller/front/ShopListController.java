@@ -43,13 +43,20 @@ public class ShopListController {
         List<ShopCategoery> shopCategoeryList = null;
         List<Area> areaList = null;
 
-        shopCategoeryList = shopCategoeryService.findShopCategoeryByParentId(shopCategoeryId);
-        areaList = areaService.findAlls();
-        outputMap.put("shopCategoeryList", shopCategoeryList);
-        outputMap.put("areaList", areaList);
-
+        try {
+            shopCategoeryList = shopCategoeryService.findShopCategoeryByParentId(shopCategoeryId);
+            areaList = areaService.findAlls();
+            outputMap.put("shopCategoeryList", shopCategoeryList);
+            outputMap.put("areaList", areaList);
+            outputMap.put("success", true);
+            outputMap.put("areaList", areaList);
+            outputMap.put("shopCategoeryList", shopCategoeryList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            outputMap.put("success", false);
+            outputMap.put("message", "初期话失败");
+        }
         return outputMap;
-
     }
 
     @RequestMapping(value = "/init", method = RequestMethod.POST)
@@ -90,8 +97,6 @@ public class ShopListController {
             outputMap.put("success", false);
             outputMap.put("message", "初期话失败");
         }
-
-
         return outputMap;
     }
 
