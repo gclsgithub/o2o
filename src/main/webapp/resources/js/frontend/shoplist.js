@@ -36,11 +36,11 @@ $(function () {
                     shopCategoeryHtml += "<a href='javascript:void(0)' class='button' data-id='" + item.shopCategoeryId + "'>" + item.shopCategoeryName + "</a>";
                 })
                 $('#shoplist-search-div').html(shopCategoeryHtml);
-                var selectOptions = '<option value="+ +">"+全部地区+"</option>'
+                var selectOptions = '<option value="+ +">全部地区</option>'
 
                 var areaList = data.areaList;
                 areaList.map(function (item, index) {
-                    selectOptions += '<option value="+item.areaId+">"+item.areaName+"</option>';
+                    selectOptions += '<option value="+item.areaId+">'+item.areaName+'</option>';
                 })
 
                 $('#area-search').html(selectOptions);

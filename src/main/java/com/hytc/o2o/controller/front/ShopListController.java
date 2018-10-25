@@ -59,7 +59,7 @@ public class ShopListController {
         return outputMap;
     }
 
-    @RequestMapping(value = "/init", method = RequestMethod.POST)
+    @RequestMapping(value = "/init", method = RequestMethod.GET)
     public Map<String, Object> initShopList(HttpServletRequest request) {
 
         Map<String, Object> outputMap = new HashMap<>(6);
