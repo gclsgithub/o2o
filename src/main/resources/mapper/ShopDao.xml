@@ -177,7 +177,7 @@
                 </if>
             </if>
             <if test="ShopCondition.area!=null">
-                <if test="ShopCondition.area.areaId!=null">
+                <if test="ShopCondition.area.areaId!=null and ShopCondition.area.areaId!=-100">
                     AND ts.area_id = #{ShopCondition.area.areaId}
                 </if>
             </if>

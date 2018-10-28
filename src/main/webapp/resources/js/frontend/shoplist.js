@@ -3,7 +3,7 @@ $(function () {
 
     var maxItem = 999;
 
-    var pageSize = 10;
+    var pageSize = 3;
 
     //获取店铺列表
     var searchDivUrl = "http://localhost:8081/shoplist/listshoppageinfo";
@@ -20,6 +20,10 @@ $(function () {
 
     addItems(pageSize, pageNum);
 
+
+    /**
+     * 获取搜索框的数据
+     */
     function getSearchDivData() {
 
         if (shopCategoeryId == ''){
@@ -50,8 +54,11 @@ $(function () {
         })
     }
 
+    /**
+     * 获取卡片数据
+     */
     function addItems() {
-        var url = 'http://localhost:8081/shoplist/init?shopCategoeryId=' + shopCategoeryId + '&index=' + pageNum +
+        var url = 'http://localhost:8081/shoplist/getshopinfo?shopCategoeryId=' + shopCategoeryId + '&index=' + pageNum +
             '&pageSize=' + pageSize + '&areaId=' + areaId + '&shopName=' + shopName;
 
         loading = true;
@@ -96,12 +103,14 @@ $(function () {
                 // 隐藏加载提示符
                 $('.infinite-scroll-preloader').hide();
                 return;
-            }else{
+            }else {
                 $('.infinite-scroll-preloader').show();
             }
 
             pageNum++;
-            loading =lase;
+            loading =false;
+
+            //刷新界面显示数据
             $.refreshScroller();
 
         })
@@ -110,7 +119,7 @@ $(function () {
     /**
      * 当向下活动屏幕，自动进行分页搜索
      */
-    $(document).on('infinite','infinite-scroll-bottom',function () {
+    $(document).on('infinite', '.infinite-scroll-bottom',function() {
         if (loading){
             return;
         }

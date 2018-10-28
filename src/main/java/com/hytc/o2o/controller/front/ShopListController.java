@@ -59,7 +59,7 @@ public class ShopListController {
         return outputMap;
     }
 
-    @RequestMapping(value = "/init", method = RequestMethod.GET)
+    @RequestMapping(value = "/getshopinfo", method = RequestMethod.GET)
     public Map<String, Object> initShopList(HttpServletRequest request) {
 
         Map<String, Object> outputMap = new HashMap<>(6);
@@ -75,9 +75,16 @@ public class ShopListController {
         int pageSize = HttpRequestUtil.getInt(request, "pageSize");
 
         String shopName = HttpRequestUtil.getString(request, "shopName");
+        Shop shop = null;
 
-        //设置参数
-        Shop shop = SetSearchParams(shopCategoeryId, areaId, shopName);
+        try {
+            //设置参数
+            shop = SetSearchParams(shopCategoeryId, areaId, shopName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            outputMap.put("success", false);
+            outputMap.put("message", "查询失败");
+        }
 
         List<Shop> shopList = null;
         List<Area> areaList = null;
@@ -95,12 +102,17 @@ public class ShopListController {
         } catch (Exception e) {
             e.printStackTrace();
             outputMap.put("success", false);
-            outputMap.put("message", "初期话失败");
+            outputMap.put("message", "查询失败");
         }
         return outputMap;
     }
 
     private Shop SetSearchParams(Long shopCategoeryId, int areaId, String shopName) {
+
+        if (areaId == -1 ){
+            areaId = -100;
+        }
+
         Shop shop = new Shop();
         ShopCategoery shopCategoery = new ShopCategoery();
         shopCategoery.setShopCategoeryId(shopCategoeryId);
