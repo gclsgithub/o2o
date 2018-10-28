@@ -29,7 +29,7 @@ $(function(){
             var productCategoeryHtml = '';
             shopCategoerieList.map(function (item,index) {
                 productCategoeryHtml +=
-                    "<div class='col-50 shop-classify'> "
+                    "<div class='col-50 shop-classify' onclick='jumpShopListWithcategoeryId("+item.shopCategoeryId+")'> "
                         +"<div class='word'>  "
                             +"<p class='shop-title'>"+item.shopCategoeryName+"</p>  "
                             +"<p class='shop-desc'>"+item.shopCategoeryDesc+"</p> "
@@ -43,6 +43,10 @@ $(function(){
         }
     })
 })
+
+function jumpShopListWithcategoeryId(id){
+    window.location.href= "http://localhost:8081/frontend/shoplist?shopCategoeryId="+id;
+}
 
 function openOverLay() {
     $.openPanel("#panel-left-demo");
