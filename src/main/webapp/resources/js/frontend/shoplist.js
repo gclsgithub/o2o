@@ -26,8 +26,8 @@ $(function () {
      */
     function getSearchDivData() {
 
-        if (shopCategoeryId == ''){
-            shopCategoeryId =-1;
+        if (shopCategoeryId == '') {
+            shopCategoeryId = -1;
         }
 
         var url = searchDivUrl + "?shopCategoeryId=" + shopCategoeryId;
@@ -37,19 +37,17 @@ $(function () {
                 var shopCategoeryList = data.shopCategoeryList;
                 var shopCategoeryHtml = '';
                 shopCategoeryList.map(function (item, index) {
-                    shopCategoeryHtml += "<a href='javascript:void(0)' class='button' data-id='" + item.shopCategoeryId + "'>" + item.shopCategoeryName + "</a>";
+                    shopCategoeryHtml += "<a onclick = 'searchShopInfo(this)' href='javascript:void(0)' class='button' data-id='" + item.shopCategoeryId + "' >" + item.shopCategoeryName + "</a>";
                 })
                 $('#shoplist-search-div').html(shopCategoeryHtml);
-                var selectOptions = '<option value="+ +">全部地区</option>'
+                var selectOptions = '<option value="">全部地区</option>'
 
                 var areaList = data.areaList;
                 areaList.map(function (item, index) {
-                    selectOptions += '<option value="+item.areaId+">'+item.areaName+'</option>';
+                    selectOptions += '<option value=' + item.areaId + '>' + item.areaName + '</option>';
                 })
 
                 $('#area-search').html(selectOptions);
-
-
             }
         })
     }
@@ -69,46 +67,49 @@ $(function () {
             var shopList = data.shopList;
             shopList.map(function (item, index) {
                 cardHtml +=
-                '<div class="card" data-shop-id="' + item.shopId + '">' +
-                '<div class="card-header">' + item.shopName + '</div>' +
-                '<div class="card-content">' +
-                '<div class="list-block media-list">'+
-                '<ul>' +
-                '<li class="item-content">' +
-                '<div class="item-media">' +
-                '<img src="' + item.shopImg + '" width="44">' +
-                '</div>' +
-                '<div class="item-inner">'+
-                '<div class="item-subtitle"></div>' +
-                '</div>' +
-                '</li>' +
-                '</ul>' +
-                '</div>' +
-                '</div>' +
-                '<div class="card-footer">' +
-                    '<p class="color-gray">'+new Date(item.lastEditTime).Format("yyyy-MM-dd")+'更新</p>'+
-                '<span>点击查看</span>' +
-                ' </div>' +
-                '</div>'
+                    '<div class="card" data-shop-id="' + item.shopId + '">' +
+                    '<div class="card-header">' + item.shopName + '</div>' +
+                    '<div class="card-content">' +
+                    '<div class="list-block media-list">' +
+                    '<ul>' +
+                    '<li class="item-content">' +
+                    '<div class="item-media">' +
+                    '<img src="' + item.shopImg + '" width="44">' +
+                    '</div>' +
+                    '<div class="item-inner">' +
+                    '<div class="item-subtitle"></div>' + item.shopDesc +
+                    '</div>' +
+                    '</li>' +
+                    '</ul>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card-footer">' +
+                    '<p class="color-gray">' + new Date(item.lastEditTime).Format("yyyy-MM-dd") + '更新</p>' +
+                    '<span>点击查看</span>' +
+                    ' </div>' +
+                    '</div>'
             })
 
             $('.list-div').append(cardHtml);
 
             var total = $('.list-div .card').length;
 
-            if (total > maxItem){
+            if (total > maxItem) {
 
                 // 加载完毕，则注销无限加载事件，以防不必要的加载
 
                 // 隐藏加载提示符
                 $('.infinite-scroll-preloader').hide();
                 return;
-            }else {
+            } else {
                 $('.infinite-scroll-preloader').show();
             }
 
+            if (shopList.size == null) {
+                $('.infinite-scroll-preloader').hide();
+            }
             pageNum++;
-            loading =false;
+            loading = false;
 
             //刷新界面显示数据
             $.refreshScroller();
@@ -116,26 +117,85 @@ $(function () {
         })
     }
 
+
     /**
      * 当向下活动屏幕，自动进行分页搜索
      */
-    $(document).on('infinite', '.infinite-scroll-bottom',function() {
-        if (loading){
+    $(document).on('infinite', '.infinite-scroll-bottom', function () {
+        if (loading) {
             return;
         }
-        addItems(pageSize,pageNum);
+        addItems(pageSize, pageNum);
     })
 
     /**
      * 点击卡片进入详情
      */
-    $('.shop-list').on('click','.card',function (cuurent) {
-        var shopId= cuurent.currentTarget.dataset.shopId;
-        window.location.href = "http://localhost:8081/shoplist/shopDetial?shopId="+shopId;
+    $('.shop-list').on('click', '.card', function (cuurent) {
+        var shopId = cuurent.currentTarget.dataset.shopId;
+        window.location.href = "http://localhost:8081/shoplist/shopDetial?shopId=" + shopId;
     })
 
     /**
-     * 搜索
+     * 搜索框
      */
-    $('#shoplist-search-div')
+    $('#search').on("change", function () {
+        $('.list-div').empty();
+        if (shopCategoeryId == '') {
+            shopCategoeryId = -1;
+        }
+        var shopCategoery = $('a[data-Id]').find('.button-fill');
+
+        if (shopCategoery.length > 0) {
+
+            shopCategoeryId = $('a[data-Id]').find('.button-fill').dataset().id;
+        }
+        areaId = $('#area-search').val();
+
+        if (areaId == '') {
+            areaId = null;
+        }
+        shopName = $('#search').val();
+        pageNum = 1;
+        addItems()
+    })
+
+    /**
+     * Categoery发生改变的时候
+     * @param bf
+     */
+    $('#shoplist-search-div').on(
+        'click',
+        '.button',
+        function (bf) {
+
+            $('.list-div').empty();
+            areaId = $('#area-search').val();
+            shopCategoeryId = $(bf.target).dataset().id;
+            shopName = $('#search').val();
+            pageNum = 1;
+            $('a[data-Id]').removeClass('button-fill');
+            $(bf.target).addClass('button-fill');
+            addItems(pageSize, pageNum);
+        })
+
+    $('#area-search').on('change', function () {
+        $('.list-div').empty();
+        shopName = $('#search').val();
+        areaId = $('#area-search').val();
+
+        if (shopCategoeryId == '') {
+            shopCategoeryId = -1;
+        }
+        var shopCategoery = $('a[data-Id]').find('.button-fill');
+
+        if (shopCategoery.length > 0) {
+
+            shopCategoeryId = $('a[data-Id]').find('.button-fill').dataset().id;
+        }
+        pageNum = 1;
+        addItems(pageSize, pageNum);
+    })
 })
+
+
