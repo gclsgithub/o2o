@@ -2,13 +2,11 @@ package com.hytc.o2o.service.impl;
 
 
 import com.hytc.o2o.DTO.ImageHolder;
+import com.hytc.o2o.dao.ProductDao;
 import com.hytc.o2o.dao.ShopCategoeryDao;
 import com.hytc.o2o.dao.ShopDao;
 import com.hytc.o2o.DTO.ShopExecution;
-import com.hytc.o2o.entity.PersonInfo;
-import com.hytc.o2o.entity.Product;
-import com.hytc.o2o.entity.Shop;
-import com.hytc.o2o.entity.ShopCategoery;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.enums.ShopStateEnum;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.ShopService;
@@ -35,8 +33,12 @@ public class ShopServiceImpl implements ShopService {
     @Autowired
     private ShopCategoeryDao shopCategoeryDao;
 
+    @Autowired
+    private ProductDao productDao;
+
     /**
      * 查询前段界面的ShopLit
+     *
      * @param shop
      * @param index
      * @param pageSize
@@ -58,7 +60,21 @@ public class ShopServiceImpl implements ShopService {
     }
 
     /**
+     * 根据Shop获取Product
+     *
+     * @param shopId
+     * @return
+     */
+    @Override
+    public List<ProductCategory> getProductCategoeryId(Long shopId) {
+
+        return  productDao.getProductCategoryListByShopId(shopId);
+
+    }
+
+    /**
      * 查询后端界面的ShopList
+     *
      * @param ShopCondition
      * @param indexNum
      * @param pageSize

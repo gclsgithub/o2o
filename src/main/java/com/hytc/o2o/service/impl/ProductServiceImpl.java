@@ -55,6 +55,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductByShopId(Long shopId,int index,int pageSize) {
+        return productDao.getProductListByShopId(shopId,index,pageSize);
+    }
+
+    @Override
     public List<ProductCategory> getProductCategoeryList() {
 
         return productDao.getProductCategoryList(null);

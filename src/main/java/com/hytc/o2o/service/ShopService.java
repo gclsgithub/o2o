@@ -3,6 +3,7 @@ package com.hytc.o2o.service;
 import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ShopExecution;
 import com.hytc.o2o.entity.Product;
+import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.entity.ShopCategoery;
 
@@ -61,4 +62,11 @@ public interface ShopService {
     List<ShopCategoery> getShopCategoeryList();
 
     ShopExecution getFrontShopList(Shop shop, int index, int pageSize);
+
+    /**
+     * 获取商品所有分类
+     * @param shopId
+     * @return
+     */
+    List<ProductCategory>  getProductCategoeryId(Long shopId);
 }

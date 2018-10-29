@@ -1,11 +1,9 @@
 package com.hytc.o2o.controller.front;
 
 import com.hytc.o2o.DTO.ShopExecution;
-import com.hytc.o2o.entity.Area;
-import com.hytc.o2o.entity.Shop;
-import com.hytc.o2o.entity.ShopCategoery;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.service.AreaService;
-import com.hytc.o2o.service.ProductCategoryService;
+import com.hytc.o2o.service.ProductService;
 import com.hytc.o2o.service.ShopCategoeryService;
 import com.hytc.o2o.service.ShopService;
 import com.hytc.o2o.util.HttpRequestUtil;
@@ -33,6 +31,35 @@ public class ShopListController {
     @Autowired
     private ShopCategoeryService shopCategoeryService;
 
+    @Autowired
+    private ProductService productService;
+
+    @GetMapping(value = "/getShopInfo")
+    public Map<String,Object> getShopInfo(HttpServletRequest request){
+        Map<String,Object> outputMap = new HashMap<>();
+
+        Long shopId = HttpRequestUtil.getLong(request,"shopId");
+
+        int index = HttpRequestUtil.getInt(request,"index");
+        int pageSize = HttpRequestUtil.getInt(request,"pageSize");
+
+        try {
+            Shop shop = shopService.findSingleShopByShopId(shopId);
+
+            List<ProductCategory> productCategoryList = shopService.getProductCategoeryId(shopId);
+
+            List<Product> productList = productService.getProductByShopId(shopId,index,pageSize);
+            outputMap.put("shop",shop);
+            outputMap.put("productCategoryList",productCategoryList);
+            outputMap.put("productList",productList);
+            outputMap.put("success",true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            outputMap.put("success",false);
+            outputMap.put("message", "查询失败");
+        }
+        return  outputMap;
+    }
 
     @GetMapping(value = "/listshoppageinfo")
     public Map<String, Object> listSearchInfo(HttpServletRequest request) {
@@ -109,7 +136,7 @@ public class ShopListController {
 
     private Shop SetSearchParams(Long shopCategoeryId, int areaId, String shopName) {
 
-        if (areaId == -1 ){
+        if (areaId == -1) {
             areaId = -100;
         }
 

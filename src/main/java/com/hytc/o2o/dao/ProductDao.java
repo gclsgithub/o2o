@@ -11,6 +11,7 @@ public interface ProductDao {
 
     /**
      * 获取商店商品的所有分类  按照权限排序
+     *
      * @param shopId
      * @return
      */
@@ -18,6 +19,7 @@ public interface ProductDao {
 
     /**
      * 商品信息插入到数据库
+     *
      * @param product
      * @return
      */
@@ -25,25 +27,29 @@ public interface ProductDao {
 
     /**
      * 批量插入商品信息到数据库
+     *
      * @param products
      */
-    Integer insertIntoProductImgDb(@Param("productlist")List<Product> products);
+    Integer insertIntoProductImgDb(@Param("productlist") List<Product> products);
 
     /**
      * 查询关于Product的信息
+     *
      * @param productId
      * @return
      */
-    Product getProductInfo(@Param("productId")Long productId);
+    Product getProductInfo(@Param("productId") Long productId);
 
     /**
      * 获取商品分类
+     *
      * @return
      */
-    List<ProductCategory> getProductCategoryList(@Param("productId")Long productId);
+    List<ProductCategory> getProductCategoryList(@Param("productId") Long productId);
 
     /**
      * 更新商品信息
+     *
      * @param product
      * @return
      */
@@ -51,7 +57,23 @@ public interface ProductDao {
 
     /**
      * 逻辑删除
+     *
      * @param productId
      */
-    int delProductByProductId(@Param("productId") String productId,@Param("status")String status);
+    int delProductByProductId(@Param("productId") String productId, @Param("status") String status);
+
+    /**
+     * 根据shopId查询出ProductCategoeryId
+     *
+     * @param shopId
+     * @return
+     */
+    List<ProductCategory> getProductCategoryListByShopId(@Param("shopId") Long shopId);
+
+    /**
+     * 根据ShopId查询Produt相关信息
+     * @param shopId
+     * @return
+     */
+    List<Product> getProductListByShopId(@Param("shopId") Long shopId,@Param("indexNum")int index,@Param("pageSize")int pageSize);
 }

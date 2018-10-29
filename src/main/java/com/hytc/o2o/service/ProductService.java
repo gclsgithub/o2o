@@ -40,4 +40,13 @@ public interface ProductService {
      * @param productId
      */
     void delProduct(String productId,String status);
+
+    /**
+     * 根据ShopId获得Product的数据
+     * @param shopId
+     * @param index
+     * @param pageSize
+     * @return
+     */
+    List<Product> getProductByShopId(Long shopId,int index ,int pageSize);
 }

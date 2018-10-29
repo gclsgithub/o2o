@@ -45,7 +45,6 @@
     </update>
 
     <select id="searchProductImg" resultType="com.hytc.o2o.entity.ProductImg">
-
         SELECT
             product_img_id AS productImgId,
             img_addr AS imgAddr

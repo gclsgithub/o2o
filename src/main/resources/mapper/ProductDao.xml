@@ -158,4 +158,47 @@
         WHERE
           product_id=#{productId}
     </update>
+
+    <select id="getProductCategoryListByShopId" resultType="com.hytc.o2o.entity.ProductCategory">
+        SELECT
+          product_category_id AS productionCategoryId,
+          product_category_name AS productionCategoryName
+        FROM
+          tb_product_category
+        WHERE
+          enable_status='0'
+        AND
+          product_category_id
+          IN (
+              SELECT
+                DISTINCT
+                product_category_id
+              FROM
+                tb_product
+              WHERE
+                shop_id = #{shopId}
+          )
+    </select>
+
+    <select id="getProductListByShopId" resultType="com.hytc.o2o.entity.Product">
+        SELECT
+          product_id,
+          product_name,
+          product_desc,
+          img_addr,
+          normal_price,
+          promotion_price,
+          last_edit_time,
+          product_category_id,
+          shop_id
+        FROM
+          tb_product
+        WHERE
+          enable_status = '0'
+        AND
+          shop_id=#{shopId}
+        ORDER BY priority DESC
+        LIMIT
+        #{indexNum},#{pageSize}
+    </select>
 </mapper>

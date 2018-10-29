@@ -133,7 +133,7 @@ $(function () {
      */
     $('.shop-list').on('click', '.card', function (cuurent) {
         var shopId = cuurent.currentTarget.dataset.shopId;
-        window.location.href = "http://localhost:8081/shoplist/shopDetial?shopId=" + shopId;
+        window.location.href = "http://localhost:8081/frontend/shopdetail?shopId=" + shopId;
     })
 
     /**

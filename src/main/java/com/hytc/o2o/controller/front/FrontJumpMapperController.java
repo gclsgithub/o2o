@@ -49,4 +49,10 @@ public class FrontJumpMapperController {
     public String jumpShopList() {
         return "/frontend/shoplist";
     }
+
+    /**
+     * shopList到ShopDetial
+     */
+    @RequestMapping(value = "/shopdetail", method = RequestMethod.GET)
+    public String jumpShopDetial(){return "/frontend/shopdetail";}
 }
