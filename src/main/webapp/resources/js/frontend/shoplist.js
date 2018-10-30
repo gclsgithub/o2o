@@ -121,11 +121,16 @@ $(function () {
     /**
      * 当向下活动屏幕，自动进行分页搜索
      */
-    $(document).on('infinite', '.infinite-scroll-bottom', function () {
+    $('.content').scroll(function() {
         if (loading) {
             return;
         }
-        addItems(pageSize, pageNum);
+        var height = $('.content').height();
+        var scroll = $('.content').scrollTop();
+
+        if (height < height - scroll + 40){
+            addItems(pageSize, pageNum);
+        }
     })
 
     /**
@@ -133,7 +138,7 @@ $(function () {
      */
     $('.shop-list').on('click', '.card', function (cuurent) {
         var shopId = cuurent.currentTarget.dataset.shopId;
-        window.location.href = "http://localhost:8081/frontend/shopdetail?shopId=" + shopId;
+        window.location.href = "http://localhost:8081/frontend/shopDetial?shopId=" + shopId;
     })
 
     /**
