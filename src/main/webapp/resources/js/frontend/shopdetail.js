@@ -15,6 +15,8 @@ $(function () {
         var url = "http://localhost:8081/shoplist/getShopInfo?index="+index+"&pageSize="+pageSize+"&shopId="+shopId;
         loading = true;
         var total;
+
+
         $.getJSON(url, function (data) {
             if (data.success){
                 var shop = data.shop;
@@ -39,7 +41,8 @@ $(function () {
                 total = productList.length;
                 var productHtml = '';
                 productList.map(function (item,index) {
-                    productHtml+='div class="card">'+
+                    productHtml+=
+                        '<div class="card">'+
                         '<div class="card-header">'+item.productName+'</div>'+
                         '<div class="card-content">'+
                         '<div class="list-block media-list">'+
@@ -61,7 +64,7 @@ $(function () {
                     '</div>'+
                     '</div>'
                 })
-                $('.list-div').html(productHtml);
+                $('.list-div').append(productHtml);
             }else {
                 $.toast(data.message);
             }
@@ -78,12 +81,26 @@ $(function () {
             $('.infinite-scroll-preloader').show();
         }
 
-        if (shopList.size == null) {
+        if (total == null || total == 0) {
             $('.infinite-scroll-preloader').hide();
         }
         loading = false;
         //刷新界面显示数据
         $.refreshScroller();
-
     }
+
+    /**
+     * 当向下活动屏幕，自动进行分页搜索
+     */
+    $('.content').scroll(function() {
+        if (loading) {
+            return;
+        }
+        var height = $('.content').height();
+        var scroll = $('.content').scrollTop();
+
+        if (height < height - scroll + 50){
+            addItems(pageSize, pageNum);
+        }
+    })
 })
