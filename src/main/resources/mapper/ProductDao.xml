@@ -13,7 +13,7 @@
         <result column="normal_price" property="normalPrice"></result>
         <result column="promotion_price" property="promotionPrice"></result>
         <result column="priority" property="priority"></result>
-        <association property="productCategory" javaType="com.hytc.o2o.entity.ProductCategory"  >
+        <association property="productCategory" javaType="com.hytc.o2o.entity.ProductCategory">
             <id column="product_category_id" property="productionCategoryId"></id>
         </association>
         <association property="shop" javaType="com.hytc.o2o.entity.Shop">
@@ -49,51 +49,51 @@
             t1.priority ASC
     </select>
 
-    <insert id="insertPrdouctIntoDb"  useGeneratedKeys="true" keyProperty="product.productId" keyColumn="product_id" >
+    <insert id="insertPrdouctIntoDb" useGeneratedKeys="true" keyProperty="product.productId" keyColumn="product_id">
         INSERT INTO
-            tb_product(
-            product_name,
-            product_desc,
-            img_addr,
-            normal_price,
-            promotion_price,
-            priority,
-            create_time,
-            last_edit_time,
-            enable_status,
-            product_category_id,
-            shop_id
-            )VALUES(
-            #{product.productName},
-            #{product.productDesc},
-            <!--缩略图 -->
-            #{product.imgAddr},
-            #{product.normalPrice},
-            #{product.promotionPrice},
-            #{product.priority},
-            NOW(),
-            NOW(),
-            '0',
-            #{product.productCategory.productionCategoryId},
-            #{product.shop.shopId}
-            )
+        tb_product(
+        product_name,
+        product_desc,
+        img_addr,
+        normal_price,
+        promotion_price,
+        priority,
+        create_time,
+        last_edit_time,
+        enable_status,
+        product_category_id,
+        shop_id
+        )VALUES(
+        #{product.productName},
+        #{product.productDesc},
+        <!--缩略图 -->
+        #{product.imgAddr},
+        #{product.normalPrice},
+        #{product.promotionPrice},
+        #{product.priority},
+        NOW(),
+        NOW(),
+        '0',
+        #{product.productCategory.productionCategoryId},
+        #{product.shop.shopId}
+        )
     </insert>
 
     <!-- 批量插入-->
-    <insert id="insertIntoProductImgDb"  >
+    <insert id="insertIntoProductImgDb">
         INSERT INTO
-            tb_product(
-            product_name,
-            product_desc,
-            img_addr,
-            normal_price,
-            promotion_price,
-            priority,
-            create_time,
-            last_edit_time,
-            enable_status,
-            product_category_id,
-            shop_id
+        tb_product(
+        product_name,
+        product_desc,
+        img_addr,
+        normal_price,
+        promotion_price,
+        priority,
+        create_time,
+        last_edit_time,
+        enable_status,
+        product_category_id,
+        shop_id
         )VALUES
         <foreach collection="productlist" item="product" index="index" separator=",">
             (
@@ -132,22 +132,22 @@
             product_id=#{productId}
     </select>
 
-    <update id="updateProduct" >
+    <update id="updateProduct">
         UPDATE
-            tb_product
+        tb_product
         SET
-            product_name = #{product.productName},
-            product_desc = #{product.productDesc},
-            <!--缩略图 -->
-            img_addr = #{product.imgAddr},
-            normal_price =  #{product.normalPrice},
-            promotion_price = #{product.promotionPrice},
-            priority = #{product.priority},
-            last_edit_time = now(),
-            enable_status = #{product.enableStatus},
-            product_category_id = #{product.productCategory.productionCategoryId}
+        product_name = #{product.productName},
+        product_desc = #{product.productDesc},
+        <!--缩略图 -->
+        img_addr = #{product.imgAddr},
+        normal_price = #{product.normalPrice},
+        promotion_price = #{product.promotionPrice},
+        priority = #{product.priority},
+        last_edit_time = now(),
+        enable_status = #{product.enableStatus},
+        product_category_id = #{product.productCategory.productionCategoryId}
         WHERE
-            product_id = #{product.productId}
+        product_id = #{product.productId}
     </update>
 
     <update id="delProductByProductId">
@@ -200,5 +200,41 @@
         ORDER BY priority DESC
         LIMIT
         #{indexNum},#{pageSize}
+    </select>
+
+    <select id="getProductList" resultType="com.hytc.o2o.entity.Product">
+        SELECT
+        product_id,
+        product_name,
+        product_desc,
+        img_addr,
+        normal_price,
+        promotion_price,
+        last_edit_time,
+        product_category_id,
+        shop_id
+        FROM
+        tb_product
+        WHERE
+        enable_status = '0'
+        <if test="product.productName neq null and product.productName neq ''">
+            AND
+            product_name = #{product.productName}
+        </if>
+        <if test="product.productCategory neq null">
+            <if test="product.productCategory.productionCategoryId neq null and product.productCategory.productionCategoryId neq ''">
+                AND
+                product_category_id = #{product.productCategory.productionCategoryId}
+            </if>
+        </if>
+
+        <if test="product.shop neq null">
+            <if test="product.shop.shopId neq null and product.shop.shopId neq ''">
+                shop_id = #{product.shop.shopId}
+            </if>
+        </if>
+        ORDER BY priority DESC
+        LIMIT
+        #{index},#{pageSize}
     </select>
 </mapper>

@@ -60,6 +60,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductList(Product product, int index, int pageSize) {
+        return productDao.getProductList(product,index,pageSize);
+    }
+
+    @Override
     public List<ProductCategory> getProductCategoeryList() {
 
         return productDao.getProductCategoryList(null);

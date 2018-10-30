@@ -76,4 +76,13 @@ public interface ProductDao {
      * @return
      */
     List<Product> getProductListByShopId(@Param("shopId") Long shopId,@Param("indexNum")int index,@Param("pageSize")int pageSize);
+
+    /**
+     * 查询商品信息
+     * @param product
+     * @param index
+     * @param pageSize
+     * @return
+     */
+    List<Product> getProductList(@Param("product") Product product, @Param("index") int index, @Param("pageSize") int pageSize);
 }

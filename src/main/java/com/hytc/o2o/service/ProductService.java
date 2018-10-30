@@ -49,4 +49,14 @@ public interface ProductService {
      * @return
      */
     List<Product> getProductByShopId(Long shopId,int index ,int pageSize);
+
+    /**
+     * 按照条件搜索商品信息
+     *
+     * @param product
+     * @param index
+     * @param pageSize
+     * @return
+     */
+    List<Product> getProductList(Product product, int index, int pageSize);
 }
