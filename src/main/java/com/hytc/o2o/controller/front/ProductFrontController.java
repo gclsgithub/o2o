@@ -54,7 +54,17 @@ public class ProductFrontController {
         product.setProductName(productName);
 
         //调用ProductService
-        List<Product> productList = productService.getProductList(product, index, pageSize);
+        try {
+            List<Product> productList = productService.getProductList(product, index, pageSize);
+            outputMap.put("success",true);
+            outputMap.put("productList",productList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            outputMap.put("success",false);
+            outputMap.put("message","数据查询失败");
+
+        }
 
 
         return outputMap;

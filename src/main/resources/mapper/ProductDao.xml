@@ -230,6 +230,7 @@
 
         <if test="product.shop neq null">
             <if test="product.shop.shopId neq null and product.shop.shopId neq ''">
+                AND
                 shop_id = #{product.shop.shopId}
             </if>
         </if>

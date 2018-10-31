@@ -1,6 +1,6 @@
 $(function () {
 
-    var shopId =getQueryString("shopId");
+    var shopId = getQueryString("shopId");
 
     var index = 1;
 
@@ -11,13 +11,14 @@ $(function () {
     var loading = false;
 
     init();
+
     function init() {
-        var url = "http://localhost:8081/shoplist/getShopInfo?index="+index+"&pageSize="+pageSize+"&shopId="+shopId;
+        var url = "http://localhost:8081/shoplist/getShopInfo?index=" + index + "&pageSize=" + pageSize + "&shopId=" + shopId;
         loading = true;
         $.getJSON(url, function (data) {
-            if (data.success){
+            if (data.success) {
                 var shop = data.shop;
-                $('#shop-cover-pic').prop('src',shop.shopImg);
+                $('#shop-cover-pic').prop('src', shop.shopImg);
                 $('#shop-name').html(shop.shopName);
                 $('#shop-desc').html(shop.shopDesc);
                 $('#shop-addr').html(shop.shopAddr);
@@ -27,41 +28,41 @@ $(function () {
                 //类别
                 var productCategoryList = data.productCategoryList;
 
-                var productCategoeryHtml = '' ;
-                productCategoryList.map(function (item,index) {
-                    productCategoeryHtml+= '<a href="javascript:void(0)" class="button" data-id="'+item.productionCategoryId+'">'+item.productionCategoryName+'</a>'
+                var productCategoeryHtml = '';
+                productCategoryList.map(function (item, index) {
+                    productCategoeryHtml += '<a href="javascript:void(0)" class="button" data-id="' + item.productionCategoryId + '">' + item.productionCategoryName + '</a>'
                 })
 
                 $('#shopdetail-button-div').html(productCategoeryHtml);
 
                 var productList = data.productList;
                 var productHtml = '';
-                productList.map(function (item,index) {
-                    productHtml+=
-                        '<div class="card">'+
-                        '<div class="card-header">'+item.productName+'</div>'+
-                        '<div class="card-content">'+
-                        '<div class="list-block media-list">'+
-                        '<ul>'+
-                        '<li class="item-content">'+
-                        '<div class="item-media">'+
-                        '<img src="'+item.imgAddr+'" width="44">'+
-                        '</div>'+
-                        '<div class="item-inner">'+
-                        '<div class="item-subtitle"></div>'+
-                        '</div>'+
-                        '</li>'+
-                        '</ul>'+
-                        '</div>'+
-                        '</div>'+
-                        '<div class="card-footer">'+
-                        '<span>'+new Date(item.lastEditTime).Format("yyyy-MM-dd")+'</span>'+
-                        '<span>点击查看</span>'+
-                    '</div>'+
-                    '</div>'
+                productList.map(function (item, index) {
+                    productHtml +=
+                        '<div class="card">' +
+                        '<div class="card-header">' + item.productName + '</div>' +
+                        '<div class="card-content">' +
+                        '<div class="list-block media-list">' +
+                        '<ul>' +
+                        '<li class="item-content">' +
+                        '<div class="item-media">' +
+                        '<img src="' + item.imgAddr + '" width="44">' +
+                        '</div>' +
+                        '<div class="item-inner">' +
+                        '<div class="item-subtitle"></div>' +
+                        '</div>' +
+                        '</li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-footer">' +
+                        '<span>' + new Date(item.lastEditTime).Format("yyyy-MM-dd") + '</span>' +
+                        '<span>点击查看</span>' +
+                        '</div>' +
+                        '</div>'
                 })
                 $('.list-div').append(productHtml);
-            }else {
+            } else {
                 $.toast(data.message);
             }
         })
@@ -87,26 +88,124 @@ $(function () {
     }
 
     /**
-     * 分页加载
+     * 搜索
      */
-    function addItems(){
+    $('#search').on("change", function () {
+        searchProductInfos();
+    })
+
+    $('.shopdetail-button-div').on(
+        'click',
+        '.button',
+        function (bf) {
+
+            $('.list-div').empty();
+            areaId = $('#area-search').val();
+            shopCategoeryId = $(bf.target).dataset().id;
+            shopName = $('#search').val();
+            pageNum = 1;
+            $('a[data-Id]').removeClass('button-fill');
+            $(bf.target).addClass('button-fill');
+            addItems(pageSize, pageNum);
+        })
+
+    /**
+     * 搜索加载
+     */
+    function searchProductInfos() {
+
         var url = 'http://localhost:8081/productfront/searchproductInfos';
         var formData = new FormData();
 
-        formData.append("productName",$('#search').val());
-        formData.append("productCategoeryId",$('#search').val());
-        formData.append("shopId",getQueryString("shopId"));
-        formData.append("index",index);
-        formData.append("pageSize",pageSize);
+        index = 1;
+        $('a[data-Id]').find('.button-fill');
+        formData.append("productName", $('#search').val());
+        formData.append("productCategoeryId", $('#search').val());
+        formData.append("shopId", getQueryString("shopId"));
+        formData.append("index", index);
+        formData.append("pageSize", pageSize);
 
         $.ajax({
-            url:url,
-            type:'POST',
-            data:formData,
-            cache:false,
-            contentType:false,
-            processData:false,
-            success:function (data) {
+            url: url,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.success) {
+                    var productList = data.productList;
+                    var productHtml = '';
+                    productList.map(function (item, index) {
+                        productHtml +=
+                            '<div class="card">' +
+                            '<div class="card-header">' + item.productName + '</div>' +
+                            '<div class="card-content">' +
+                            '<div class="list-block media-list">' +
+                            '<ul>' +
+                            '<li class="item-content">' +
+                            '<div class="item-media">' +
+                            '<img src="' + item.imgAddr + '" width="44">' +
+                            '</div>' +
+                            '<div class="item-inner">' +
+                            '<div class="item-subtitle"></div>' +
+                            '</div>' +
+                            '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="card-footer">' +
+                            '<span>' + new Date(item.lastEditTime).Format("yyyy-MM-dd") + '</span>' +
+                            '<span>点击查看</span>' +
+                            '</div>' +
+                            '</div>'
+                    })
+                    $('.list-div').html(productHtml);
+                } else {
+                    $.toast(data.message);
+                }
+
+                var total = $('.list-div .card').length;
+
+                if (total > maxItem) {
+
+                    // 加载完毕，则注销无限加载事件，以防不必要的加载
+
+                    // 隐藏加载提示符
+                    $('.infinite-scroll-preloader').hide();
+                    return;
+                } else {
+                    $('.infinite-scroll-preloader').show();
+                }
+
+                if (productList.size == null) {
+                    $('.infinite-scroll-preloader').hide();
+                }
+            }
+        })
+    }
+
+    /**
+     * 分页加载
+     */
+    function addItems() {
+        var url = 'http://localhost:8081/productfront/searchproductInfos';
+        var formData = new FormData();
+
+        formData.append("productName", $('#search').val());
+        formData.append("productCategoeryId", $('#search').val());
+        formData.append("shopId", getQueryString("shopId"));
+        formData.append("index", index);
+        formData.append("pageSize", pageSize);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
                 if (data.success) {
                     var productList = data.productList;
                     var productHtml = '';
@@ -135,7 +234,7 @@ $(function () {
                             '</div>'
                     })
                     $('.list-div').append(productHtml);
-                }else {
+                } else {
                     $.toast(data.message);
                 }
 
@@ -162,15 +261,15 @@ $(function () {
     /**
      * 当向下活动屏幕，自动进行分页搜索
      */
-    $('.content').scroll(function() {
+    $('.content').scroll(function () {
         if (loading) {
             return;
         }
         var height = $('.content').height();
         var scroll = $('.content').scrollTop();
 
-        if (height < height - scroll + 50){
-            addItems(pageSize, pageNum);
+        if (height < height - scroll + 50) {
+            addItems(index, pageSize);
         }
     })
 })
