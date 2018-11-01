@@ -100,9 +100,9 @@ $(function () {
         function (bf) {
 
             $('.list-div').empty();
-            areaId = $('#area-search').val();
-            shopCategoeryId = $(bf.target).dataset().id;
-            shopName = $('#search').val();
+
+            var  shopCategoeryId = $(bf.target).dataset().id;
+            $('#productCategoeryId').val(shopCategoeryId);
             pageNum = 1;
             $('a[data-Id]').removeClass('button-fill');
             $(bf.target).addClass('button-fill');
@@ -120,7 +120,7 @@ $(function () {
         index = 1;
         $('a[data-Id]').find('.button-fill');
         formData.append("productName", $('#search').val());
-        formData.append("productCategoeryId", $('#search').val());
+        formData.append("productCategoeryId", $('#productCategoeryId').val());
         formData.append("shopId", getQueryString("shopId"));
         formData.append("index", index);
         formData.append("pageSize", pageSize);
@@ -193,7 +193,7 @@ $(function () {
         var formData = new FormData();
 
         formData.append("productName", $('#search').val());
-        formData.append("productCategoeryId", $('#search').val());
+        formData.append("productCategoeryId", $('#productCategoeryId').val());
         formData.append("shopId", getQueryString("shopId"));
         formData.append("index", index);
         formData.append("pageSize", pageSize);
