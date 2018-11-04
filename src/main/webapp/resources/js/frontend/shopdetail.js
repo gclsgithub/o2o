@@ -39,7 +39,7 @@ $(function () {
                 var productHtml = '';
                 productList.map(function (item, index) {
                     productHtml +=
-                        '<div class="card">' +
+                        '<div class="card" data-product-id="' + item.productId + '">' +
                         '<div class="card-header">' + item.productName + '</div>' +
                         '<div class="card-content">' +
                         '<div class="list-block media-list">' +
@@ -49,7 +49,8 @@ $(function () {
                         '<img src="' + item.imgAddr + '" width="44">' +
                         '</div>' +
                         '<div class="item-inner">' +
-                        '<div class="item-subtitle"></div>' +
+                        '<div class="item-subtitle">' +
+                        '</div>' +
                         '</div>' +
                         '</li>' +
                         '</ul>' +
@@ -86,6 +87,14 @@ $(function () {
         //刷新界面显示数据
         $.refreshScroller();
     }
+
+    /**
+     * 点击卡片进入详情
+     */
+    $('.list-div').on('click', '.card', function (cuurent) {
+        var productId = cuurent.currentTarget.dataset.productId;
+        window.location.href = "http://localhost:8081/frontend/productdetail?productId=" + productId;
+    })
 
     /**
      * 搜索
@@ -138,7 +147,7 @@ $(function () {
                     var productHtml = '';
                     productList.map(function (item, index) {
                         productHtml +=
-                            '<div class="card">' +
+                            '<div class="card" data-product-id="' + item.productId + '">' +
                             '<div class="card-header">' + item.productName + '</div>' +
                             '<div class="card-content">' +
                             '<div class="list-block media-list">' +
@@ -148,7 +157,9 @@ $(function () {
                             '<img src="' + item.imgAddr + '" width="44">' +
                             '</div>' +
                             '<div class="item-inner">' +
-                            '<div class="item-subtitle"></div>' +
+                            '<div class="item-subtitle">' +
+                            '<input type="hidden" name="productId" value="'+item.productId+'">' +
+                            '</div>' +
                             '</div>' +
                             '</li>' +
                             '</ul>' +
