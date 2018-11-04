@@ -8,6 +8,7 @@ import com.hytc.o2o.dao.AreaDao;
 import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.exceptions.AreaOptionException;
 import com.hytc.o2o.service.AreaService;
+import com.hytc.o2o.service.CacheService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class AreaServiceImpl implements AreaService {
 
     @Autowired
     private static Logger logger = LoggerFactory.getLogger(AreaServiceImpl.class);
+
+    @Autowired
+    private CacheService cacheService;
 
     private static final String AREA_LIST_KEY = "arealist";
 
