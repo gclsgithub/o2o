@@ -25,7 +25,7 @@ $(function () {
     }
 
     function goShop(status,id ) {
-        if (status != 0 && status != -1){
+        if (status != 1 && status != -1){
             return '<a href = "/shop/mappershopfunction?shopId='+id+'">进入</a>';
         }else{
             return '';

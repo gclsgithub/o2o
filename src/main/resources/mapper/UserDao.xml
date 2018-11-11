@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.UserDao">
+
+    <resultMap id="personMap" type="com.hytc.o2o.entity.LocalAuth">
+        <id column="local_auth_id" property="localAuthID"></id>
+        <result column="user_name" property="userName"></result>
+        <result column="pass_word" property="passWord"></result>
+        <result column="last_edit_time" property="lastEditTime"></result>
+        <association property="personInfo" javaType="com.hytc.o2o.entity.PersonInfo">
+            <id column="user_id" property="userId"></id>
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+
+    <select id="login" resultMap="personMap">
+        SELECT
+          t1.local_auth_id,
+          t1.user_name,
+          t1.pass_word,
+          t1.last_edit_time,
+          t2.user_id,
+          t2.name
+        FROM
+          tb_local_auth t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t2.user_id = t1.user_id
+        WHERE
+          t1.user_name = #{auth.userName}
+        AND
+          t1.pass_word = #{auth.passWord}
+        <!-- 保证用户信息不被删除 -->
+        AND
+          t2.enable_status = '0'
+    </select>
+
+    <insert id="insertIntoLocalAuth">
+        INSERT INTO
+          tb_local_auth
+              (user_id,
+              user_name,
+              pass_word,
+              create_time,
+              last_edit_time)
+          VALUES
+            (
+            #{userId},
+            #{auth.userName},
+            #{auth.passWord},
+            NOW(),
+            NOW()
+          )
+    </insert>
+
+    <insert id="insertIntoPersonInfo" parameterType="com.hytc.o2o.entity.PersonInfo" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId" >
+
+        INSERT INTO
+          tb_person_info
+        (
+          name,
+          profile_img,
+          email,
+          gender,
+          enable_status,
+          user_type,
+          create_time,
+          last_edit_time
+        )
+        VALUES (
+          #{name},
+          #{profileImg},
+          #{email},
+          #{gender},
+          '1',
+          #{userType},
+          NOW(),
+          NOW()
+        )
+    </insert>
+
+    <insert id="insertIntoPhoneAuth">
+        INSERT INTO
+            tb_phone_auth
+        (
+          user_id,
+          phone,
+          auth_number
+        ) VALUES (
+          #{userId},
+          #{aurh.personInfo.phone},
+          '000000'
+        )
+    </insert>
+
+    <update id="updateAuth">
+        UPDATE
+          tb_local_auth
+        SET
+          pass_word = #{auth.passWord}
+        WHERE
+          user_id = #{auth.personInfo.userId}
+    </update>
+</mapper>

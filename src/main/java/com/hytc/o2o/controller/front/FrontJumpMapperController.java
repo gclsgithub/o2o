@@ -61,4 +61,12 @@ public class FrontJumpMapperController {
      */
     @RequestMapping(value = "/productdetail", method = RequestMethod.GET)
     public String jumpProductDetial(){return "/frontend/productdetail";}
+
+
+    /**
+     * 到登陆画面
+     */
+    @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
+    public String jumpToLogin(){return "/frontend/frontLogin";}
+
 }

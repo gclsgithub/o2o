@@ -11,6 +11,21 @@ function getQueryString(name) {
 }
 
 /**
+ * 系统休眠
+ * @param n 休眠时间
+ */
+function sleep(n){
+
+    var start = new Date().getTime();
+    
+    while(true) {
+        if (new Date().getTime() - start >= n){
+            break;
+        }
+    }
+}
+
+/**
  *格式化时间
  */
 Date.prototype.Format = function(fmt) {
@@ -33,3 +48,4 @@ Date.prototype.Format = function(fmt) {
                 : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
