@@ -13,6 +13,8 @@ public class PersonInfo {
     //姓名
     private String name;
 
+    private String phone;
+
     private String profileImg;
 
     private String email;
@@ -27,6 +29,14 @@ public class PersonInfo {
     private Date createTime;
 
     private Date lastEditTime;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Long getUserId() {
         return userId;

@@ -1,24 +1,31 @@
 package com.hytc.o2o.entity;
 
+import com.sun.istack.internal.NotNull;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * 本地账户
+ *
  * @author hytc
  */
 public class LocalAuth {
 
-    private  Long localAuthID;
+    private Long localAuthID;
 
+    @NotNull
     private String userName;
 
+    @NotNull
     private String passWord;
 
-    private Date crateTime;
+    private LocalDateTime crateTime;
 
     private Date lastEditTime;
 
     private PersonInfo personInfo;
+
 
     public void setLocalAuthID(Long localAuthID) {
         this.localAuthID = localAuthID;
@@ -32,7 +39,7 @@ public class LocalAuth {
         this.passWord = passWord;
     }
 
-    public void setCrateTime(Date crateTime) {
+    public void setCrateTime(LocalDateTime crateTime) {
         this.crateTime = crateTime;
     }
 
@@ -56,7 +63,7 @@ public class LocalAuth {
         return passWord;
     }
 
-    public Date getCrateTime() {
+    public LocalDateTime getCrateTime() {
         return crateTime;
     }
 
