@@ -2,6 +2,12 @@ $(function () {
 
     getShopList();
 
+    $('#log-out').on('click',function () {
+
+        var url = "http://localhost:8081/jumpto/logout";
+
+        window.location.href=url;
+    })
 
     function getShopList() {
         var getShopListInitUril="/shopadmin/showShopList";
