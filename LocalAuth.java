@@ -14,10 +14,8 @@ public class LocalAuth {
 
     private Long localAuthID;
 
-    @NotNull
     private String userName;
 
-    @NotNull
     private String passWord;
 
     private LocalDateTime crateTime;
@@ -26,6 +24,15 @@ public class LocalAuth {
 
     private PersonInfo personInfo;
 
+    private String userType;
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
     public void setLocalAuthID(Long localAuthID) {
         this.localAuthID = localAuthID;
