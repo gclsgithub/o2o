@@ -18,6 +18,7 @@ $(function () {
 
         formData.append("userName",userName);
         formData.append("passWord",passWord);
+        formData.append("userType","1");
 
         $.ajax({
             url:url,

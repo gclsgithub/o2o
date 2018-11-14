@@ -3,8 +3,6 @@ package com.hytc.o2o.service.impl;
 import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.dao.UserDao;
 import com.hytc.o2o.entity.LocalAuth;
-import com.hytc.o2o.entity.PersonInfo;
-import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.service.UserService;
 import com.hytc.o2o.util.ImageUtil;
 import com.hytc.o2o.util.PathUtil;
@@ -48,14 +46,17 @@ public class UserServcieImpl implements UserService {
 
         Long userId = 0L;
         try {
-            userId = userDao.insertIntoPersonInfo(auth.getPersonInfo());
+            userDao.insertIntoPersonInfo(auth.getPersonInfo());
+
+            //取出userId
+            userId = userDao.findUserIdByUserNameAndPassword(auth);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         auth.getPersonInfo().setProfileImg(addr);
         if (userId != 0) {
-            boolean flag = userDao.insertIntoLocalAuth(auth,userId);
+            boolean flag = userDao.insertIntoLocalAuth(auth, userId);
             if (flag) {
                 boolean insertFlag = userDao.insertIntoPhoneAuth(auth, userId);
                 return insertFlag;
@@ -71,13 +72,13 @@ public class UserServcieImpl implements UserService {
     public void modify(LocalAuth localAuth) {
         int count = 0;
         try {
-             count = userDao.updateAuth(localAuth);
-        }catch (Exception e){
+            count = userDao.updateAuth(localAuth);
+        } catch (Exception e) {
 
             //不存在的异常
             e.printStackTrace();
         }
-        if (count == 0 ){
+        if (count == 0) {
             throw new RuntimeException("更新的数据不存");
         }
     }

@@ -16,6 +16,7 @@ $(function () {
         var userName = $('#userName').val();
         var passWord = $('#passWord').val();
 
+        formData.append("userType","2");
         formData.append("userName",userName);
         formData.append("passWord",passWord);
 
@@ -31,7 +32,7 @@ $(function () {
                     $.toast("success");
                     window.location.href=indexUrl;
                 } else {
-                    $.toast(output.message);
+                    $.toast(data.message);
                 }
             }
         })

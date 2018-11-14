@@ -9,7 +9,6 @@ import com.hytc.o2o.util.HttpRequestUtil;
 import com.hytc.o2o.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,12 +42,16 @@ public class RestUserController {
 
         String passWord = HttpRequestUtil.getString(request, "passWord");
 
+        String userType = HttpRequestUtil.getString(request, "userType");
+
         LocalAuth localAuth = new LocalAuth();
 
         localAuth.setUserName(userName);
 
         //对密码进行MD5加密之后存放入数据库
         localAuth.setPassWord(MD5Util.getEncode(passWord));
+
+        localAuth.setUserType(userType);
 
         //判断是否登陆成功，登陆成功把Seesion存放在数据库中
         LocalAuth myauth = null;
@@ -57,7 +60,7 @@ public class RestUserController {
         try {
             myauth = userService.doLogin(localAuth);
 
-            if (ObjectUtils.isEmpty(myauth)) {
+            if (!ObjectUtils.isEmpty(myauth)) {
                 isLogin = true;
             }
         } catch (Exception e) {

@@ -59,6 +59,8 @@ $(function () {
 
         personInfo.phone = $('#phone').val();
 
+        personInfo.userType = '1';
+
         localAuth.personInfo = personInfo;
 
         if (confirmPassWord == '' || confirmPassWord != localAuth.passWord  ) {

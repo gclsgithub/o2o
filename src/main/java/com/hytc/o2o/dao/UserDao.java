@@ -23,8 +23,7 @@ public interface UserDao {
     boolean insertIntoLocalAuth(@Param("auth") LocalAuth auth, @Param("userId") Long userId);
 
     /**
-     * 注册用户信息
-     * <p>
+     * 注册用户信息<p>
      * 使用userGenerableKey 不能使用@Param（）注解
      *
      * @param personInfo
@@ -43,8 +42,17 @@ public interface UserDao {
 
     /**
      * 更新商品信息
+     *
      * @param localAuth
      * @return
      */
     int updateAuth(@Param("auth") LocalAuth localAuth);
+
+    /**
+     * 查找userId
+     *
+     * @param auth
+     * @return
+     */
+    Long findUserIdByUserNameAndPassword(@Param("auth") LocalAuth auth);
 }
