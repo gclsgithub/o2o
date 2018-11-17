@@ -12,6 +12,7 @@ public interface HeadLineDao {
 
     /**
      * 查询指定状态下的头条信息
+     *
      * @param headLine
      * @return
      */
@@ -19,6 +20,7 @@ public interface HeadLineDao {
 
     /**
      * 根据Id查询头条信息
+     *
      * @param headLine
      * @return
      */
@@ -26,8 +28,16 @@ public interface HeadLineDao {
 
     /**
      * 根据Id查询头条信息
+     *
      * @param list
      * @return
      */
     List<HeadLine> queryHeadLineByIds(@Param("list") List<HeadLine> list);
+
+    /**
+     * 查询指定状态的status
+     *
+     * @return
+     */
+    List<HeadLine> queryHeadLines(@Param("status") String status);
 }

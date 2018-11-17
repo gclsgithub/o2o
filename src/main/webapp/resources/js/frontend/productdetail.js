@@ -26,7 +26,9 @@ $(function () {
                     $('#product-img').prop("src",data.product.imgAddr);
                     $('#product-name').html(data.product.productName);
                     $('#product-desc').html(data.product.productDesc);
-
+                    if (data.product.point != undefined) {
+                        $('#product-point').html("购买可以得到：" + data.product.point + "个积分");
+                    }
                 } else {
                     $.toast(data.message);
                 }

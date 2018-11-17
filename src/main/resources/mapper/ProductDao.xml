@@ -13,6 +13,7 @@
         <result column="normal_price" property="normalPrice"></result>
         <result column="promotion_price" property="promotionPrice"></result>
         <result column="priority" property="priority"></result>
+        <result column="point" property="point"></result>
         <association property="productCategory" javaType="com.hytc.o2o.entity.ProductCategory">
             <id column="product_category_id" property="productionCategoryId"></id>
         </association>
@@ -62,7 +63,8 @@
         last_edit_time,
         enable_status,
         product_category_id,
-        shop_id
+        shop_id,
+        point
         )VALUES(
         #{product.productName},
         #{product.productDesc},
@@ -75,7 +77,8 @@
         NOW(),
         '0',
         #{product.productCategory.productionCategoryId},
-        #{product.shop.shopId}
+        #{product.shop.shopId},
+        #{product.point}
         )
     </insert>
 
@@ -125,7 +128,8 @@
             priority,
             product_category_id,
             shop_id,
-            enable_status
+            enable_status,
+            point
         FROM
             tb_product
         WHERE
@@ -184,6 +188,7 @@
         SELECT
           product_id,
           product_name,
+          point,
           product_desc,
           img_addr,
           normal_price,
@@ -206,6 +211,7 @@
         SELECT
         product_id,
         product_name,
+        point,
         product_desc,
         img_addr,
         normal_price,

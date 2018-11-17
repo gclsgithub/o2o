@@ -8,7 +8,16 @@ public interface HeadLineService {
 
     /**
      * 获取在线的头条信息
+     *
      * @return
      */
-    List<HeadLine> getHeadLine();
+    List<HeadLine> getUpHeadLine();
+
+    /**
+     * 获取指定状态的头条信息
+     *
+     * @param status
+     * @return
+     */
+    List<HeadLine> getAllHeadLines(String status);
 }

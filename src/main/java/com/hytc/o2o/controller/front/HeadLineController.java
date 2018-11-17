@@ -45,7 +45,7 @@ public class HeadLineController {
 
         // 取出头条
         try {
-            List<HeadLine> headLineList = headLineService.getHeadLine();
+            List<HeadLine> headLineList = headLineService.getUpHeadLine();
             mapMap.put("headLineList", headLineList);
         } catch (Exception ex) {
             mapMap.put("success", false);

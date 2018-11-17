@@ -8,7 +8,7 @@ $(function() {
 
     //返回按键
     $('#back').on("click",function () {
-        window.location.href = "/shop/productmanage?shopId="+$('#shopId').val();
+        window.location.href = "/shop/mappershopfunction?shopId="+$('#shopId').val();
 
     })
 
@@ -40,7 +40,7 @@ $(function() {
         product.promotionPrice = $('#promotion-price').val();
         product.productDesc = $('#product-desc').val();
         product.productId = getQueryString('productId');
-
+        product.point = $('#point').val();
         //类别
         product.productCategory = {
             productionCategoryId:$('#category').find('option').not(function(){
@@ -116,6 +116,7 @@ $(function() {
                         $('#product-name').attr("value",product.productName);
                         $('#category').html(temHtmlShopCategoeryCompenx);
                         $('#priority').attr("value",product.priority);
+                        $('#point').attr("value",product.point);
                         $('#normal-price').attr("value",product.normalPrice);
                         $('#promotion-price').attr("value",product.promotionPrice);
                         $('#small-img').attr("value",product.promotionPrice);

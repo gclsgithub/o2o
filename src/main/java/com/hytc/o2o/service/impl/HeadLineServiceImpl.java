@@ -15,9 +15,14 @@ public class HeadLineServiceImpl implements HeadLineService {
     HeadLineDao headLineDao;
 
     @Override
-    public List<HeadLine> getHeadLine() {
+    public List<HeadLine> getUpHeadLine() {
         HeadLine headLine = new HeadLine();
         headLine.setEnableStatus(0);
         return headLineDao.queryHeadLineNotDel(headLine);
+    }
+
+    @Override
+    public List<HeadLine> getAllHeadLines(String staus) {
+        return headLineDao.queryHeadLines(staus);
     }
 }

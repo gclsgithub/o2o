@@ -54,4 +54,21 @@
             </foreach>
     </select>
 
+    <select id="queryHeadLines" resultType="com.hytc.o2o.entity.HeadLine">
+        SELECT
+            line_id,
+            line_name,
+            line_link,
+            line_img,
+            priority,
+            enable_status
+        FROM
+            tb_head_line
+        <where>
+            <if test="status neq null and status neq ''">
+                enable_status = #{status}
+            </if>
+        </where>
+    </select>
+
 </mapper>
