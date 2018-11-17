@@ -27,6 +27,8 @@ public class Product {
 
     private Integer priority;
 
+    private Integer point;
+
     private LocalDateTime createTime;
 
     private LocalDateTime lastEditTime;
@@ -41,6 +43,14 @@ public class Product {
     private ProductCategory productCategory;
 
     private Shop shop;
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
 
     public Long getProductId() {
         return productId;
