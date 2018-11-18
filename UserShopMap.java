@@ -17,6 +17,9 @@ public class UserShopMap {
 
     private Shop shop;
 
+    public UserShopMap() {
+    }
+
     public Long getUserShopId() {
         return userShopId;
     }

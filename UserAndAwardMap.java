@@ -33,16 +33,6 @@ public class UserAndAwardMap {
      */
     private PersonInfo operator;
 
-    public UserAndAwardMap(Long userAndAwardId, Date createTime, Integer userStatus, Integer point, PersonInfo user, Award award, PersonInfo operator) {
-        this.userAndAwardId = userAndAwardId;
-        this.createTime = createTime;
-        this.usedStatus = userStatus;
-        this.point = point;
-        this.user = user;
-        this.award = award;
-        this.operator = operator;
-    }
-
     public Long getUserAndAwardId() {
         return userAndAwardId;
     }
@@ -59,12 +49,12 @@ public class UserAndAwardMap {
         this.createTime = createTime;
     }
 
-    public Integer getUserStatus() {
+    public Integer getUsedStatus() {
         return usedStatus;
     }
 
-    public void setUserStatus(Integer userStatus) {
-        this.usedStatus = userStatus;
+    public void setUsedStatus(Integer usedStatus) {
+        this.usedStatus = usedStatus;
     }
 
     public Integer getPoint() {

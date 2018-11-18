@@ -24,6 +24,9 @@ public class UserProductMap {
 
     private PersonInfo operator;
 
+    public UserProductMap() {
+    }
+
     public Long getUserProductId() {
         return userProductId;
     }

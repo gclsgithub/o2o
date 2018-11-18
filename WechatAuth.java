@@ -16,6 +16,9 @@ public class WechatAuth {
 
     private PersonInfo personInfo;
 
+    public WechatAuth() {
+    }
+
     public void setWechatID(Long wechatID) {
         this.wechatID = wechatID;
     }

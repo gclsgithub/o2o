@@ -21,6 +21,9 @@ public class Award {
 
     private String awardImg;
 
+    /**
+     * 这个奖品将要消耗的分数
+     */
     private Integer needPoint;
 
     private Integer priority;
@@ -29,10 +32,23 @@ public class Award {
 
     private Date lastEditTime;
 
+    private String enableStatus;
+
     /**
      * 属于哪个店铺
      */
     private Long shopId;
+
+    public String getEnableStatus() {
+        return enableStatus;
+    }
+
+    public void setEnableStatus(String enableStatus) {
+        this.enableStatus = enableStatus;
+    }
+
+    public Award() {
+    }
 
     @Override
     public boolean equals(Object o) {
