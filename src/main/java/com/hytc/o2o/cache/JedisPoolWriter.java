@@ -5,17 +5,20 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class JedisPoolWriter {
 
-    /** Redis连接吃对象*/
+    /**
+     * Redis连接吃对象
+     */
     private JedisPool jedisPool;
 
 
     /**
      * 构造函数
+     *
      * @param jedisPoolConfig
      */
-    public JedisPoolWriter(JedisPoolConfig jedisPoolConfig,final String host, final int port){
+    public JedisPoolWriter(JedisPoolConfig jedisPoolConfig, final String host, final int port) {
         try {
-            jedisPool  = new JedisPool(jedisPoolConfig,host,port);
+            jedisPool = new JedisPool(jedisPoolConfig, host, port);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -23,7 +26,8 @@ public class JedisPoolWriter {
 
     /**
      * 获取链接池对象
-     * @return
+     *
+     * @return JedisPool
      */
     public JedisPool getJedisPool() {
         return jedisPool;
@@ -31,6 +35,7 @@ public class JedisPoolWriter {
 
     /**
      * 设置链接池对象
+     *
      * @param jedisPool
      */
     public void setJedisPool(JedisPool jedisPool) {
