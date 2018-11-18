@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.UserProductMapDao">
+
+    <resultMap id="userAndProdcuMap" type="com.hytc.o2o.entity.UserProductMap">
+        <id column="user_product_id" property="userProductId"></id>
+        <result column="create_time" property="createTime"></result>
+        <result column="point" property="point"></result>
+        <association property="user" javaType="com.hytc.o2o.entity.PersonInfo">
+            <id column="userId" property="userId"></id>
+            <result column="name" property="name"></result>
+        </association>
+        <association property="operator" javaType="com.hytc.o2o.entity.PersonInfo">
+            <id column="operator_id" property="userId"></id>
+            <result column="operatorName" property="name"></result>
+        </association>
+        <association property="product" javaType="com.hytc.o2o.entity.Product">
+            <id column="product_id" property="productId"></id>
+            <result column="product_name" property="productName"></result>
+            <result column="product_desc" property="productDesc"></result>
+            <result column="img_addr" property="imgAddr"></result>
+            <result column="normal_price" property="normalPrice"></result>
+            <result column="promotion_price" property="promotionPrice"></result>
+        </association>
+        <association property="shop" javaType="com.hytc.o2o.entity.Shop">
+            <id column="shop_id" property="shopId"></id>
+            <result column="shop_name" property="shopName"></result>
+            <result column="shop_desc" property="shopDesc"></result>
+            <result column="shop_addr" property="shopAddr"></result>
+            <result column="phone" property="phone"></result>
+            <result column="shop_img" property="shopImg"></result>
+        </association>
+    </resultMap>
+
+    <select id="findUserProductMapList" resultMap="userAndProdcuMap">
+        SELECT
+        t1.user_product_id,
+        t1.create_time,
+        t1.point,
+        t2.user_id AS userId,
+        t2.name,
+        t3.product_id,
+        t3.product_name,
+        t3.product_desc,
+        t3.img_addr,
+        t3.normal_price,
+        t3.promotion_price,
+        t4.shop_id,
+        t4.shop_name,
+        t4.shop_desc,
+        t4.shop_addr,
+        t4.phone,
+        t4.shop_img,
+        t5.operator_id,
+        t5.name AS operatorName
+        FROM
+        tb_user_product_map t1
+        LEFT JOIN
+        tb_person_info t2
+        ON
+        t1.user_id = t2.user_id
+        LEFT JOIN
+        tb_product t3
+        ON
+        t1.product_id = t3.product_id
+        LEFT JOIN
+        tb_shop t4
+        ON
+        t1.shop_id = t4.shop_id
+        LEFT JOIN
+        tb_person_info t5
+        ON
+        t1.operator_id = t5.user_id
+        <where>
+            <if test="condition.userProductId neq null and condition.userProductId neq ''">
+                AND t1.user_award_id = #{condition.userProductId}
+            </if>
+            <if test="condition.point neq null and condition.point neq ''">
+                AND t1.point = #{condition.point}
+            </if>
+            <if test="condition.user.name neq null and condition.user.name neq ''">
+                AND t2.name LIKE CONCAT('%',#{condition.user.name},'%')
+            </if>
+            <if test="condition.product.productName neq null and condition.product.productName neq ''">
+                AND t3.product_name = CONCAT('%',#{condition.product.productName},'%')
+            </if>
+            <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                AND t3.shop_name = CONCAT('%',#{condition.shop.shopName},'%')
+            </if>
+        </where>
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="queryUserProductCount" resultType="java.lang.Integer">
+        SELECT
+        CONT(1)
+        FROM
+        tb_user_product_map t1
+        LEFT JOIN
+        tb_local_auth t2
+        ON
+        t1.user_id = t2.user_id
+        LEFT JOIN
+        tb_product t3
+        ON
+        t1.product_id = t3.product_id
+        LEFT JOIN
+        tb_shop t4
+        ON
+        t1.shop_id = t4.shop_id
+        LEFT JOIN
+        tb_person_info t5
+        ON
+        t1.operator_id = t5.user_id
+        <where>
+            <if test="condition.userProductId neq null and condition.userProductId neq ''">
+                AND t1.user_award_id = #{condition.userProductId}
+            </if>
+            <if test="condition.point neq null and condition.point neq ''">
+                AND t1.point = #{condition.point}
+            </if>
+            <if test="condition.user.name neq null and condition.user.name neq ''">
+                AND t2.name LIKE CONCAT('%',#{condition.user.name},'%')
+            </if>
+            <if test="condition.product.productName neq null and condition.product.productName neq ''">
+                AND t3.product_name = CONCAT('%',#{condition.product.productName},'%')
+            </if>
+            <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                AND t3.shop_name = CONCAT('%',#{condition.shop.shopName},'%')
+            </if>
+        </where>
+    </select>
+    
+    <insert id="save">
+        INSERT INTO
+          tb_user_product_map
+          (
+          user_id
+          ,product_id
+          ,shop_id
+          ,operator_id
+          ,user_name
+          ,product_name
+          ,create_time
+          ,point
+          ) VALUES(
+
+          )
+
+    </insert>
+
+</mapper>

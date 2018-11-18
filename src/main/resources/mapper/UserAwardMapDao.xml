@@ -54,22 +54,22 @@
           t4.user_id = t1.operator
         <where>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                t1.user_award_id = #{condition.userAndAwardId}
+                AND t1.user_award_id = #{condition.userAndAwardId}
             </if>
             <if test="condition.usedStatus neq null and condition.usedStatus neq ''">
-                t1.used_status = #{condition.usedStatus}
+                AND t1.used_status = #{condition.usedStatus}
             </if>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                t1.point = #{condition.point}
+                AND t1.point = #{condition.point}
             </if>
             <if test="condition.user.name neq null and condition.user.name neq ''">
-                t2.name LIKE CONCAT('%',#{condition.user.name},'%')
+                AND t2.name LIKE CONCAT('%',#{condition.user.name},'%')
             </if>
             <if test="condition.award.awardName neq null and condition.award.awardName neq ''">
-                t3.award_name LIKE CONCAT('%',#{condition.award.awardName},'%')
+                AND t3.award_name LIKE CONCAT('%',#{condition.award.awardName},'%')
             </if>
             <if test="condition.operator.name neq null and condition.operator.name neq ''">
-                t3.name LIKE CONCAT('%',#{condition.operator.name},'%')
+                AND t3.name LIKE CONCAT('%',#{condition.operator.name},'%')
             </if>
         </where>
         LIMIT #{start},#{pageSize}
@@ -82,13 +82,13 @@
         tb_user_award_map
         <where>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                user_award_id = #{condition.userAndAwardId}
+                AND user_award_id = #{condition.userAndAwardId}
             </if>
             <if test="condition.usedStatus neq null and condition.usedStatus neq ''">
-                used_status = #{condition.usedStatus}
+                AND used_status = #{condition.usedStatus}
             </if>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                point = #{condition.point}
+                AND point = #{condition.point}
             </if>
         </where>
     </select>
