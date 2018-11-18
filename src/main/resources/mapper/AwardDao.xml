@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.AwardDao">
+
+    <select id="findAwardsBySomeAwardCondition" resultType="com.hytc.o2o.entity.Award">
+        SELECT
+        award_id AS awardId,
+        award_name AS awardName,
+        award_desc AS awardDesc,
+        award_img AS awardImg,
+        point AS needPoint,
+        create_time AS createTime,
+        last_edit_time AS lastEditTime,
+        shop_id AS shopId
+        FROM
+        tb_award
+        <where>
+            <if test="condition.awardId neq null and condition.awardId neq ''">
+                AND
+                award_id = #{condition.awardId}
+            </if>
+            <if test="condition.awardName neq null and condition.awardName neq ''">
+                AND
+                award_name = #{condition.awardName}
+            </if>
+            <if test="condition.awardDesc neq null and condition.awardDesc neq ''">
+                AND
+                award_desc = #{condition.awardDesc}
+            </if>
+            <if test="condition.awardImg neq null and condition.awardImg neq ''">
+                AND
+                award_img = #{condition.awardImg}
+            </if>
+            <if test="condition.needPoint neq null and condition.needPoint neq ''">
+                AND
+                point = #{condition.needPoint}
+            </if>
+            <if test="condition.shopId neq null and condition.shopId neq ''">
+                AND
+                shop_id = #{condition.shopId}
+            </if>
+            <if test="condition.enableStatus neq null and condition.enableStatus neq ''">
+                AND
+                enable_status = #{condition.enableStatus}
+            </if>
+        </where>
+        ORDER BY
+        priority DESC
+        LIMIT #{startPage},#{pageSize}
+    </select>
+
+
+    <select id="findAwardsCount" resultType="java.lang.Integer">
+        SELECT
+        count(award_id)
+        FROM
+        tb_award
+        <where>
+            <if test="condition.awardId neq null and condition.awardId neq ''">
+                AND
+                award_id = #{condition.awardId}
+            </if>
+            <if test="condition.awardName neq null and condition.awardName neq ''">
+                AND
+                award_name = #{condition.awardName}
+            </if>
+            <if test="condition.awardDesc neq null and condition.awardDesc neq ''">
+                AND
+                award_desc = #{condition.awardDesc}
+            </if>
+            <if test="condition.awardImg neq null and condition.awardImg neq ''">
+                AND
+                award_img = #{condition.awardImg}
+            </if>
+            <if test="condition.needPoint neq null and condition.needPoint neq ''">
+                AND
+                point = #{condition.needPoint}
+            </if>
+            <if test="condition.shopId neq null and condition.shopId neq ''">
+                AND
+                shop_id = #{condition.shopId}
+            </if>
+            <if test="condition.enableStatus neq null and condition.enableStatus neq ''">
+                AND
+                enable_status = #{condition.enableStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAwardById" resultType="com.hytc.o2o.entity.Award">
+         SELECT
+            award_id AS awardId,
+            award_name AS awardName,
+            award_desc AS awardDesc,
+            award_img AS awardImg,
+            point AS needPoint,
+            create_time AS createTime,
+            last_edit_time AS lastEditTime,
+            shop_id AS shopId
+         FROM
+            tb_award
+         WHERE
+            award_id = #{awardId}
+         AND
+            enable_status = '0'
+    </select>
+
+    <insert id="sava">
+        INSERT INTO
+          tb_award(
+            award_name,
+            award_desc,
+            award_img,
+            point,
+            priority,
+            create_time,
+            expire_time,
+            last_edit_time,
+            enable_status,
+            shop_id
+          )VALUES (
+            #{award.awardName},
+            #{award.awardDesc},
+            #{award.awardImg},
+            #{award.needPoint},
+            #{award.priority},
+            NOW(),
+            NOW(),
+            NOW(),
+            '0',
+            #{award.shopId}
+          )
+    </insert>
+
+    <insert id="updateAward">
+        UPDATE
+            tb_award
+        SET
+            last_edit_time = NOW()
+        <if test="award.awardId neq null and award.awardId neq ''">
+            ,award_id = #{award.awardId}
+        </if>
+        <if test="award.awardName neq null and award.awardName neq ''">
+            ,award_name = #{award.awardName}
+        </if>
+        <if test="award.awardDesc neq null and award.awardDesc neq ''">
+            ,award_desc = #{award.awardDesc}
+        </if>
+        <if test="award.awardImg neq null and award.awardImg neq ''">
+            ,award_img = #{award.awardImg}
+        </if>
+        <if test="award.needPoint neq null and award.needPoint neq ''">
+            ,point = #{award.needPoint}
+        </if>
+        <if test="award.shopId neq null and award.shopId neq ''">
+            ,shop_id = #{award.shopId}
+        </if>
+        <if test="award.enableStatus neq null and award.enableStatus neq ''">
+            ,enable_status = #{award.enableStatus}
+        </if>
+    </insert>
+    
+    <delete id="delAward">
+        DELETE FROM
+          tb_award
+        WHERE
+          award_id = #{awardId}
+        AND
+          shop_id = #{shopId}
+    </delete>
+</mapper>
