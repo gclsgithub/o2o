@@ -53,7 +53,7 @@
         t4.shop_addr,
         t4.phone,
         t4.shop_img,
-        t5.operator_id,
+        t5.user_id,
         t5.name AS operatorName
         FROM
         tb_user_product_map t1
@@ -95,7 +95,7 @@
 
     <select id="queryUserProductCount" resultType="java.lang.Integer">
         SELECT
-        CONT(1)
+        COUNT(1)
         FROM
         tb_user_product_map t1
         LEFT JOIN
@@ -132,7 +132,7 @@
             </if>
         </where>
     </select>
-    
+
     <insert id="save">
         INSERT INTO
           tb_user_product_map
@@ -146,7 +146,14 @@
           ,create_time
           ,point
           ) VALUES(
-
+            #{condition.user.userId},
+            #{condition.product.productId},
+            #{condition.shop.shopId},
+            #{condition.operator.userId},
+            #{condition.user.name},
+            #{condition.operator.name},
+            NOW(),
+            #{condition.point}
           )
 
     </insert>
