@@ -11,37 +11,65 @@
         <result column="used_status" property="usedStatus"></result>
         <association property="user" javaType="com.hytc.o2o.entity.PersonInfo">
             <id column="user_id" property="userId"></id>
+            <result column="userName" property="name"></result>
         </association>
         <association property="award" javaType="com.hytc.o2o.entity.Award">
             <id column="award_id" property="awardId"></id>
             <result column="shop_id" property="shopId"></result>
+            <result column="award_name" property="awardName"></result>
         </association>
         <association property="operator" javaType="com.hytc.o2o.entity.PersonInfo">
             <id column="operator" property="userId"></id>
+            <result column="operatorName" property="name"></result>
         </association>
     </resultMap>
 
 
     <select id="findUserAwardMapList" resultMap="userAndAwardMap">
         SELECT
-          user_award_id,
-          create_time,
-          point,
-          used_status,
-          user_id,
-          award_id,
-          operator
+          t1.user_award_id,
+          t1.create_time,
+          t1.point,
+          t1.used_status,
+          t1.user_id,
+          t1.award_id,
+          t1.operator,
+          t2.name AS userName,
+          t3.shop_id,
+          t3.award_name,
+          t4.name AS operatorName
         FROM
-          tb_user_award_map
+          tb_user_award_map t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t1.user_id = t2.user_id
+        LEFT JOIN
+          tb_award t3
+        ON
+          t1.award_id = t3.award_id
+        LEFT JOIN
+          tb_person_info t4
+        ON
+          t4.user_id = t1.operator
         <where>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                user_award_id = #{condition.userAndAwardId}
+                t1.user_award_id = #{condition.userAndAwardId}
             </if>
             <if test="condition.usedStatus neq null and condition.usedStatus neq ''">
-                used_status = #{condition.usedStatus}
+                t1.used_status = #{condition.usedStatus}
             </if>
             <if test="condition.userAndAwardId neq null and condition.userAndAwardId neq ''">
-                point = #{condition.point}
+                t1.point = #{condition.point}
+            </if>
+            <if test="condition.user.name neq null and condition.user.name neq ''">
+                t2.name LIKE CONCAT('%',#{condition.user.name},'%')
+            </if>
+            <if test="condition.award.awardName neq null and condition.award.awardName neq ''">
+                t3.award_name LIKE CONCAT('%',#{condition.award.awardName},'%')
+            </if>
+            <if test="condition.operator.name neq null and condition.operator.name neq ''">
+                t3.name LIKE CONCAT('%',#{condition.operator.name},'%')
             </if>
         </where>
         LIMIT #{start},#{pageSize}
