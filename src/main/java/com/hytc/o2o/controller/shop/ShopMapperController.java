@@ -35,44 +35,54 @@ public class ShopMapperController {
     private AreaService areaService;
 
     @GetMapping("/shoplist")
-    public String jumpToShopList(){
+    public String jumpToShopList() {
 
         return "/shop/shoplist";
     }
 
     /**
      * 跳转
+     *
      * @return
      */
     @GetMapping("/mappershop")
-    public String mapperShop(){
+    public String mapperShop() {
         return "/shop/shopoperation";
     }
 
     /**
      * 跳转 managershopfunction
+     *
      * @return
      */
     @GetMapping("/mappershopfunction")
-    public String mapperShopFuncion(HttpServletRequest request){
-        String shopId = HttpRequestUtil.getString(request,"shopId");
+    public String mapperShopFuncion(HttpServletRequest request) {
+        String shopId = HttpRequestUtil.getString(request, "shopId");
         //向Session中存放ShopId
-        request.getSession().setAttribute("shopId",shopId);
+        request.getSession().setAttribute("shopId", shopId);
         return "/shop/shopmanage";
     }
+
     @GetMapping("/productmanage")
-    public String jumpProductmanage(){
+    public String jumpProductmanage() {
         return "/shop/productmanage";
     }
 
+    @GetMapping("/shopauthmanage")
+    public String jumpShopAuthManage() {
+        return "/shop/shopauthmanage";
+    }
+
+
     /**
      * 初始化
+     *
      * @return
      */
     @GetMapping("/shopinit")
     @ResponseBody
-    public Map<String,Object> initShopOperationHtml(){
-        Map<String,Object> modelMap = new HashMap<>();
+    public Map<String, Object> initShopOperationHtml() {
+        Map<String, Object> modelMap = new HashMap<>();
 
         List<ShopCategoery> shopCategoeryList = new ArrayList<>();
         List<Area> areaList = areaService.findAlls();
@@ -83,16 +93,16 @@ public class ShopMapperController {
 
         try {
             //初始化ShopCateGoery,初始化的时候只查询其父亲类别Id为null的类
-             shopCategoeryList = shopCategoeryService.findAlls(shopCategoery);
+            shopCategoeryList = shopCategoeryService.findAlls(shopCategoery);
             //初始化地区ID
-            modelMap.put("shopCategoeryList",shopCategoeryList);
-            modelMap.put("areaList",areaList);
-            modelMap.put("success",true);
+            modelMap.put("shopCategoeryList", shopCategoeryList);
+            modelMap.put("areaList", areaList);
+            modelMap.put("success", true);
 
-        }catch (ShopRuntimeException shopRuntimeException){
-            modelMap.put("shopCategoeryList",shopCategoeryList);
-            modelMap.put("areaList",areaList);
-            modelMap.put("success",false);
+        } catch (ShopRuntimeException shopRuntimeException) {
+            modelMap.put("shopCategoeryList", shopCategoeryList);
+            modelMap.put("areaList", areaList);
+            modelMap.put("success", false);
         }
 
         return modelMap;

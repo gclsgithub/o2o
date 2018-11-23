@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.UserShopMapDao">
+
+
+    <resultMap id="userAndShopMap" type="com.hytc.o2o.entity.UserShopMap">
+        <id column="user_shop_id" property="userShopId"></id>
+        <result column="create_time" property="createTime"></result>
+        <result column="point" property="point"></result>
+        <association property="user" javaType="com.hytc.o2o.entity.PersonInfo">
+            <id column="user_id" property="userId"></id>
+            <result column="user_name" property="name"></result>
+        </association>
+        <association property="shop" javaType="com.hytc.o2o.entity.Shop">
+            <id column="shop_id" property="shopId"></id>
+            <result column="shop_name" property="shopName"></result>
+        </association>
+    </resultMap>
+
+    <select id="findUserShopMapLists" resultMap="userAndShopMap">
+        SELECT
+          t1.user_shop_id,
+          t1.create_time,
+          t1.point,
+          t2.user_id,
+          t1.user_name,
+          t3.shop_id,
+          t3.shop_name
+        FROM
+          tb_user_shop_map t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t1.user_id = t2.user_id
+        LEFT JOIN
+          tb_shop t3
+        ON
+          t1.shop_id = t3.shop_id
+        <where>
+            <if test="condition.user neq null">
+                <if test="condition.user.userId neq null and condition.user.userId neq ''">
+                  and t1.user_id = #{condition.user.userId}
+                </if>
+                <if test="condition.user.name neq null and condition.user.name neq ''">
+                    and t1.user_name like CONCAT('%',#{condition.user.name},'%')
+                </if>
+            </if>
+            <if test="condition.shop neq null">
+                <if test="condition.shop.shopId neq null and condition.shop.shopId neq ''">
+                    and t1.shop_id = #{condition.shop.shopId}
+                </if>
+                <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                    and t1.shop_name like CONCAT('%',#{condition.shop.shopName},'%')
+                </if>
+            </if>
+            <if test="condition.createTime neq null">
+                <![CDATA[
+                and t1.create_time > #{condition.createTime}
+                ]]>
+            </if>
+        </where>
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <insert id="save" >
+        INSERT INTO
+          tb_user_shop_map(
+          user_id,
+          shop_id,
+          user_name,
+          shop_name,
+          create_time,
+          point
+        )VALUES (
+          #{condition.user.userId},
+          #{condition.shop.shopId},
+          #{condition.user.name},
+          #{condition.shop.shopName},
+          NOW(),
+          #{condition.point}
+        )
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="findUserShopMapCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(t1.user_shop_id)
+        FROM
+        tb_user_shop_map t1
+        LEFT JOIN
+        tb_person_info t2
+        ON
+        t1.user_id = t2.user_id
+        LEFT JOIN
+        tb_shop t3
+        ON
+        t1.shop_id = t3.shop_id
+        <where>
+            <if test="condition.user neq null">
+                <if test="condition.user.userId neq null">
+                    and t1.user_id = #{condition.user.userId}
+                </if>
+                <if test="condition.user.name neq null">
+                    and t1.user_name like CONCAT('%',#{condition.user.name},'%')
+                </if>
+            </if>
+            <if test="condition.shop neq null">
+                <if test="condition.shop.shopId neq null and condition.shop.shopId neq ''">
+                    and t1.shop_id = #{condition.shop.shopId}
+                </if>
+                <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                    and t1.shop_name like CONCAT('%',#{condition.shop.shopName},'%')
+                </if>
+            </if>
+            <if test="condition.createTime neq null">
+                <![CDATA[
+                and t1.create_time >= #{condition.createTime}
+                ]]>
+            </if>
+        </where>
+    </select>
+    
+    <select id="findUserShopMapByID" resultMap="userAndShopMap">
+        SELECT
+          t1.user_shop_id,
+          t1.create_time,
+          t1.point,
+          t2.user_id,
+          t1.user_name,
+          t3.shop_id,
+          t3.shop_name
+        FROM
+          tb_user_shop_map t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t1.user_id = t2.user_id
+        LEFT JOIN
+          tb_shop t3
+        ON
+          t1.shop_id = t3.shop_id
+        WHERE
+          user_shop_id = #{id}
+    </select>
+
+    <update id="updateUserShopMap">
+      UPDATE
+        tb_user_shop_map
+      SET
+        user_shop_id = #{condition.userShopId}
+        ,create_time = #{condition.createTime}
+        ,point = #{condition.point}
+        <if test="condition.user neq null">
+            <if test="condition.user.userId neq null and condition.user.userId neq ''">
+                ,user_id = #{condition.user.userId}
+            </if>
+            <if test="condition.user.name neq null condition.user.name neq ''">
+                 ,user_name = #{condition.user.name}
+            </if>
+        </if>
+        <if test="condition.shop neq null">
+            <if test="condition.shop.shopId neq null and condition.shop.shopId neq ''">
+                ,shop_id = #{condition.shopId}
+            </if>
+            <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                ,shop_name = #{condition.shop.shopName}
+            </if>
+        </if>
+    </update>
+    
+    <delete id="delUserShopMap">
+        DELETE FROM
+          tb_user_shop_map
+        WHERE
+          user_shop_id = #{id}
+    </delete>
+</mapper>

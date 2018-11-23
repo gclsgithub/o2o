@@ -17,6 +17,13 @@
 
     <dependencies>
 
+        <!-- 二维码code -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
         <!-- Redis客户端 -->
         <dependency>
             <groupId>redis.clients</groupId>

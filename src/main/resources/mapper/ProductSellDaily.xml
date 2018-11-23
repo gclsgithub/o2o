@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.ProductSellDailyDao">
+
+    
+    <resultMap id="productSellDailyMap" type="com.hytc.o2o.entity.ProductSellDaily">
+        <result column="create_time" property="createTime"></result>
+        <result column="total" property="total"></result>
+        <association property="product" javaType="com.hytc.o2o.entity.Product">
+            <id column="product_id" property="productId"></id>
+            <result column="product_name" property="productName"></result>
+            <result column="normal_price" property="normalPrice"></result>
+            <result column="promotion_price" property="promotionPrice"></result>
+            <result column="point" property="point"></result>
+        </association>
+        <association property="shop" javaType="com.hytc.o2o.entity.Shop">
+            <id column="shop_id" property="shopId"></id>
+            <result column="shop_name" property="shopName"></result>
+        </association>
+    </resultMap>
+    
+    <select id="findProductSellDailyList" resultMap="productSellDailyMap">
+        SELECT
+          t1.create_time,
+          t1.total,
+          t2.product_id,
+          t2.product_name,
+          t2.normal_price,
+          t2.promotion_price,
+          t2.point,
+          t3.shop_id,
+          t3.shop_name
+        FROM
+          tb_product_sell_daily t1
+        LEFT JOIN
+          tb_product t2
+        ON
+          t1.product_id = t2.product_id
+        LEFT JOIN
+          tb_shop
+        ON
+          t1.shop_id = t3.shop_id
+        <where>
+            <if test="condition.product.productName neq null and condition.product.productName neq ''">
+                AND t2.product_name LIKE CONCAT('%',#{condition.product.productName},'%')
+            </if>
+            <if test="condition.shop.shopName neq null and condition.shop.shopName neq ''">
+                AND t3.shop_name LIKE CONCAT('%',#{condition.shop.shopName},'%')
+            </if>
+            <if test="condition.shop.shopId neq null and condition.shop.shopId neq ''">
+                AND t3.shop_id =#{condition.shop.shopId}
+            </if>
+            <if test="startTime neq null and startTime neq ''">
+                <![CDATA[
+                AND t1.create_time >= #{create_time}
+                ]]>
+            </if>
+            <if test="startTime neq null and startTime neq ''">
+                <![CDATA[
+                AND t1.create_time <= #{endTime}
+                ]]>
+            </if>
+
+        </where>
+    </select>
+    
+    <insert id="save" >
+        INSERT INTO
+        tb_product_sell_daily
+        (
+        SELECT
+          product_id,
+          shop_id,
+          create_time,
+          COUNT(product_id) AS total
+        FROM
+          tb_user_product_map
+        WHERE
+          date_format(create_time,'%Y-%m-%d') = date_sub(curdate(),interval 1 day)
+        GROUP  BY
+          product_id,shop_id,create_time
+        )
+
+    </insert>
+</mapper>
