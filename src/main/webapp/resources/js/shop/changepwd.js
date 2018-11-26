@@ -21,7 +21,8 @@ $(function () {
 
 
         $.ajax({
-            url:
+            url:modifyurl,
+
         })
     })
     

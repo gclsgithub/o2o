@@ -46,8 +46,6 @@
           t1.shop_id = t3.shop_id
         WHERE
           t1.shop_id = #{shopId}
-        AND
-          t1.enable_status = '1'
         LIMIT #{start} ,#{pageSize}
     </select>
 
@@ -76,8 +74,6 @@
           t1.shop_id = t3.shop_id
         WHERE
           t1.shop_auth_id = #{shopAuthId}
-        AND
-          t1.enable_status = '1'
     </select>
     
     <select id="findShopAuthContByShopId" resultType="java.lang.Integer">
@@ -147,6 +143,11 @@
         <if test="condition.emableStatus neq null and condition.emableStatus neq ''">
                 ,enable_status = #{condition.emableStatus}
         </if>
+        <where>
+            <if test="condition.shopAuthId neq null and condition.shopAuthId neq ''">
+                shop_auth_id = #{condition.shopAuthId}
+            </if>
+        </where>
     </update>
 
 </mapper>

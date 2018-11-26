@@ -24,21 +24,18 @@
                 <div class="col-40">操作</div>
             </div>
             <div class="shopauth-wrap">
-                <!-- <div class="row row-shopauth">
-                    <div class="col-40">商品名称</div>
-                    <div class="col-60">
-                        <a href="#">编辑</a>
-                        <a href="#">删除</a>
-                        <a href="#">预览</a>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div class="content-block">
             <div class="row">
                 <div class="col-100">
-                    <a href="/shop/shopmanage" class="button button-big button-fill button-danger">返回</a>
+                    <a href="javascript:void(0)" id="back" class="button button-big button-fill button-danger">返回</a>
                 </div>
+            </div>
+            <div>
+                <input type="hidden" id="index" value="0"/>
+                <input type="hidden" id="pageSize" value="3"/>
+                <input type="hidden" id="shopId" value=""/>
             </div>
         </div>
     </div>
@@ -48,6 +45,7 @@
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='../resources/js/common/common.js' charset='utf-8'></script>
     <script type='text/javascript' src='../resources/js/shop/shopauthmanage.js' charset='utf-8'></script>
 </body>
 </html>

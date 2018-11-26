@@ -88,8 +88,8 @@ public class ShopAuthMapServiceImpl implements ShopAuthMapService {
     @Transactional
     public ShopAuthMapExcution updateShopAuthMap(ShopAuthMap shopAuthMap) {
         ShopAuthMapExcution shopAuthMapExcution = null;
-        if (ObjectUtils.isEmpty(shopAuthMap)
-                && ObjectUtils.isEmpty(shopAuthMap.getShopAuthId())) {
+        if (!ObjectUtils.isEmpty(shopAuthMap)
+                && !ObjectUtils.isEmpty(shopAuthMap.getShopAuthId())) {
             int isUpdate = shopAuthMapDao.updateShopAuth(shopAuthMap);
             if (isUpdate == 0) {
                 shopAuthMapExcution = new ShopAuthMapExcution(ShopAuthMapStateEnum.EMPTY);
@@ -99,6 +99,6 @@ public class ShopAuthMapServiceImpl implements ShopAuthMapService {
                 return shopAuthMapExcution;
             }
         }
-        return null;
+        return shopAuthMapExcution;
     }
 }

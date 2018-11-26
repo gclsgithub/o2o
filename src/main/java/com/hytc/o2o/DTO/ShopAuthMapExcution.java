@@ -42,4 +42,24 @@ public class ShopAuthMapExcution {
         this.stateInfo = stateEnum.getStateInfo();
         this.shopAuthMap = shopAuthMap;
     }
+
+    public ShopAuthMap getShopAuthMap() {
+        return shopAuthMap;
+    }
+
+    public List<ShopAuthMap> getShopAuthMapList() {
+        return shopAuthMapList;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public String getStateInfo() {
+        return stateInfo;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
 }

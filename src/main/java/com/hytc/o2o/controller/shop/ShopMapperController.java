@@ -51,7 +51,7 @@ public class ShopMapperController {
     }
 
     /**
-     * 跳转 managershopfunction
+     * 跳转 managershopfunction  login
      *
      * @return
      */
@@ -71,6 +71,11 @@ public class ShopMapperController {
     @GetMapping("/shopauthmanage")
     public String jumpShopAuthManage() {
         return "/shop/shopauthmanage";
+    }
+
+    @GetMapping("/shopauthedit")
+    public String jumpShopAuthEdit() {
+        return "/shop/shopauthedit";
     }
 
 

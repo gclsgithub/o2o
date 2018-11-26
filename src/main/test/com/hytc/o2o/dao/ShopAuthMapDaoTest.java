@@ -57,23 +57,7 @@ public class ShopAuthMapDaoTest extends BaseTest {
     @Test
     public void updateShopAuth() {
         ShopAuthMap shopAuthMap = new ShopAuthMap();
-        Shop shop = new Shop();
-        shop.setShopId(2L);
-        shopAuthMap.setShop(shop);
-
-        PersonInfo employee = new PersonInfo();
-        employee.setUserId(2L);
-
-        shopAuthMap.setEmmployee(employee);
-
-        shopAuthMap.setCreateTime(new Date());
-
-        shopAuthMap.setEmableStatus(1);
-
-        shopAuthMap.setJobName("AAA");
-
-        shopAuthMap.setTitleFlag(1);
-
+        shopAuthMap.setEmableStatus(2);
         shopAuthMap.setShopAuthId(1L);
         shopAuthMapDao.updateShopAuth(shopAuthMap);
     }
