@@ -82,6 +82,5 @@
         GROUP  BY
           product_id,shop_id,create_time
         )
-
     </insert>
 </mapper>

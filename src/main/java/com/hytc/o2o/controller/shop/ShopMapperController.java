@@ -1,23 +1,26 @@
 package com.hytc.o2o.controller.shop;
 
 
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.ShopCategoery;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.AreaService;
 import com.hytc.o2o.service.ShopCategoeryService;
+import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-
-
-import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +36,37 @@ public class ShopMapperController {
 
     @Autowired
     private AreaService areaService;
+
+    @Value("${wechat.url}")
+    public String url;
+
+    @Value("${wechat.authUrl}")
+    public String authUrl;
+
+    @Value("${wechat.urlMiddle}")
+    public String urlMiddle;
+
+    @GetMapping("/gennerateqrcode4shopauth")
+    public void gennerateqrcode4shopauth(HttpServletRequest request, HttpServletResponse response){
+        String shopId = (String) request.getSession().getAttribute("shopId");
+        if (ObjectUtils.isEmpty(shopId)){
+            long timeStap = System.currentTimeMillis();
+            String content = "{aaashopIdaaa:"+shopId+",aaacreateTimeaaa:"+timeStap+"}";
+            try {
+
+                String longUrl = url + authUrl + urlMiddle + URLEncoder.encode(content,"UTF-8");
+
+                BitMatrix qrCodeImg = CodeUtil.generateQrCodeStream(longUrl,response);
+
+                //将二维码以图片的形式输出到前段
+                MatrixToImageWriter.writeToStream(qrCodeImg,".png",response.getOutputStream());
+
+
+            }catch (Exception ex){
+
+            }
+        }
+    }
 
     @GetMapping("/shoplist")
     public String jumpToShopList() {
