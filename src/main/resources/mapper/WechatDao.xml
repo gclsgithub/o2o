@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hytc.o2o.dao.WechatDao">
+
+    <resultMap id="WechatAuthMap" type="com.hytc.o2o.entity.WechatAuth">
+        <id column="wechatID" property="wechatID"></id>
+        <result column="openID" property="openID"></result>
+        <result column="createTime" property="createTime"></result>
+        <association property="personInfo" javaType="com.hytc.o2o.entity.PersonInfo">
+            <id column="userId" property="userId"></id>
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+
+    <select id="findWechatAuthByOpenId" resultMap="WechatAuthMap">
+        SELECT
+          t1.wechat_auth_id  AS wechatID
+          ,t1.open_id AS openID
+          ,t1.create_time AS createTime
+          ,t1.user_id AS userId
+          ,t2.name AS name
+        FROM
+          tb_wechat_auth t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t2.user_id = t1.user_id
+        WHERE
+          t1.open_id = #{openId}
+        AND
+          enable_status = '1'
+    </select>
+</mapper>

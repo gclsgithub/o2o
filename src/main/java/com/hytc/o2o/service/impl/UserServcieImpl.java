@@ -24,7 +24,7 @@ public class UserServcieImpl implements UserService {
         LocalAuth certificationUser = userDao.login(localAuth);
 
         if (ObjectUtils.isEmpty(certificationUser)) {
-            throw new RuntimeException("登陆失败");
+            throw new RuntimeException("login fail");
         }
         return certificationUser;
     }

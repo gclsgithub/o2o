@@ -59,7 +59,7 @@ $(function () {
 
         personInfo.phone = $('#phone').val();
 
-        personInfo.userType = '1';
+        personInfo.userType = $('input[name="userType"]:checked').val();
 
         localAuth.personInfo = personInfo;
 
@@ -95,7 +95,9 @@ $(function () {
                 if (data.success){
                     //休眠2秒
                     sleep(2000);
-                    $('#back').onclick();
+                    $('#back').click();
+                } else {
+                    $.toast(data.errorMsg);
                 }
             }
         })

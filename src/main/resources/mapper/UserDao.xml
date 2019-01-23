@@ -59,7 +59,6 @@
     </insert>
 
     <insert id="insertIntoPersonInfo" parameterType="com.hytc.o2o.entity.PersonInfo" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId" >
-
         INSERT INTO
           tb_person_info
         (
@@ -111,14 +110,11 @@
         SELECT
           user_id
         FROM
-          tb_local_auth
+          tb_person_info
         WHERE
         <if test="auth">
-          <if test="auth.userName neq null">
-            user_name = #{auth.userName} AND
-          </if>
-          <if test="auth.passWord neq null">
-            pass_word =  #{auth.passWord}
+          <if test="auth.personInfo.name neq null">
+              name = #{auth.personInfo.name}
           </if>
         </if>
     </select>

@@ -16,7 +16,7 @@ $(function () {
         var userName = $('#userName').val();
         var passWord = $('#passWord').val();
 
-        formData.append("userType","2");
+        formData.append("userType",$('input[name="userType"]:checked').val());
         formData.append("userName",userName);
         formData.append("passWord",passWord);
 

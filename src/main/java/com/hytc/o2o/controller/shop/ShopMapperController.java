@@ -37,14 +37,17 @@ public class ShopMapperController {
     @Autowired
     private AreaService areaService;
 
-    @Value("${wechat.url}")
+    //@Value("${wechat.url}")
     public String url;
 
-    @Value("${wechat.authUrl}")
+    //@Value("${wechat.authUrl}")
     public String authUrl;
 
-    @Value("${wechat.urlMiddle}")
+    //@Value("${wechat.urlMiddle}")
     public String urlMiddle;
+
+   // @Value("${wechat.urlSuffix}")
+    public String urlSuffix;
 
     @GetMapping("/gennerateqrcode4shopauth")
     public void gennerateqrcode4shopauth(HttpServletRequest request, HttpServletResponse response){
@@ -54,7 +57,7 @@ public class ShopMapperController {
             String content = "{aaashopIdaaa:"+shopId+",aaacreateTimeaaa:"+timeStap+"}";
             try {
 
-                String longUrl = url + authUrl + urlMiddle + URLEncoder.encode(content,"UTF-8");
+                String longUrl = url + authUrl + urlMiddle + URLEncoder.encode(content,"UTF-8")+urlSuffix;
 
                 BitMatrix qrCodeImg = CodeUtil.generateQrCodeStream(longUrl,response);
 
