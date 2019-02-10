@@ -98,7 +98,9 @@
             point AS needPoint,
             create_time AS createTime,
             last_edit_time AS lastEditTime,
-            shop_id AS shopId
+            shop_id AS shopId,
+            priority,
+            point
          FROM
             tb_award
          WHERE
@@ -124,10 +126,11 @@
             #{award.awardName},
             #{award.awardDesc},
             #{award.awardImg},
+            #{award.point},
             #{award.needPoint},
             #{award.priority},
             NOW(),
-            NOW(),
+            #{award.expireTime},
             NOW(),
             '0',
             #{award.shopId}
@@ -160,6 +163,12 @@
         <if test="award.enableStatus neq null and award.enableStatus neq ''">
             ,enable_status = #{award.enableStatus}
         </if>
+        <if test="award.expireTime neq null and award.expireTime neq ''">
+            ,expire_time = #{award.expireTime}
+        </if>
+        WHERE
+        award_id = #{award.awardId}
+
     </insert>
     
     <delete id="delAward">

@@ -1,8 +1,10 @@
 package com.hytc.o2o.controller.shop;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.Award;
 import com.hytc.o2o.entity.ShopCategoery;
@@ -16,12 +18,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,4 +177,78 @@ public class ShopMapperController {
         return modelMap;
     }
 
+    @GetMapping("awardedit")
+    public ModelAndView jumpToNewAward(@RequestParam(value = "shopId")String shopId){
+        ModelAndView modelAndView = new ModelAndView("/shop/awardedit");
+
+        modelAndView.addObject("shopId",shopId);
+
+        return modelAndView;
+    }
+
+    @GetMapping("getawardbyid")
+    @ResponseBody
+    public  Map<String, Object> getAwardInfo(@RequestParam(value = "awardId",required = false)String awardId){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        Award award = awardService.findAwardByAwardId(awardId);
+
+        if (ObjectUtils.isEmpty(award)){
+            modelMap.put("success", false);
+            modelMap.put("message","未查到信息");
+        } else {
+            modelMap.put("success", true);
+            modelMap.put("award",award);
+        }
+        return modelMap;
+    }
+
+    @PostMapping("modifyaward")
+    @ResponseBody
+    public Map<String, Object> modifyAward(HttpServletRequest request, String awardStr){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        boolean statusChange = CodeUtil.cheackVerfityCode(request);
+
+        //判断验证码是否正确
+        if (!statusChange && !CodeUtil.cheackVerfityCode(request)) {
+            modelMap.put("success", false);
+            modelMap.put("errorMsg", "验证码信息错误");
+            return modelMap;
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Award award = null;
+        try {
+             award = objectMapper.readValue(awardStr,Award.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CommonsMultipartFile awardImage = null;
+
+        //从Servlet上下文中获取文件流
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if (commonsMultipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            awardImage = (CommonsMultipartFile) multipartHttpServletRequest.getFile("thumbnail");
+        }
+
+        if (award != null && awardImage != null) {
+            try {
+                ImageHolder holder = new ImageHolder(awardImage.getOriginalFilename(),awardImage.getInputStream());
+                Boolean isAdd = awardService.addAward(award,holder);
+
+                if (isAdd){
+                    modelMap.put("success",true);
+                }else {
+                    modelMap.put("success",false);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return modelMap;
+    }
 }

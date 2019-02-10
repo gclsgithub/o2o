@@ -77,21 +77,21 @@ $(function() {
 		});
 	}
 
-	$('.award-wrap')
-			.on('click','a',function(e) {
-				var target = $(e.currentTarget);
-				if (target.hasClass('edit')) {
-					window.location.href = '/myo2o/shop/awardedit?awardId='
-						+ e.currentTarget.dataset.id;
-				} else if (target.hasClass('delete')) {
-					deleteItem(e.currentTarget.dataset.id,
-						e.currentTarget.dataset.status);
-				} else if (target.hasClass('preview')) {
-					window.location.href = '/myo2o/frontend/awarddetail?awardId='
-						+ e.currentTarget.dataset.id;
-				}
-			});
+	$('.award-wrap').on('click','a',function(e) {
+		var target = $(e.currentTarget);
+		if (target.hasClass('edit')) {
+			window.location.href = '/shop/awardedit?awardId='
+				+ e.currentTarget.dataset.id+'&shopId='+shopId;
+		} else if (target.hasClass('delete')) {
+			deleteItem(e.currentTarget.dataset.id,
+				e.currentTarget.dataset.status);
+		} else if (target.hasClass('preview')) {
+			window.location.href = '/frontend/awarddetail?awardId='
+				+ e.currentTarget.dataset.id;
+		}
+	});
+
 	$('#new').click(function() {
-		window.location.href = '/myo2o/shop/awardedit';
+		window.location.href = '/shop/awardedit?shopId='+shopId;
 	});
 });
