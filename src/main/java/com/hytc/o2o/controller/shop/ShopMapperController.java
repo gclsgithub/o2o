@@ -116,7 +116,7 @@ public class ShopMapperController {
     }
 
     @GetMapping("/awardmanage")
-    public String jumpProductmanage() {
+    public String jumpAwardmanage() {
         return "/shop/awardmanage";
     }
 
@@ -125,7 +125,10 @@ public class ShopMapperController {
         return "/shop/shopauthedit";
     }
 
-
+    @GetMapping("/productmanage")
+    public String jumpProductmanage() {
+        return "/shop/productmanage";
+    }
     /**
      * 初始化
      *

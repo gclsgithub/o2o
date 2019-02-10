@@ -142,9 +142,6 @@
             tb_award
         SET
             last_edit_time = NOW()
-        <if test="award.awardId neq null and award.awardId neq ''">
-            ,award_id = #{award.awardId}
-        </if>
         <if test="award.awardName neq null and award.awardName neq ''">
             ,award_name = #{award.awardName}
         </if>
@@ -163,7 +160,7 @@
         <if test="award.enableStatus neq null and award.enableStatus neq ''">
             ,enable_status = #{award.enableStatus}
         </if>
-        <if test="award.expireTime neq null and award.expireTime neq ''">
+        <if test="award.expireTime neq null">
             ,expire_time = #{award.expireTime}
         </if>
         WHERE

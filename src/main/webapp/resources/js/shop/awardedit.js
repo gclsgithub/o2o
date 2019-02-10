@@ -8,7 +8,7 @@ $(function() {
 		getInfo(awardId);
 		isEdit = true;
 	} else {
-		awardPostUrl = '/myo2o/shop/addaward';
+		awardPostUrl = '/shop/addaward';
 	}
 
 	$("#pass-date").calendar({
