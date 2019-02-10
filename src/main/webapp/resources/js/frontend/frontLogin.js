@@ -32,7 +32,7 @@ $(function () {
                     $.toast("success");
                     window.location.href=indexUrl;
                 } else {
-                    $.toast(output.message);
+                    $.toast(data.message);
                 }
             }
         })

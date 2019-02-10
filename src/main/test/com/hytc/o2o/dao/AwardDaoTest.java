@@ -16,6 +16,13 @@ public class AwardDaoTest extends BaseTest {
 
     @Autowired
     private AwardDao awardDao;
+
+    @Test
+    public void fiandAll(){
+        List<Award> awards = awardDao.findAll();
+        awards.stream().forEach(System.out::println);
+    }
+
     @Test
     public void findAwardsBySomeAwardCondition() {
         Award award = new Award();
@@ -94,13 +101,11 @@ public class AwardDaoTest extends BaseTest {
         award.setShopId(2L);
         award.setEnableStatus("0");
         Integer count = awardDao.updateAward(award);
-
         Assert.assertEquals(count,new Integer(1));
     }
 
     @Test
     public void delAward() {
-
         awardDao.delAward(2L,2L);
     }
 }

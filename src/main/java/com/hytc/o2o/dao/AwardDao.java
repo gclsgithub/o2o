@@ -2,6 +2,7 @@ package com.hytc.o2o.dao;
 
 import com.hytc.o2o.entity.Award;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -48,4 +49,17 @@ public interface AwardDao {
 
     Integer delAward(@Param("awardId")Long awardId,
                      @Param("shopId")Long shopId);
+
+    @Select("SELECT  award_id AS awardId," +
+            "        award_name AS awardName," +
+            "        award_desc AS awardDesc," +
+            "        award_img AS awardImg," +
+            "        point AS needPoint," +
+            "        create_time AS createTime," +
+            "        last_edit_time AS lastEditTime," +
+            "        shop_id AS shopId," +
+            "        priority"+
+            "        FROM " +
+            "        tb_award")
+    List<Award> findAll();
 }

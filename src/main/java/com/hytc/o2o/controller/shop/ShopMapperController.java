@@ -4,15 +4,17 @@ package com.hytc.o2o.controller.shop;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.hytc.o2o.entity.Area;
+import com.hytc.o2o.entity.Award;
 import com.hytc.o2o.entity.ShopCategoery;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.AreaService;
+import com.hytc.o2o.service.AwardService;
 import com.hytc.o2o.service.ShopCategoeryService;
 import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,9 @@ public class ShopMapperController {
     @Autowired
     private AreaService areaService;
 
+    @Autowired
+    private AwardService awardService;
+
     //@Value("${wechat.url}")
     public String url;
 
@@ -46,26 +51,26 @@ public class ShopMapperController {
     //@Value("${wechat.urlMiddle}")
     public String urlMiddle;
 
-   // @Value("${wechat.urlSuffix}")
+    // @Value("${wechat.urlSuffix}")
     public String urlSuffix;
 
     @GetMapping("/gennerateqrcode4shopauth")
-    public void gennerateqrcode4shopauth(HttpServletRequest request, HttpServletResponse response){
+    public void gennerateqrcode4shopauth(HttpServletRequest request, HttpServletResponse response) {
         String shopId = (String) request.getSession().getAttribute("shopId");
-        if (ObjectUtils.isEmpty(shopId)){
+        if (ObjectUtils.isEmpty(shopId)) {
             long timeStap = System.currentTimeMillis();
-            String content = "{aaashopIdaaa:"+shopId+",aaacreateTimeaaa:"+timeStap+"}";
+            String content = "{aaashopIdaaa:" + shopId + ",aaacreateTimeaaa:" + timeStap + "}";
             try {
 
-                String longUrl = url + authUrl + urlMiddle + URLEncoder.encode(content,"UTF-8")+urlSuffix;
+                String longUrl = url + authUrl + urlMiddle + URLEncoder.encode(content, "UTF-8") + urlSuffix;
 
-                BitMatrix qrCodeImg = CodeUtil.generateQrCodeStream(longUrl,response);
+                BitMatrix qrCodeImg = CodeUtil.generateQrCodeStream(longUrl, response);
 
                 //将二维码以图片的形式输出到前段
-                MatrixToImageWriter.writeToStream(qrCodeImg,".png",response.getOutputStream());
+                MatrixToImageWriter.writeToStream(qrCodeImg, ".png", response.getOutputStream());
 
 
-            }catch (Exception ex){
+            } catch (Exception ex) {
 
             }
         }
@@ -100,14 +105,14 @@ public class ShopMapperController {
         return "/shop/shopmanage";
     }
 
-    @GetMapping("/productmanage")
-    public String jumpProductmanage() {
-        return "/shop/productmanage";
-    }
-
     @GetMapping("/shopauthmanage")
     public String jumpShopAuthManage() {
         return "/shop/shopauthmanage";
+    }
+
+    @GetMapping("/awardmanage")
+    public String jumpProductmanage() {
+        return "/shop/awardmanage";
     }
 
     @GetMapping("/shopauthedit")
@@ -149,4 +154,22 @@ public class ShopMapperController {
 
         return modelMap;
     }
+
+    @GetMapping("listawardsbyshop")
+    @ResponseBody
+    public Map<String, Object> initAwardList() {
+        Map<String, Object> modelMap = new HashMap<>();
+
+        List<Award> awardList = awardService.finaAll();
+
+        if (CollectionUtils.isEmpty(awardList)){
+            modelMap.put("success", false);
+            modelMap.put("message","未查到信息");
+        }else {
+            modelMap.put("success", true);
+            modelMap.put("awardList",awardList);
+        }
+        return modelMap;
+    }
+
 }
