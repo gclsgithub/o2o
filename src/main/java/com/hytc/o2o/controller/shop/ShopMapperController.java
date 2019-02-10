@@ -129,6 +129,7 @@ public class ShopMapperController {
     public String jumpProductmanage() {
         return "/shop/productmanage";
     }
+
     /**
      * 初始化
      *
@@ -170,45 +171,45 @@ public class ShopMapperController {
 
         List<Award> awardList = awardService.finaAll();
 
-        if (CollectionUtils.isEmpty(awardList)){
+        if (CollectionUtils.isEmpty(awardList)) {
             modelMap.put("success", false);
-            modelMap.put("message","未查到信息");
-        }else {
+            modelMap.put("message", "未查到信息");
+        } else {
             modelMap.put("success", true);
-            modelMap.put("awardList",awardList);
+            modelMap.put("awardList", awardList);
         }
         return modelMap;
     }
 
     @GetMapping("awardedit")
-    public ModelAndView jumpToNewAward(@RequestParam(value = "shopId")String shopId){
+    public ModelAndView jumpToNewAward(@RequestParam(value = "shopId") String shopId) {
         ModelAndView modelAndView = new ModelAndView("/shop/awardedit");
 
-        modelAndView.addObject("shopId",shopId);
+        modelAndView.addObject("shopId", shopId);
 
         return modelAndView;
     }
 
     @GetMapping("getawardbyid")
     @ResponseBody
-    public  Map<String, Object> getAwardInfo(@RequestParam(value = "awardId",required = false)String awardId){
+    public Map<String, Object> getAwardInfo(@RequestParam(value = "awardId", required = false) String awardId) {
         Map<String, Object> modelMap = new HashMap<>();
 
         Award award = awardService.findAwardByAwardId(awardId);
 
-        if (ObjectUtils.isEmpty(award)){
+        if (ObjectUtils.isEmpty(award)) {
             modelMap.put("success", false);
-            modelMap.put("message","未查到信息");
+            modelMap.put("message", "未查到信息");
         } else {
             modelMap.put("success", true);
-            modelMap.put("award",award);
+            modelMap.put("award", award);
         }
         return modelMap;
     }
 
     @PostMapping("modifyaward")
     @ResponseBody
-    public Map<String, Object> modifyAward(HttpServletRequest request, String awardStr){
+    public Map<String, Object> modifyAward(HttpServletRequest request, String awardStr) {
         Map<String, Object> modelMap = new HashMap<>();
 
         boolean statusChange = CodeUtil.cheackVerfityCode(request);
@@ -224,7 +225,7 @@ public class ShopMapperController {
 
         Award award = null;
         try {
-             award = objectMapper.readValue(awardStr,Award.class);
+            award = objectMapper.readValue(awardStr, Award.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -240,13 +241,13 @@ public class ShopMapperController {
 
         if (award != null && awardImage != null) {
             try {
-                ImageHolder holder = new ImageHolder(awardImage.getOriginalFilename(),awardImage.getInputStream());
-                Boolean isAdd = awardService.addAward(award,holder);
+                ImageHolder holder = new ImageHolder(awardImage.getOriginalFilename(), awardImage.getInputStream());
+                Boolean isAdd = awardService.addAward(award, holder);
 
-                if (isAdd){
-                    modelMap.put("success",true);
-                }else {
-                    modelMap.put("success",false);
+                if (isAdd) {
+                    modelMap.put("success", true);
+                } else {
+                    modelMap.put("success", false);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

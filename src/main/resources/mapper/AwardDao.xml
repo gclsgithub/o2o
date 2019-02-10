@@ -127,7 +127,6 @@
             #{award.awardDesc},
             #{award.awardImg},
             #{award.point},
-            #{award.needPoint},
             #{award.priority},
             NOW(),
             #{award.expireTime},
