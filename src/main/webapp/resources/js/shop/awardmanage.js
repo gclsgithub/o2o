@@ -91,6 +91,9 @@ $(function() {
 		}
 	});
 
+    $('#backButton').click(function() {
+        window.location.href = '/shop/mappershopfunction?shopId='+shopId;
+	});
 	$('#new').click(function() {
 		window.location.href = '/shop/awardedit?shopId='+shopId;
 	});

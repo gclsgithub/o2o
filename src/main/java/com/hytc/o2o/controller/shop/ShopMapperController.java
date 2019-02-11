@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -212,6 +213,30 @@ public class ShopMapperController {
     public Map<String, Object> modifyAward(HttpServletRequest request, String awardStr) {
         Map<String, Object> modelMap = new HashMap<>();
 
+        String verifyCodeActual = HttpRequestUtil.getString(request, "verifyCodeActual");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Award award = null;
+        try {
+            award = objectMapper.readValue(awardStr, Award.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (StringUtils.isEmpty(verifyCodeActual)) {
+
+            //删除的时候
+            if ("0".equalsIgnoreCase(award.getEnableStatus())){
+                award.setEnableStatus("1");
+            } else {
+                award.setEnableStatus("0");
+            }
+            Boolean isDel = awardService.addAward(award, null);
+
+            modelMap.put("success", isDel);
+
+            return modelMap;
+        }
+
         boolean statusChange = CodeUtil.cheackVerfityCode(request);
 
         //判断验证码是否正确
@@ -219,15 +244,6 @@ public class ShopMapperController {
             modelMap.put("success", false);
             modelMap.put("errorMsg", "验证码信息错误");
             return modelMap;
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        Award award = null;
-        try {
-            award = objectMapper.readValue(awardStr, Award.class);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         CommonsMultipartFile awardImage = null;

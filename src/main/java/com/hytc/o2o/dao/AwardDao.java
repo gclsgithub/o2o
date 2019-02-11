@@ -58,7 +58,8 @@ public interface AwardDao {
             "        create_time AS createTime," +
             "        last_edit_time AS lastEditTime," +
             "        shop_id AS shopId," +
-            "        priority"+
+            "        priority,"+
+            "        enable_status AS enableStatus"+
             "        FROM " +
             "        tb_award")
     List<Award> findAll();

@@ -14,6 +14,7 @@ import com.hytc.o2o.util.ImageUtil;
 import com.hytc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
@@ -44,8 +45,9 @@ public class AwardServiceImpl implements AwardService {
         if (award == null) {
             throw new AwardException(AwardStateEnum.NULL_SHOPID.getMsgl());
         }
-        addFile2Proctectand2Award(award, holder.getImage(), holder.getImageName());
-
+        if (!ObjectUtils.isEmpty(holder)) {
+            addFile2Proctectand2Award(award, holder.getImage(), holder.getImageName());
+        }
         try {
             if (StringUtils.isEmpty(award.getAwardId())){
                 awardDao.sava(award);

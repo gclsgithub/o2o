@@ -27,6 +27,9 @@ $(function() {
 		});
 	}
 
+    $('#back').click(function() {
+        window.location.href = '/shop/awardmanage?shopId='+shopId;
+    });
 	$('#submit').click(function() {
 		var award = {};
 		award.awardName = $('#award-name').val();
