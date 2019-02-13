@@ -5,12 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.hytc.o2o.DTO.ImageHolder;
+import com.hytc.o2o.DTO.ProductUseExcution;
 import com.hytc.o2o.entity.Area;
 import com.hytc.o2o.entity.Award;
+import com.hytc.o2o.entity.ProductUse;
 import com.hytc.o2o.entity.ShopCategoery;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.AreaService;
 import com.hytc.o2o.service.AwardService;
+import com.hytc.o2o.service.ProductUseService;
 import com.hytc.o2o.service.ShopCategoeryService;
 import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
@@ -29,10 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -47,6 +48,9 @@ public class ShopMapperController {
 
     @Autowired
     private AwardService awardService;
+
+    @Autowired
+    private ProductUseService productUseService;
 
     //@Value("${wechat.url}")
     public String url;
@@ -131,6 +135,85 @@ public class ShopMapperController {
         return "/shop/productmanage";
     }
 
+    /***
+     * 跳转到消费记录
+     * @return
+     */
+    @GetMapping("/productbuycheck")
+    public String jumpProductBuyCheck() {
+        return "/shop/productbuycheck";
+    }
+
+
+    @GetMapping("/listuserproductmapsbyshop")
+    @ResponseBody
+    public  Map<String, Object> getPriductBuyChecks(){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        List<ProductUse> userProductMapList = productUseService.getAllInfos();
+
+
+        List<ProductUseExcution> productUseExcutionList = new ArrayList<>();
+
+        for (ProductUse p:userProductMapList){
+
+            ProductUseExcution productUseExcution = new ProductUseExcution();
+
+            productUseExcution.setName(p.getProductName());
+            productUseExcution.setType("bar");
+            List<Integer> dataList = new ArrayList<>();
+
+            for (int i = 0; i <= 6 ;i++){
+                dataList.add(0);
+            }
+
+            productUseExcution.setData(dataList);
+
+            if (!productUseExcutionList.stream().map(info -> info.getName()).collect(Collectors.toList()).contains(productUseExcution.getName())){
+                if ("Monday".equals(p.getWeek())){
+                    dataList.set(0,Integer.valueOf(p.getCount()));
+                }else if ("Tuesday".equals(p.getWeek())){
+                    dataList.set(1,Integer.valueOf(p.getCount()));
+                }else if ("Wednesday".equals(p.getWeek())){
+                    dataList.set(2,Integer.valueOf(p.getCount()));
+                }else if ("Thursday".equals(p.getWeek())){
+                    dataList.set(3,Integer.valueOf(p.getCount()));
+                }else if ("Friday".equals(p.getWeek())){
+                    dataList.set(4,Integer.valueOf(p.getCount()));
+                }else if ("Saturday".equals(p.getWeek())){
+                    dataList.set(5,Integer.valueOf(p.getCount()));
+                }else if ("Sunday".equals(p.getWeek())){
+                    dataList.set(6,Integer.valueOf(p.getCount()));
+                }
+                productUseExcution.setData(dataList);
+                productUseExcutionList.add(productUseExcution);
+            } else {
+                if ("Monday".equals(p.getWeek())){
+                    dataList.set(0,Integer.valueOf(p.getCount()));
+                }else if ("Tuesday".equals(p.getWeek())){
+                    dataList.set(1,Integer.valueOf(p.getCount()));
+                }else if ("Wednesday".equals(p.getWeek())){
+                    dataList.set(2,Integer.valueOf(p.getCount()));
+                }else if ("Thursday".equals(p.getWeek())){
+                    dataList.set(3,Integer.valueOf(p.getCount()));
+                }else if ("Friday".equals(p.getWeek())){
+                    dataList.set(4,Integer.valueOf(p.getCount()));
+                }else if ("Saturday".equals(p.getWeek())){
+                    dataList.set(5,Integer.valueOf(p.getCount()));
+                }else if ("Sunday".equals(p.getWeek())){
+                    dataList.set(6,Integer.valueOf(p.getCount()));
+                }
+                productUseExcution.setData(dataList);
+                productUseExcutionList.removeAll(productUseExcutionList.stream().map(info -> info.getName().equals(p.getProductName())).collect(Collectors.toList()));
+            }
+
+        }
+
+        modelMap.put("userProductMapList",userProductMapList);
+        modelMap.put("showData",productUseExcutionList);
+        modelMap.put("success",true);
+        return modelMap;
+    }
     /**
      * 初始化
      *
