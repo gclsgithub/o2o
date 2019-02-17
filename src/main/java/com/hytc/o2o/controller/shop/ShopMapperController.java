@@ -6,15 +6,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ProductUseExcution;
-import com.hytc.o2o.entity.Area;
-import com.hytc.o2o.entity.Award;
-import com.hytc.o2o.entity.ProductUse;
-import com.hytc.o2o.entity.ShopCategoery;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.exceptions.ShopRuntimeException;
-import com.hytc.o2o.service.AreaService;
-import com.hytc.o2o.service.AwardService;
-import com.hytc.o2o.service.ProductUseService;
-import com.hytc.o2o.service.ShopCategoeryService;
+import com.hytc.o2o.service.*;
 import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +45,10 @@ public class ShopMapperController {
 
     @Autowired
     private ProductUseService productUseService;
+
+    @Autowired
+    private ProductRecordService productRecordService;
+
 
     //@Value("${wechat.url}")
     public String url;
@@ -135,6 +133,13 @@ public class ShopMapperController {
         return "/shop/productmanage";
     }
 
+    @GetMapping("/usershopcheck")
+    public String jumpUserShopPoint() {
+        return "/shop/awarddelivercheck";
+    }
+
+
+
     /***
      * 跳转到消费记录
      * @return
@@ -144,13 +149,61 @@ public class ShopMapperController {
         return "/shop/productbuycheck";
     }
 
+    @GetMapping("awarddelivercheck")
+    public String jumpPointAndAwar(){
+        return "/shop/awarddelivercheckchange";
+    }
+
+    /**
+     * 获取奖品
+     * @return
+     */
+    @GetMapping("/listaward")
+    @ResponseBody
+    public Map<String, Object> getAward(@RequestParam(value = "shopId")String shopId,
+                                              @RequestParam(value = "awardName",required = false)String awardName){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        if (StringUtils.isEmpty(awardName)){
+            awardName = null;
+        }
+        List<Award> productRecords = awardService.finaAll(shopId,awardName);
+
+        modelMap.put("success",true);
+
+        modelMap.put("userAwardMapList",productRecords);
+
+        return modelMap;
+    }
+
+    /**
+     * 获取积分记录
+     * @return
+     */
+    @GetMapping("/listuserawardmapsbyshop")
+    @ResponseBody
+    public Map<String, Object> getPointRecord(@RequestParam(value = "shopId")String shopId,
+                                              @RequestParam(value = "useName",required = false)String useName){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        if (StringUtils.isEmpty(useName)){
+            useName = null;
+        }
+        List<ProductRecord> productRecords = productRecordService.getAllInfos(shopId,useName);
+
+        modelMap.put("success",true);
+
+        modelMap.put("userAwardMapList",productRecords);
+
+        return modelMap;
+    }
 
     @GetMapping("/listuserproductmapsbyshop")
     @ResponseBody
-    public  Map<String, Object> getPriductBuyChecks(){
+    public  Map<String, Object> getPriductBuyChecks(@RequestParam(value = "shopId")String shopId){
         Map<String, Object> modelMap = new HashMap<>();
 
-        List<ProductUse> userProductMapList = productUseService.getAllInfos();
+        List<ProductUse> userProductMapList = productUseService.getAllInfos(shopId);
 
 
         List<ProductUseExcution> productUseExcutionList = new ArrayList<>();
@@ -204,7 +257,21 @@ public class ShopMapperController {
                     dataList.set(6,Integer.valueOf(p.getCount()));
                 }
                 productUseExcution.setData(dataList);
-                productUseExcutionList.removeAll(productUseExcutionList.stream().map(info -> info.getName().equals(p.getProductName())).collect(Collectors.toList()));
+               List<ProductUseExcution> delList = productUseExcutionList.stream().filter(info -> info.getName().equals(p.getProductName())).collect(Collectors.toList());
+                productUseExcutionList.removeAll(delList);
+
+                for (ProductUseExcution delP:delList){
+                    List<Integer> oldDataList = delP.getData();
+
+                    for (int i = 0; i < 7; i++){
+                         if (oldDataList.get(i) != 0 || dataList.get(i) != 0){
+                             Integer newPoint = oldDataList.get(i)+dataList.get(i);
+                             dataList.set(i,newPoint);
+                         }
+                    }
+                }
+                productUseExcution.setData(dataList);
+                productUseExcutionList.add(productUseExcution);
             }
 
         }
@@ -253,7 +320,7 @@ public class ShopMapperController {
     public Map<String, Object> initAwardList() {
         Map<String, Object> modelMap = new HashMap<>();
 
-        List<Award> awardList = awardService.finaAll();
+        List<Award> awardList = awardService.finaAll(null,null);
 
         if (CollectionUtils.isEmpty(awardList)) {
             modelMap.put("success", false);

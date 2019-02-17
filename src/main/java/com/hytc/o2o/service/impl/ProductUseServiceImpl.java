@@ -9,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,33 +20,43 @@ public class ProductUseServiceImpl implements ProductUseService {
     private ProductUseDao productUseDao;
 
     @Override
-    public List<ProductUse> getAllInfos() {
-        List<ProductUse>  dbProductUseList = productUseDao.getAll();
+    public List<ProductUse> getAllInfos(String shopId) {
+        List<ProductUse> dbProductUseList = productUseDao.getAll(shopId);
 
-        Iterator<ProductUse> dbItetator = dbProductUseList.iterator();
 
-        List<ProductUse>  outputList = new ArrayList<>();
+        List<ProductUse> outputList = new ArrayList<>();
 
-        while (dbItetator.hasNext()){
-            ProductUse p1 = dbItetator.next();
-            SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
-            p1.setWeek(dateFm.format(p1.getCreateTime()));
-            Iterator<ProductUse> outIterator = outputList.iterator();
-            while (outIterator.hasNext()){
-                outIterator = outputList.iterator();
-                ProductUse p2 = outIterator.next();
-                if (p2.getProductName().equals(p1.getProductName())){
-                    if (dateFm.format(p1.getCreateTime()).equals(dateFm.format(p2.getCreateTime()))){
-                        p1.setWeek(dateFm.format(p1.getCreateTime()));
-                        p1.setCount(String.valueOf(Integer.valueOf(p1.getCount() == null?"0":p1.getCount())+1));
-                        outputList.add(p1);
-                    }
+
+        SimpleDateFormat dateFm = new SimpleDateFormat("EEEE");
+        for (ProductUse productUse : dbProductUseList) {
+
+            if (CollectionUtils.isEmpty(outputList)) {
+                productUse.setWeek(dateFm.format(productUse.getCreateTime()));
+                String count = String.valueOf(Integer.valueOf(productUse.getCount()));
+                productUse.setCount(count);
+                outputList.add(productUse);
+                continue;
+            }
+
+            Boolean addFlag = Boolean.TRUE;
+            for (ProductUse p2 : outputList) {
+                if (p2.getProductName().equals(productUse.getProductName()) && p2.getCreateTime().equals(productUse.getCreateTime())) {
+                    p2.setWeek(dateFm.format(p2.getCreateTime()));
+                    String count = String.valueOf(Integer.valueOf(p2.getCount()) + Integer.valueOf(productUse.getCount()));
+                    p2.setCount(count);
+                    addFlag = Boolean.FALSE;
+                    break;
                 }
             }
-            if (CollectionUtils.isEmpty(outputList)){
-                outputList.add(p1);
+
+            if (addFlag) {
+                productUse.setWeek(dateFm.format(productUse.getCreateTime()));
+                String count = String.valueOf(Integer.valueOf(productUse.getCount()));
+                productUse.setCount(count);
+                outputList.add(productUse);
             }
         }
         return outputList;
     }
 }
+

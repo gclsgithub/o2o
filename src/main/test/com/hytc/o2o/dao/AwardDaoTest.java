@@ -19,7 +19,7 @@ public class AwardDaoTest extends BaseTest {
 
     @Test
     public void fiandAll(){
-        List<Award> awards = awardDao.findAll();
+        List<Award> awards = awardDao.findAll(null,null);
         awards.stream().forEach(System.out::println);
     }
 

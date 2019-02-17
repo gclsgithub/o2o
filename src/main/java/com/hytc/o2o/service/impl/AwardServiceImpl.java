@@ -28,8 +28,8 @@ public class AwardServiceImpl implements AwardService {
     private AwardDao awardDao;
 
     @Override
-    public List<Award> finaAll() {
-        return awardDao.findAll();
+    public List<Award> finaAll(String shopId,String awardName) {
+        return awardDao.findAll(shopId,awardName);
     }
 
     @Override

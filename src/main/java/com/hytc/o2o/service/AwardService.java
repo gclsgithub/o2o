@@ -6,7 +6,7 @@ import com.hytc.o2o.entity.Award;
 import java.util.List;
 
 public interface AwardService {
-    List<Award> finaAll();
+    List<Award> finaAll(String shopId,String awardName);
 
     Award findAwardByAwardId(String awardId);
 

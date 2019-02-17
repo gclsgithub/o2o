@@ -50,7 +50,8 @@ public interface AwardDao {
     Integer delAward(@Param("awardId")Long awardId,
                      @Param("shopId")Long shopId);
 
-    @Select("SELECT  award_id AS awardId," +
+    @Select("<script>"+
+            "SELECT  award_id AS awardId," +
             "        award_name AS awardName," +
             "        award_desc AS awardDesc," +
             "        award_img AS awardImg," +
@@ -61,6 +62,14 @@ public interface AwardDao {
             "        priority,"+
             "        enable_status AS enableStatus"+
             "        FROM " +
-            "        tb_award")
-    List<Award> findAll();
+            "        tb_award"+
+            " WHERE" +
+            "<when test='shopId != null'>" +
+            "   shop_id = #{shopId}" +
+            "</when>'"+
+            "<when test='awardName != null'>" +
+            "  AND award_name = #{awardName}" +
+            "</when>'"+
+            "</script>")
+    List<Award> findAll(@Param("shopId")String shopId,@Param("awardName")String awardName);
 }

@@ -16,7 +16,7 @@ $(function() {
                          +      '<div class="row row-productbuycheck">'
                          +          '<div class="col-33">'+ item.productName +'</div>'
                          +          '<div class="col-33 productbuycheck-time">'+ item.createTime +'</div>'
-                         +          '<div class="col-33">'+ item.userName +'</div>'
+                         +          '<div class="col-33">'+ item.shopName+'</div>'
                          +      '</div>';
                     //设置总的类别
                     prodctNames.push(item.productName);
