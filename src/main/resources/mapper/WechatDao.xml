@@ -32,4 +32,35 @@
         AND
           enable_status = '1'
     </select>
+
+    <select id="findWechatAuthByuserId" resultMap="WechatAuthMap">
+         SELECT
+          t1.wechat_auth_id  AS wechatID
+          ,t1.open_id AS openID
+          ,t1.create_time AS createTime
+          ,t1.user_id AS userId
+          ,t2.name AS name
+        FROM
+          tb_wechat_auth t1
+        LEFT JOIN
+          tb_person_info t2
+        ON
+          t2.user_id = t1.user_id
+        WHERE
+          t1.user_id = #{userId}
+        AND
+          enable_status = '1'
+    </select>
+
+    <insert id="saveInfo">
+      INSERT INTO tb_wechat_auth(
+      open_id,
+      create_time,
+      user_id
+      ) VALUES(
+      #{openId},
+      NOW(),
+      #{userId}
+      )
+    </insert>
 </mapper>

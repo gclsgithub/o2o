@@ -83,6 +83,11 @@ public class UserServcieImpl implements UserService {
         }
     }
 
+    @Override
+    public void saveUserInfo(LocalAuth localAuth,String oldPassWord) {
+        userDao.updateLocalAuthInfo(localAuth,oldPassWord);
+    }
+
     /**
      * 处理缩略图文件流
      *

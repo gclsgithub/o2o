@@ -55,4 +55,10 @@ public interface UserDao {
      * @return
      */
     Long findUserIdByUserNameAndPassword(@Param("auth") LocalAuth auth);
+
+    /**
+     *
+     * @param localAuth
+     */
+    Integer updateLocalAuthInfo(@Param("auth")LocalAuth localAuth,@Param("oldPassWord")String oldPassword);
 }

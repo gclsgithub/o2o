@@ -23,4 +23,18 @@ public class WechatServiceImpl implements WechatService {
 
         return auth;
     }
+
+    @Override
+    public WechatAuth getWechatAuthByUserId(String userId) {
+        WechatAuth auth = wechatDao.findWechatAuthByuserId(userId);
+
+        return auth;
+    }
+
+    @Override
+    public void saveInfo(String userId, String openId) {
+        wechatDao.saveInfo(userId,openId);
+    }
+
+
 }

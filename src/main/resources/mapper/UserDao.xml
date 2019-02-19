@@ -15,6 +15,21 @@
         </association>
     </resultMap>
 
+    <update id="updateLocalAuthInfo">
+        UPDATE
+          tb_local_auth
+        SET
+          user_name = #{auth.userName},
+          pass_word = #{auth.passWord}
+        WHERE
+          user_id = #{auth.personInfo.userId}
+        AND
+          user_name = #{auth.userName}
+        AND
+          pass_word = #{oldPassWord}
+
+    </update>
+    
     <select id="login" resultMap="personMap">
         SELECT
           t1.local_auth_id,

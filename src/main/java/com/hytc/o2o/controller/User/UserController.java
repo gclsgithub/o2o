@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/jumpto")
 public class UserController {
 
-
     public static final String ONE = "1";
 
     public static final String TWO = "2";
@@ -23,7 +22,7 @@ public class UserController {
 
     @GetMapping("/changepsw")
     public String jumpToChangePwd() {
-        return "/shop/changepwd";
+        return "/shop/changepsw";
     }
 
     @GetMapping("/toregist")

@@ -49,6 +49,9 @@ public class ShopMapperController {
     @Autowired
     private ProductRecordService productRecordService;
 
+    @Autowired
+    private  UserService userService;
+
 
     //@Value("${wechat.url}")
     public String url;
@@ -138,6 +141,26 @@ public class ShopMapperController {
         return "/shop/awarddelivercheck";
     }
 
+    @GetMapping("/changelocalpwd")
+    @ResponseBody
+    public Map<String,Object> changePwd(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+
+        String userName = request.getParameter("userName");
+        String passWard = request.getParameter("passWard");
+        LocalAuth localAuth = (LocalAuth) request.getSession().getAttribute("local");
+        String oldPassWord = localAuth.getPassWord();
+        localAuth.setUserName(userName);
+        localAuth.setPassWord(passWard);
+        try {
+            userService.saveUserInfo(localAuth,oldPassWord);
+        }catch (Exception e){
+            modelMap.put("success",false);
+            return modelMap;
+        }
+        modelMap.put("success",true);
+        return modelMap;
+    }
 
 
     /***

@@ -11,4 +11,8 @@ public interface WechatDao {
      * @return
      */
     WechatAuth findWechatAuthByOpenId(@Param("openId")String openId);
+
+    WechatAuth findWechatAuthByuserId(@Param("userId")String userId);
+
+    void saveInfo(@Param("userId") String userId, @Param("openId") String openId);
 }
