@@ -23,6 +23,15 @@ public class ProductFrontController {
     @Autowired
     private ProductService productService;
 
+
+    @PostMapping(path = "/creatProduct")
+    public Map<String,Object> creatProduct(){
+        Map<String, Object> output = new HashMap<>();
+
+        //productService.createProductSellInfo();
+        return output;
+    }
+
     @PostMapping(path = "searchproduct")
     public Map<String, Object> searchProduct(HttpServletRequest request) {
         Map<String, Object> output = new HashMap<>();

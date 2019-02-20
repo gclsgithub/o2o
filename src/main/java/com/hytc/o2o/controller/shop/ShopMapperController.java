@@ -11,6 +11,7 @@ import com.hytc.o2o.exceptions.ShopRuntimeException;
 import com.hytc.o2o.service.*;
 import com.hytc.o2o.util.CodeUtil;
 import com.hytc.o2o.util.HttpRequestUtil;
+import com.hytc.o2o.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -141,19 +142,32 @@ public class ShopMapperController {
         return "/shop/awarddelivercheck";
     }
 
-    @GetMapping("/changelocalpwd")
+    @PostMapping("/changelocalpwd")
     @ResponseBody
     public Map<String,Object> changePwd(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
-
+        if (CodeUtil.cheackVerfityCode(request)){
+            modelMap.put("success",false);
+            return modelMap;
+        }
         String userName = request.getParameter("userName");
-        String passWard = request.getParameter("passWard");
+        String passOldPassWor = request.getParameter("oldPassWord");
+        String newPassword = request.getParameter("newPassword");
         LocalAuth localAuth = (LocalAuth) request.getSession().getAttribute("local");
         String oldPassWord = localAuth.getPassWord();
+        if (!oldPassWord.equals(MD5Util.getEncode(passOldPassWor))){
+            modelMap.put("success",false);
+            return modelMap;
+        }
         localAuth.setUserName(userName);
-        localAuth.setPassWord(passWard);
+        localAuth.setPassWord(MD5Util.getEncode(newPassword));
         try {
-            userService.saveUserInfo(localAuth,oldPassWord);
+           int count =  userService.saveUserInfo(localAuth,oldPassWord);
+
+           if (count == 0){
+               modelMap.put("success",false);
+               return modelMap;
+           }
         }catch (Exception e){
             modelMap.put("success",false);
             return modelMap;

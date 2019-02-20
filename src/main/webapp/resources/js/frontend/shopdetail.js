@@ -93,7 +93,7 @@ $(function () {
      */
     $('.list-div').on('click', '.card', function (cuurent) {
         var productId = cuurent.currentTarget.dataset.productId;
-        window.location.href = "http://localhost:8081/frontend/productdetail?productId=" + productId;
+        window.location.href = "http://localhost:8081/frontend/productdetail?productId=" + productId+"&shopId="+shopId;
     })
 
     /**

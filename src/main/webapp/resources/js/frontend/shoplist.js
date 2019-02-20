@@ -64,6 +64,10 @@ $(function () {
         var cardHtml = '';
         $.getJSON(url, function (data) {
 
+            if (!data.success){
+                $.toast(data.message);
+                return;
+            }
             var shopList = data.shopList;
             shopList.map(function (item, index) {
                 cardHtml +=

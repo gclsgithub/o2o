@@ -2,6 +2,8 @@ $(function () {
 
     var productId = getQueryString("productId");
 
+    var createUrl = 'http://localhost:8081/productfront/creatProduct';
+
     init();
 
     function init(){
@@ -36,11 +38,19 @@ $(function () {
         })
     }
 
-    $('#buy').onclick(function () {
-        $.toast("功能尚未开放，请到店购买");
-    })
+    $('#buy').click(function () {
+        $.ajax({
+            url:createUrl,
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function (data) {
+        }
+    })})
 
-    $('#love').onclick(function () {
+    $('#love').click(function () {
         $.toast("已经点赞");
         $('#love').prop("disable",true);
     })

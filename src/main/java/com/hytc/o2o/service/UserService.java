@@ -29,5 +29,5 @@ public interface UserService {
      *
      * @param localAuth
      */
-    void saveUserInfo(LocalAuth localAuth,String oldPassWord);
+    int saveUserInfo(LocalAuth localAuth,String oldPassWord);
 }
