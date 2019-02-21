@@ -2,6 +2,7 @@ package com.hytc.o2o.controller.front;
 
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
+import com.hytc.o2o.entity.ProductSellDaily;
 import com.hytc.o2o.entity.Shop;
 import com.hytc.o2o.service.ProductService;
 import com.hytc.o2o.util.HttpRequestUtil;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +27,34 @@ public class ProductFrontController {
 
 
     @PostMapping(path = "/creatProduct")
-    public Map<String,Object> creatProduct(){
+    public Map<String,Object> creatProduct(HttpServletRequest request){
         Map<String, Object> output = new HashMap<>();
 
-        //productService.createProductSellInfo();
+        String productId = request.getParameter("productId");
+
+        String shopId = request.getParameter("shopId");
+
+        int totalCont = 1;
+        ProductSellDaily productSellDaily = new ProductSellDaily();
+
+        Product product = new Product();
+        product.setProductId(Long.valueOf(productId));
+
+        Shop shop = new Shop();
+        shop.setShopId(Long.valueOf(shopId));
+        productSellDaily.setCreateTime(new Date());
+        productSellDaily.setProduct(product);
+        productSellDaily.setShop(shop);
+        productSellDaily.setTotal(totalCont);
+
+        int count = productService.createProductSellInfo(productSellDaily);
+
+        if (count != 0) {
+            output.put("success", true);
+            output.put("sellId", count);
+        } else {
+            output.put("success", false);
+        }
         return output;
     }
 

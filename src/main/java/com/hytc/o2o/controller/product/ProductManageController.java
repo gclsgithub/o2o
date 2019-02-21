@@ -57,8 +57,6 @@ public class ProductManageController {
         }catch (ProductRuntimeException ex){
             dataMap.put("message",ex.getMessage());
         }
-
-
         return dataMap;
     }
 

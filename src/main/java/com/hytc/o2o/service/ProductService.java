@@ -6,6 +6,7 @@ import com.hytc.o2o.DTO.ProductExcution;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.entity.ProductImg;
+import com.hytc.o2o.entity.ProductSellDaily;
 import com.hytc.o2o.exceptions.ProductRuntimeException;
 
 import java.io.InputStream;
@@ -59,4 +60,12 @@ public interface ProductService {
      * @return
      */
     List<Product> getProductList(Product product, int index, int pageSize);
+
+    /**
+     * 插入销售数据
+     *
+     * @param productSellDaily
+     * @return
+     */
+    int createProductSellInfo(ProductSellDaily productSellDaily);
 }

@@ -8,6 +8,7 @@ import com.hytc.o2o.dao.ProductImgDao;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.entity.ProductImg;
+import com.hytc.o2o.entity.ProductSellDaily;
 import com.hytc.o2o.enums.ProductStateEnum;
 import com.hytc.o2o.exceptions.ProductRuntimeException;
 import com.hytc.o2o.service.ProductService;
@@ -21,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,26 +44,57 @@ public class ProductServiceImpl implements ProductService {
     /**
      * 逻辑商品信息
      * 逻辑删除
+     *
      * @param productId
      */
     @Override
-    public void delProduct(String productId,String status) {
-        if ("1".equals(status)){
+    public void delProduct(String productId, String status) {
+        if ("1".equals(status)) {
             status = "0";
-        }else if ("0".equals(status)){
+        } else if ("0".equals(status)) {
             status = "1";
         }
-        productDao.delProductByProductId(productId,status);
+        productDao.delProductByProductId(productId, status);
     }
 
     @Override
-    public List<Product> getProductByShopId(Long shopId,int index,int pageSize) {
-        return productDao.getProductListByShopId(shopId,index,pageSize);
+    public List<Product> getProductByShopId(Long shopId, int index, int pageSize) {
+        return productDao.getProductListByShopId(shopId, index, pageSize);
     }
 
     @Override
     public List<Product> getProductList(Product product, int index, int pageSize) {
-        return productDao.getProductList(product,index,pageSize);
+        return productDao.getProductList(product, index, pageSize);
+    }
+
+    @Override
+    public int createProductSellInfo(ProductSellDaily productSellDaily) {
+
+        int count = productDao.saveProductSellDailyInfo(productSellDaily);
+
+        if (count == 0) {
+            return 0;
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss:SSS");
+        String insertTime = simpleDateFormat.format(productSellDaily.getCreateTime());
+        if (StringUtils.isEmpty(insertTime)) {
+            return 0;
+        }
+        if (Integer.valueOf(insertTime.substring(18, 19)) >= 5) {
+            String lastTime = String.valueOf(Integer.valueOf(insertTime.substring(16, 17)) + 1);
+            if (insertTime.length() == 21) {
+                insertTime = insertTime.substring(0, 4) + insertTime.substring(5, 16) + lastTime;
+            }
+        }
+        if (insertTime.length() == 21) {
+            insertTime = insertTime.substring(0, 4) + insertTime.substring(5, 17);
+        }
+
+        productSellDaily.getCreateTime().getTime();
+        Integer sellId = productDao.getProductSellId(insertTime);
+
+        return sellId == null ? 0 : sellId;
     }
 
     @Override
@@ -72,13 +105,14 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 查询初期化信息
+     *
      * @param productId
      * @return
      */
     @Override
     public ProductAndCategoeryDto getProduct(Long productId) {
 
-        ProductAndCategoeryDto output = new  ProductAndCategoeryDto();
+        ProductAndCategoeryDto output = new ProductAndCategoeryDto();
         if (productId != null) {
             Product product = productDao.getProductInfo(productId);
             output.setProduct(product);
@@ -92,8 +126,9 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 添加或者修正一条商品信息
-     * @param product 商品信息
-     * @param thumnail 缩略图
+     *
+     * @param product        商品信息
+     * @param thumnail       缩略图
      * @param productImgList 详情图
      * @return
      * @throws ProductRuntimeException
@@ -102,8 +137,8 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductExcution addProduct(Product product, ImageHolder thumnail, List<ImageHolder> productImgList) throws ProductRuntimeException {
         //1.处理缩略图，获取缩略图相对路径并赋值给product
-        if(!ObjectUtils.isEmpty(product) && !ObjectUtils.isEmpty(product.getShop())
-                && !StringUtils.isEmpty(product.getShop().getShopId())){
+        if (!ObjectUtils.isEmpty(product) && !ObjectUtils.isEmpty(product.getShop())
+                && !StringUtils.isEmpty(product.getShop().getShopId())) {
             product.setCreateTime(LocalDateTime.now());
             product.setLastEditTime(LocalDateTime.now());
 
@@ -111,12 +146,12 @@ public class ProductServiceImpl implements ProductService {
             product.setEnableStatus(0);
 
             //判断是否存在缩略图，如果存在的话处理文件流
-            if(thumnail!=null){
-                addThumbnail(product,thumnail);
+            if (thumnail != null) {
+                addThumbnail(product, thumnail);
             }
 
             //如果传入的productId为空，则是需要添加的信息，如果不为空则是应该修改的信息
-            if (!StringUtils.isEmpty(product.getProductId())){
+            if (!StringUtils.isEmpty(product.getProductId())) {
                 try {
                     int effectedNum = productDao.updateProduct(product);
                     if (effectedNum < 0) {
@@ -127,24 +162,23 @@ public class ProductServiceImpl implements ProductService {
 
                     boolean flag = Boolean.FALSE;
                     //遍历图片，并添加到productImgs
-                    for (ImageHolder imageHolder:productImgList){
+                    for (ImageHolder imageHolder : productImgList) {
 
-                        String fileName =  imageHolder.getImageName();
-
+                        String fileName = imageHolder.getImageName();
 
 
                         //查询是否有
                         List<ProductImg> productImgSearchList = productImgDao.searchProductImg(product.getProductId());
 
-                        if (CollectionUtils.isEmpty(productImgSearchList)){
-                            addProductImgList(product,productImgList);
+                        if (CollectionUtils.isEmpty(productImgSearchList)) {
+                            addProductImgList(product, productImgList);
                             break;
-                        }else{
+                        } else {
 
-                            if (productImgSearchList.size() == productImgList.size()){
+                            if (productImgSearchList.size() == productImgList.size()) {
 
                                 //非压缩的方式生成图片
-                                String relativeAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
+                                String relativeAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(), dest, fileName);
 
 
                                 for (ProductImg img : productImgSearchList) {
@@ -162,7 +196,7 @@ public class ProductServiceImpl implements ProductService {
                                     img.setCreateTime(LocalDateTime.now());
                                     productImgDao.updateProductCategoery(img);
                                 }
-                            }else {
+                            } else {
 
                                 for (ProductImg img : productImgSearchList) {
                                     String file = null;
@@ -175,7 +209,7 @@ public class ProductServiceImpl implements ProductService {
                                 productImgDao.deleteProductImgByProductId(product.getProductId());
                                 List<ImageHolder> imageHolders = new ArrayList<>();
                                 imageHolders.add(imageHolder);
-                                addProductImgList(product,imageHolders);
+                                addProductImgList(product, imageHolders);
                                 break;
                             }
 
@@ -183,39 +217,40 @@ public class ProductServiceImpl implements ProductService {
                         }
 
                     }
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     throw new ProductRuntimeException("商品更新失败");
                 }
 
-            }else {
+            } else {
                 try {
                     int effectedNum = productDao.insertPrdouctIntoDb(product);
-                    if (effectedNum < 0){
-                        throw  new ProductRuntimeException("创建商品失败");
+                    if (effectedNum < 0) {
+                        throw new ProductRuntimeException("创建商品失败");
                     }
                 } catch (Exception e) {
-                    throw  new ProductRuntimeException("创建商品失败"+e.toString());
+                    throw new ProductRuntimeException("创建商品失败" + e.toString());
                 }
 
                 //2.向tb_product写入商品信息（商品信息+缩略图地址）
-                if (!ObjectUtils.isEmpty(productImgList)){
-                    addProductImgList(product,productImgList);
+                if (!ObjectUtils.isEmpty(productImgList)) {
+                    addProductImgList(product, productImgList);
                 }
 
                 //3.结合product_id 批量插入商品详情图片
-                return new ProductExcution(ProductStateEnum.SUCCESS,product);
+                return new ProductExcution(ProductStateEnum.SUCCESS, product);
             }
-        }else {
+        } else {
             //失败的时候
             return new ProductExcution(ProductStateEnum.EMPTY);
         }
 
         //失败的时候
-        return new ProductExcution(ProductStateEnum.SUCCESS,product);
+        return new ProductExcution(ProductStateEnum.SUCCESS, product);
     }
 
     /**
      * 处理详情图文件流
+     *
      * @param product
      * @param productImgList
      */
@@ -224,32 +259,33 @@ public class ProductServiceImpl implements ProductService {
         List<ProductImg> productImgs = new ArrayList<>();
 
         //遍历图片，并添加到productImgs
-        for (ImageHolder imageHolder:productImgList){
+        for (ImageHolder imageHolder : productImgList) {
 
-            String fileName =  imageHolder.getImageName();
+            String fileName = imageHolder.getImageName();
             //非压缩的方式生成图片
-            String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(),dest,fileName);
+            String imgAddr = ImageUtil.generateNormalThumbnail(imageHolder.getImage(), dest, fileName);
             ProductImg img = new ProductImg();
             img.setImgAddr(imgAddr);
             img.setProductId(product.getProductId());
             img.setCreateTime(LocalDateTime.now());
             productImgs.add(img);
         }
-        if (!CollectionUtils.isEmpty(productImgs)){
-            try{
+        if (!CollectionUtils.isEmpty(productImgs)) {
+            try {
 
                 int effectedNum = productImgDao.batchInsertProductImg(productImgs);
-                if (effectedNum < 0){
-                    throw  new ProductRuntimeException("添加失败");
+                if (effectedNum < 0) {
+                    throw new ProductRuntimeException("添加失败");
                 }
-            }catch (Exception ex){
-                throw  new ProductRuntimeException("创建图片失败"+ex.getMessage());
+            } catch (Exception ex) {
+                throw new ProductRuntimeException("创建图片失败" + ex.getMessage());
             }
         }
     }
 
     /**
      * 处理缩略图文件流
+     *
      * @param product
      * @param thumnail
      */
@@ -257,7 +293,7 @@ public class ProductServiceImpl implements ProductService {
         String dest = PathUtil.getShopImagePath(product.getShop().getShopId());
 
         String fileName = thumnail.getImageName();
-        String thumnnailAddr = ImageUtil.generateThumbnail(thumnail.getImage(),dest,fileName);
+        String thumnnailAddr = ImageUtil.generateThumbnail(thumnail.getImage(), dest, fileName);
         product.setImgAddr(thumnnailAddr);
     }
 }

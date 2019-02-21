@@ -3,8 +3,10 @@ package com.hytc.o2o.dao;
 import com.hytc.o2o.entity.Product;
 import com.hytc.o2o.entity.ProductCategory;
 import com.hytc.o2o.entity.ProductImg;
+import com.hytc.o2o.entity.ProductSellDaily;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ProductDao {
@@ -85,4 +87,19 @@ public interface ProductDao {
      * @return
      */
     List<Product> getProductList(@Param("product") Product product, @Param("index") int index, @Param("pageSize") int pageSize);
+
+    /**
+     * 存储销售信息
+     *
+     * @param productSellDaily
+     * @return
+     */
+    int saveProductSellDailyInfo(@Param("productSellDaily") ProductSellDaily productSellDaily);
+
+    /**
+     * 获取主建Id
+     * @param createTime
+     * @return
+     */
+    Integer getProductSellId(@Param("createTime") String createTime);
 }

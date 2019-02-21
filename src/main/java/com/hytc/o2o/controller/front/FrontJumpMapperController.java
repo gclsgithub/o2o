@@ -69,4 +69,9 @@ public class FrontJumpMapperController {
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
     public String jumpToLogin(){return "/frontend/frontLogin";}
 
+    /**
+     * 到登陆画面
+     */
+    @RequestMapping(value = "/jumpToQrcode", method = RequestMethod.GET)
+    public String jumpToQrCode(){return "/frontend/qrcode";}
 }

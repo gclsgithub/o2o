@@ -2,7 +2,7 @@ $(function () {
 
     var productId = getQueryString("productId");
 
-    var createUrl = 'http://localhost:8081/productfront/creatProduct';
+    var shopId = getQueryString("shopId");
 
     init();
 
@@ -39,6 +39,14 @@ $(function () {
     }
 
     $('#buy').click(function () {
+
+        var formData = new FormData();
+
+        formData.append("productId",productId);
+        formData.append("shopId",shopId);
+
+        var createUrl = 'http://localhost:8081/productfront/creatProduct';
+
         $.ajax({
             url:createUrl,
             type: 'POST',
@@ -47,6 +55,15 @@ $(function () {
             contentType: false,
             processData: false,
             success:function (data) {
+
+                var jumpUrl = 'http://localhost:8081/frontend/jumpToQrcode?sellId=';
+                if (data.success){
+                    $.toast("购买成功");
+                    var sellId = data.sellId;
+                    window.location.href = jumpUrl+sellId;
+                } else {
+                    $.toast("购买失败");
+                }
         }
     })})
 

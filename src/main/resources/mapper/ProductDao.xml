@@ -244,4 +244,28 @@
         LIMIT
         #{index},#{pageSize}
     </select>
+
+    <insert id="saveProductSellDailyInfo">
+        INSERT INTO
+          tb_product_sell_daily(
+            product_id,
+            shop_id,
+            create_time,
+            total
+          )VALUES(
+            #{productSellDaily.product.productId},
+            #{productSellDaily.shop.shopId},
+            #{productSellDaily.createTime},
+            #{productSellDaily.total}
+          )
+    </insert>
+
+    <select id="getProductSellId" resultType="java.lang.Integer">
+        SELECT
+          sell_id AS sellId
+        FROM
+          tb_product_sell_daily
+        WHERE
+          DATE_FORMAT(create_time,'%Y%c%d %T') = #{createTime}
+    </select>
 </mapper>

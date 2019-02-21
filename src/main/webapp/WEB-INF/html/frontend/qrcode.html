@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+    <title>登陆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+    <script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script type='text/javascript' src='../resources/js/common/common.js' charset='utf-8'></script>
+</head>
+<body>
+<input id="openid" type="hidden" name="openid" value="aaa" style="width:80%"/><br/>
+<input type="button" id="back" value="返回"/>
+<div id="qrcode"></div>
+<script type="text/javascript">
+
+    var qrcode = new QRCode("qrcode");
+
+    function makeCode() {
+        var elText = getQueryString("sellId");
+
+        var url = "http://localhost:8081/frontend/sell?sellId="+elText;
+        if (elText == null || elText == '' || elText == undefined) {
+            alert("Input a text");
+            elText.focus();
+            return;
+        }
+
+        new QRCode(document.getElementById("qrcode"), url);  // 设置要生成二维码的链接
+
+        // qrcode.makeCode(elText.value,url);
+    }
+    $('#back').click(){
+        window.location.href="http://localhost:8081/frontend/index";
+    }
+
+    makeCode();
+</script>
+</body>
+</html>
+
