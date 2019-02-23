@@ -13,6 +13,7 @@ $(function () {
         var formData = new FormData();
 
         formData.append("productId",productId);
+        formData.append("shopId",shopId);
 
         $.ajax({
             url:url,

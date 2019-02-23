@@ -15,7 +15,7 @@ $(function() {
                     tempHtml += ''
                          +      '<div class="row row-productbuycheck">'
                          +          '<div class="col-33">'+ item.productName +'</div>'
-                         +          '<div class="col-33 productbuycheck-time">'+ item.createTime +'</div>'
+                         +          '<div class="col-33 productbuycheck-time">'+ new Date(item.createTime).Format("yyyy-MM-dd hh:mm:ss") +'</div>'
                          +          '<div class="col-33">'+ item.shopName+'</div>'
                          +      '</div>';
                     //设置总的类别

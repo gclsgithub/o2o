@@ -63,6 +63,7 @@ public class ProductFrontController {
         Map<String, Object> output = new HashMap<>();
 
         Long productId = HttpRequestUtil.getLong(request, "productId");
+        Long shopId = HttpRequestUtil.getLong(request, "shopId");
 
 
         if (ObjectUtils.isEmpty(productId) || productId == -1) {
@@ -75,7 +76,7 @@ public class ProductFrontController {
 
         product.setProductId(productId);
 
-        List<Product> products = productService.getProductList(product, 1, 1);
+        List<Product> products = productService.getProductList(product, 0, 1);
 
         output.put("success",true);
 

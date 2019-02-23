@@ -223,6 +223,10 @@
         tb_product
         WHERE
         enable_status = '0'
+        <if test="product.productId neq null">
+            AND
+            product_id = #{product.productId}
+        </if>
         <if test="product.productName neq null and product.productName neq ''">
             AND
             product_name = #{product.productName}
