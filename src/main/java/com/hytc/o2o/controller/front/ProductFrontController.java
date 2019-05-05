@@ -1,9 +1,6 @@
 package com.hytc.o2o.controller.front;
 
-import com.hytc.o2o.entity.Product;
-import com.hytc.o2o.entity.ProductCategory;
-import com.hytc.o2o.entity.ProductSellDaily;
-import com.hytc.o2o.entity.Shop;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.service.ProductService;
 import com.hytc.o2o.util.HttpRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +44,10 @@ public class ProductFrontController {
         productSellDaily.setShop(shop);
         productSellDaily.setTotal(totalCont);
 
-        int count = productService.createProductSellInfo(productSellDaily);
+        //从Session中获取UserId
+        LocalAuth user = (LocalAuth) request.getSession().getAttribute("local");
+
+        int count = productService.createProductSellInfo(productSellDaily,user);
 
         if (count != 0) {
             output.put("success", true);

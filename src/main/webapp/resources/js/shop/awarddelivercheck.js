@@ -14,7 +14,7 @@ $(function() {
 							+ '<div class="col-33">' + item.point
 							+ '</div>'
 							+ '<div class="col-33 awarddeliver-time">'
-							+ new Date(item.createTime).Format("yyyy-MM-dd HH:mm:ss")
+							+ new Date(item.createTime).Format("yyyy-MM-dd hh:mm:ss")
 							+ '</div>' + '<div class="col-33">' + item.userName
 							+ '</div>' + '</div>';
 				});
@@ -31,6 +31,10 @@ $(function() {
 
     $('#back').on('click', function(e) {
 		window.location.href =backUrl;
+    });
+
+    $('#new').on('click', function(e) {
+        window.location.href =backUrl;
     });
 
 	getList();

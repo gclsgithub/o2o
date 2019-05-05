@@ -11,4 +11,12 @@ public interface ProductRecordService {
      * @return List<ProductRecord>
      */
     List<ProductRecord> getAllInfos(String shopId,String useName);
+
+    /**
+     * 查询奖品
+     * @param shopId
+     * @param useName
+     * @return
+     */
+    List<ProductRecord> getAllAwardsInfos(String shopId,String useName);
 }

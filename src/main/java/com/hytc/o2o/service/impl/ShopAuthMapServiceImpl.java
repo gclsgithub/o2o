@@ -6,6 +6,7 @@ import com.hytc.o2o.entity.ShopAuthMap;
 import com.hytc.o2o.enums.ShopAuthMapStateEnum;
 import com.hytc.o2o.service.ShopAuthMapService;
 import com.hytc.o2o.util.PageUtil;
+import com.sun.tools.javac.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +89,33 @@ public class ShopAuthMapServiceImpl implements ShopAuthMapService {
     @Transactional
     public ShopAuthMapExcution updateShopAuthMap(ShopAuthMap shopAuthMap) {
         ShopAuthMapExcution shopAuthMapExcution = null;
+
+        if (shopAuthMap.getShopAuthId()== -1){
+
+            String name = shopAuthMap.getEmmployee().getName();
+
+            List<String> userIds = shopAuthMapDao.findUserIdByName(name);
+
+
+            if (userIds.size() == 0 || userIds.size() > 1){
+                shopAuthMapExcution = new ShopAuthMapExcution(ShopAuthMapStateEnum.EMPTY);
+                return shopAuthMapExcution;
+            }
+
+            //设置userId
+            shopAuthMap.getEmmployee().setUserId(Long.valueOf(userIds.get(0)));
+
+
+            //插入一条数据
+            int isUpdate = shopAuthMapDao.insertIntoShopMap(shopAuthMap);
+            if (isUpdate == 0) {
+                shopAuthMapExcution = new ShopAuthMapExcution(ShopAuthMapStateEnum.EMPTY);
+                return shopAuthMapExcution;
+            } else {
+                shopAuthMapExcution = new ShopAuthMapExcution(ShopAuthMapStateEnum.SUCCESS, shopAuthMap);
+                return shopAuthMapExcution;
+            }
+        }
         if (!ObjectUtils.isEmpty(shopAuthMap)
                 && !ObjectUtils.isEmpty(shopAuthMap.getShopAuthId())) {
             int isUpdate = shopAuthMapDao.updateShopAuth(shopAuthMap);

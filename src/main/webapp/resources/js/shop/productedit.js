@@ -2,7 +2,7 @@ $(function() {
     var productId ='';
     getProductId();
     function getProductId() {
-        productId = "?productId="+getQueryString('productId');
+        productId = "?productId="+ (getQueryString('productId')==undefined?"-2":getQueryString('productId'));
         initproduction();
     }
 

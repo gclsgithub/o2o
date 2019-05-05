@@ -44,7 +44,7 @@
 			<div class="content infinite-scroll infinite-scroll-bottom"
 				data-distance="100">
 				<!-- 这里是页面内容区 -->
-				<div class="list-div shop-list">
+				<div class="list-div shop-list" id="count">
 					<!-- <div class="card">
                             <div class="card-header">传统火锅店</div>
                             <div class="card-content">
@@ -67,9 +67,7 @@
                             </div>
                         </div> -->
 				</div>
-				<div class="infinite-scroll-preloader">
-					<div class="preloader"></div>
-				</div>
+
 			</div>
 		</div>
 
@@ -77,9 +75,7 @@
 		<div class="panel-overlay"></div>
 		<div class="panel panel-right panel-reveal" id="panel-left-demo">
 			<div class="content-block">
-				<p>
-					<a href="/frontend/myrecord" class="close-panel">消费记录</a>
-				</p>
+
 				<p>
 					<a href="/frontend/mypoint" class="close-panel">我的积分</a>
 				</p>
@@ -103,7 +99,36 @@
 		src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
 	<script type='text/javascript'
 		src='../resources/js/common/commonutil.js' charset='utf-8'></script>
-	<script type='text/javascript'
-		src='../resources/js/frontend/mypoint.js' charset='utf-8'></script>
+	<script>
+		$(function () {
+
+
+			var url = "http://localhost:8081/nav/mypoint";
+			var formData = new FormData();
+
+
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (data) {
+					if (data.success) {
+						var tempHtmlCompenx = '<div class="row row-shop"><div class="col-40" > 用戶名' + '</div>'
+								+ '<div class="col-40" > 積分'+ '</div></div>';
+						data.list.map(function (item, index) {
+							tempHtmlCompenx += '<div class="row row-shop"><div class="col-40" >' + item.userName + '</div>'
+									+ '<div class="col-40" >' + item.point + '</div></div>';
+						})
+						$('#count').html(tempHtmlCompenx);
+					} else {
+						$.toast(data.message);
+					}
+				}
+			})
+		})
+	</script>
 </body>
 </html>

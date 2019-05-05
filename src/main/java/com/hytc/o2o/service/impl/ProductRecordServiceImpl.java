@@ -18,4 +18,10 @@ public class ProductRecordServiceImpl implements ProductRecordService {
     public List<ProductRecord> getAllInfos(String shopId,String useName) {
         return records.getAllRecords(shopId,useName);
     }
+
+    @Override
+    public List<ProductRecord> getAllAwardsInfos(String shopId,String useName) {
+        return records.getAllAwardRecords(shopId,useName);
+    }
+
 }

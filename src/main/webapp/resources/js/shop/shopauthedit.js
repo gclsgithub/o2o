@@ -1,10 +1,15 @@
 $(function () {
 
     var shopAuthId = getQueryString('shopAuthId');
-    var init = "http://localhost:8081/shopauth/shopauthedit?shopAuthId=" + shopAuthId;
 
-    var modify = "http://localhost:8081/shopauth/updateShopAuth";
+    var shopId = getQueryString('shopId');
+    var init = "http://localhost:8081/shopauth/shopauthedit?shopAuthId=" + shopAuthId+"&shopId="+shopId;
 
+    var modify = "http://localhost:8081/shopauth/updateShopAuth?shopId="+shopId;
+
+    $('#back').click(function () {
+        window.location.href = "http://localhost:8081/shop/shopauthmanage?shopId="+shopId;
+    })
     if (shopAuthId == '' || shopAuthId == null || shopAuthId == undefined) {
         $.toast("用户不存在");
     } else {
@@ -25,8 +30,13 @@ $(function () {
     $('#submit').on('click', function () {
         var shopAuth = {};
         var emmployee = {};
+        var shop = {};
+
+        shop.shopId = shopId;
 
         shopAuth.emmployee = emmployee;
+
+        shopAuth.shop = shop;
 
         shopAuth.emmployee.name = $('#shopauth-name').val();
 

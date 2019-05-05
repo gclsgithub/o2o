@@ -238,6 +238,28 @@ public class ShopMapperController {
         return modelMap;
     }
 
+    /**
+     * 获取积分记录
+     * @return
+     */
+    @GetMapping("/listawardss")
+    @ResponseBody
+    public Map<String, Object> getAwards(@RequestParam(value = "shopId")String shopId,
+                                         @RequestParam(value = "useName",required = false)String useName){
+        Map<String, Object> modelMap = new HashMap<>();
+
+        if (StringUtils.isEmpty(useName)){
+            useName = null;
+        }
+        List<ProductRecord> productRecords = productRecordService.getAllInfos(shopId,useName);
+
+        modelMap.put("success",true);
+
+        modelMap.put("userAwardMapList",productRecords);
+
+        return modelMap;
+    }
+
     @GetMapping("/listuserproductmapsbyshop")
     @ResponseBody
     public  Map<String, Object> getPriductBuyChecks(@RequestParam(value = "shopId")String shopId){
@@ -263,37 +285,37 @@ public class ShopMapperController {
             productUseExcution.setData(dataList);
 
             if (!productUseExcutionList.stream().map(info -> info.getName()).collect(Collectors.toList()).contains(productUseExcution.getName())){
-                if ("Monday".equals(p.getWeek())){
+                if ("星期一".equals(p.getWeek()) || "Monday".equals(p.getWeek())){
                     dataList.set(0,Integer.valueOf(p.getCount()));
-                }else if ("Tuesday".equals(p.getWeek())){
+                }else if ("星期二".equals(p.getWeek()) || "Tuesday".equals(p.getWeek())){
                     dataList.set(1,Integer.valueOf(p.getCount()));
-                }else if ("Wednesday".equals(p.getWeek())){
+                }else if ("星期三".equals(p.getWeek()) || "Wednesday".equals(p.getWeek())){
                     dataList.set(2,Integer.valueOf(p.getCount()));
-                }else if ("Thursday".equals(p.getWeek())){
+                }else if ("星期四".equals(p.getWeek()) || "Thursday".equals(p.getWeek())){
                     dataList.set(3,Integer.valueOf(p.getCount()));
-                }else if ("Friday".equals(p.getWeek())){
+                }else if ("星期五".equals(p.getWeek()) || "Friday".equals(p.getWeek())){
                     dataList.set(4,Integer.valueOf(p.getCount()));
-                }else if ("Saturday".equals(p.getWeek())){
+                }else if ("星期六".equals(p.getWeek()) || "Saturday".equals(p.getWeek())){
                     dataList.set(5,Integer.valueOf(p.getCount()));
-                }else if ("Sunday".equals(p.getWeek())){
+                }else if ("星期日".equals(p.getWeek()) || "Sunday".equals(p.getWeek())){
                     dataList.set(6,Integer.valueOf(p.getCount()));
                 }
                 productUseExcution.setData(dataList);
                 productUseExcutionList.add(productUseExcution);
             } else {
-                if ("Monday".equals(p.getWeek())){
+                if ("星期一".equals(p.getWeek()) || "Monday".equals(p.getWeek())){
                     dataList.set(0,Integer.valueOf(p.getCount()));
-                }else if ("Tuesday".equals(p.getWeek())){
+                }else if ("星期二".equals(p.getWeek()) || "Tuesday".equals(p.getWeek())){
                     dataList.set(1,Integer.valueOf(p.getCount()));
-                }else if ("Wednesday".equals(p.getWeek())){
+                }else if ("星期三".equals(p.getWeek()) || "Wednesday".equals(p.getWeek())){
                     dataList.set(2,Integer.valueOf(p.getCount()));
-                }else if ("Thursday".equals(p.getWeek())){
+                }else if ("星期四".equals(p.getWeek()) || "Thursday".equals(p.getWeek())){
                     dataList.set(3,Integer.valueOf(p.getCount()));
-                }else if ("Friday".equals(p.getWeek())){
+                }else if ("星期五".equals(p.getWeek()) || "Friday".equals(p.getWeek())){
                     dataList.set(4,Integer.valueOf(p.getCount()));
-                }else if ("Saturday".equals(p.getWeek())){
+                }else if ("星期六".equals(p.getWeek()) || "Saturday".equals(p.getWeek())){
                     dataList.set(5,Integer.valueOf(p.getCount()));
-                }else if ("Sunday".equals(p.getWeek())){
+                }else if ("星期日".equals(p.getWeek()) || "Sunday".equals(p.getWeek())){
                     dataList.set(6,Integer.valueOf(p.getCount()));
                 }
                 productUseExcution.setData(dataList);

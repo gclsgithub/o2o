@@ -46,6 +46,6 @@ public class ProductMapperController {
         //逻辑删除
         productService.delProduct(productId,enableStatus);
 
-        return  "redirect:/shop/productmanage";
+        return  "redirect:/shop/productmanage?shopId="+shopId;
     }
 }

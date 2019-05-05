@@ -8,8 +8,13 @@ $(function() {
         initproduction();
     }
     $("#back").on("click",function(){
-        var backUrl = window.parent.document.referrer;
+        //返回是因为这个方法使用的是Dom对象的上一个画面
+
+        var backUrl = "http://localhost:8081/shop/mappershopfunction?shopId="+shopId;
         $("#back").attr("href",backUrl);
+    })
+    $("#addButton").on("click",function(){
+       window.location.href="http://localhost:8081/productmapper/productaddmapper"+(shopId == undefined?"?shopId=":shopId);
     })
 	function initproduction() {
     	var initUrl="/shopadmin/productmanageinit";

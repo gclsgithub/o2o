@@ -27,6 +27,7 @@ public class PathUtil {
      */
     public static  String getShopImagePath(Long shopId){
         //给每一个商家设置一个文件夹保存图片
+
         String ImagePath="/upload/item/shop/"+shopId+"/";
         return ImagePath.replace("/",seperator);
     }

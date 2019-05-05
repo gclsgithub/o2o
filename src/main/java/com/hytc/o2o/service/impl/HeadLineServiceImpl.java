@@ -2,6 +2,7 @@ package com.hytc.o2o.service.impl;
 
 import com.hytc.o2o.dao.HeadLineDao;
 import com.hytc.o2o.entity.HeadLine;
+import com.hytc.o2o.entity.UserPoint;
 import com.hytc.o2o.service.HeadLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,11 @@ public class HeadLineServiceImpl implements HeadLineService {
     @Override
     public List<HeadLine> getAllHeadLines(String staus) {
         return headLineDao.queryHeadLines(staus);
+    }
+
+
+    @Override
+    public List<UserPoint> getTbUserProductInfo(Long userId) {
+        return headLineDao.queryPoint(userId);
     }
 }

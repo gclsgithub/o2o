@@ -102,4 +102,16 @@ public interface ProductDao {
      * @return
      */
     Integer getProductSellId(@Param("createTime") String createTime);
+
+    /**
+     * 插入积分
+     * @param userId
+     * @param shopId
+     * @param productId
+     * @return
+     */
+    Integer savePoint(@Param("userId") Long userId,
+                      @Param("shopId") Long shopId,
+                      @Param("productId") Long productId,
+                      @Param("point") Long point);
 }

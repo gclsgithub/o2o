@@ -86,12 +86,17 @@ public class ProductManageController {
      * @return
      */
     @RequestMapping(value = "initproductedit" ,method = {RequestMethod.GET})
-    public Map<String,Object> initProductEdit(HttpServletRequest request, @RequestParam("productId")String productId){
+    public Map<String,Object> initProductEdit(HttpServletRequest request, @RequestParam(value = "productId",required = false)String productId,
+                                              @RequestParam(value = "shopId",required = false)String myshopId){
 
         Map<String,Object> outDate = new HashMap<>();
 
-        outDate.put("productId",productId);
-        String shopId = (String) request.getSession().getAttribute("shopId");
+        outDate.put("productId","-2".equalsIgnoreCase(productId)?null:productId);
+        String shopId = StringUtils.isEmpty((String) request.getSession().getAttribute("shopId"))?myshopId:(String) request.getSession().getAttribute("shopId");
+
+        if (StringUtils.isEmpty(shopId)){
+            shopId = (String) request.getAttribute("shopId");
+        }
         ProductAndCategoeryDto serviceOutput = null;
         if (!StringUtils.isEmpty(shopId)) {
 

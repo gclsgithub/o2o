@@ -2,7 +2,7 @@ $(function () {
 
     var shopId = getQueryString("shopId");
 
-    var index = 1;
+    var index = 0;
 
     var pageSize = 3;
 

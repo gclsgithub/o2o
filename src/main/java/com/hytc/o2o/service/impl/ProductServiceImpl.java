@@ -5,10 +5,7 @@ import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.DTO.ProductExcution;
 import com.hytc.o2o.dao.ProductDao;
 import com.hytc.o2o.dao.ProductImgDao;
-import com.hytc.o2o.entity.Product;
-import com.hytc.o2o.entity.ProductCategory;
-import com.hytc.o2o.entity.ProductImg;
-import com.hytc.o2o.entity.ProductSellDaily;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.enums.ProductStateEnum;
 import com.hytc.o2o.exceptions.ProductRuntimeException;
 import com.hytc.o2o.service.ProductService;
@@ -68,9 +65,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int createProductSellInfo(ProductSellDaily productSellDaily) {
+    public int createProductSellInfo(ProductSellDaily productSellDaily, LocalAuth user ) {
 
         int count = productDao.saveProductSellDailyInfo(productSellDaily);
+
+
+        //插入积分信息
+
+        //获取point
+        Product product = productDao.getProductInfo(productSellDaily.getProduct().getProductId());
+
+        productDao.savePoint(
+                user.getPersonInfo().getUserId(),
+                productSellDaily.getShop().getShopId(),
+                productSellDaily.getProduct().getProductId(),
+                Long.valueOf(product.getPoint()));
 
         if (count == 0) {
             return 0;

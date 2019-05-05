@@ -1,7 +1,7 @@
 $(function () {
     
     $('#register').on('click',function () {
-        window.location.href = "http://localhost:8081/jumpto/toregist?type=2";
+        window.location.href = "http://localhost:8081/jumpto/toregist?type=1";
     })
 
     //登陆方法
@@ -18,7 +18,7 @@ $(function () {
 
         formData.append("userName",userName);
         formData.append("passWord",passWord);
-        formData.append("userType","1");
+        formData.append("userType","1.");
 
         $.ajax({
             url:url,

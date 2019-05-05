@@ -4,6 +4,7 @@ $(function() {
     var prodctNames = [];
     var showdata ;
     var shopId = getQueryString('shopId');
+
     function getList() {
         var listUrl = '/shop/listuserproductmapsbyshop?pageIndex=1&pageSize=9&shopId=' + shopId + '&productName=' + productName;
         $.getJSON(listUrl, function (data) {
@@ -17,6 +18,7 @@ $(function() {
                          +          '<div class="col-33">'+ item.productName +'</div>'
                          +          '<div class="col-33 productbuycheck-time">'+ new Date(item.createTime).Format("yyyy-MM-dd hh:mm:ss") +'</div>'
                          +          '<div class="col-33">'+ item.shopName+'</div>'
+
                          +      '</div>';
                     //设置总的类别
                     prodctNames.push(item.productName);

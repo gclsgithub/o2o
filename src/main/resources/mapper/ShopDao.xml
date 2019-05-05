@@ -59,7 +59,7 @@
         FROM
         tb_shop ts
         where
-        enable_status = '0'
+        enable_status = '1'
         <if test="ShopCondition != null">
             <if test="ShopCondition.shopName!=null">
                 AND ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
@@ -99,7 +99,7 @@
         FROM
         tb_shop ts
         where
-        enable_status = '0'
+        enable_status = '1'
         <if test="ShopCondition != null">
             <if test="ShopCondition.shopName!=null">
                 AND ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')
@@ -146,7 +146,7 @@
         FROM
         tb_shop ts
         where
-        enable_status = '0'
+        enable_status = '1'
         <if test="ShopCondition != null">
             <if test="ShopCondition.shopName!=null">
                 AND ts.shop_name like CONCAT('%',#{ShopCondition.shopName},'%')

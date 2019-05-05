@@ -51,4 +51,17 @@ public interface ShopAuthMapDao {
      */
     ShopAuthMap findShopAurhMapById(@Param("shopAuthId")Long shopAuthId);
 
+    /**
+     * 新规登陆
+     * @param shopAuthMap
+     * @return
+     */
+    int insertIntoShopMap(@Param("condition") ShopAuthMap shopAuthMap);
+
+    /**
+     * 根据userName找到唯一标示Id
+     * @param name
+     * @return
+     */
+    List<String> findUserIdByName(@Param("name") String name);
 }

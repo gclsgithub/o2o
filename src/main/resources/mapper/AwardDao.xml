@@ -16,7 +16,9 @@
         shop_id AS shopId
         FROM
         tb_award
-        <where>
+        WHERE
+            1 =1
+            AND
             <if test="condition.awardId neq null and condition.awardId neq ''">
                 AND
                 award_id = #{condition.awardId}
@@ -45,8 +47,7 @@
                 AND
                 enable_status = #{condition.enableStatus}
             </if>
-        </where>
-        ORDER BY
+            ORDER BY
         priority DESC
         LIMIT #{startPage},#{pageSize}
     </select>

@@ -18,10 +18,15 @@ public class UserServcieImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    /**
+     * 数据交互全是在service层中完成
+     * @param locallocalAuthAuth
+     * @return
+     */
     @Override
-    public LocalAuth doLogin(LocalAuth localAuth) {
+    public LocalAuth doLogin(LocalAuth locallocalAuthAuth) {
 
-        LocalAuth certificationUser = userDao.login(localAuth);
+        LocalAuth certificationUser = userDao.login(locallocalAuthAuth);
 
         if (ObjectUtils.isEmpty(certificationUser)) {
             throw new RuntimeException("login fail");

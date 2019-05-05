@@ -23,8 +23,9 @@
         <property name="defaultEncoding" value="uft-8"></property>
         <!-- 20M-->
         <property name="maxUploadSize" value="10485760000"></property>
-        <property name="maxInMemorySize" value="10960"></property>
-
+        <property name="maxInMemorySize" value="40960"></property>
+        <property name="uploadTempDir" value="file:WEB-INF/file"></property>
+        <property name="resolveLazily" value="true"/>
     </bean>
 
     <!-- 在spring-mvc.xml文件中加入这段配置后，spring返回给页面的都是utf-8编码了 -->

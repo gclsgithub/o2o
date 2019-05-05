@@ -71,4 +71,15 @@
         </where>
     </select>
 
+
+    <select id="queryPoint" resultType="com.hytc.o2o.entity.UserPoint">
+    SELECT
+      user_id AS userId,
+      point
+    FROM
+        tb_user_product_map
+    where
+      user_id=#{id}
+    </select>
+
 </mapper>

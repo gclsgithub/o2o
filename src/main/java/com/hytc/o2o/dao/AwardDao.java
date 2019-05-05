@@ -63,13 +63,13 @@ public interface AwardDao {
             "        enable_status AS enableStatus"+
             "        FROM " +
             "        tb_award"+
-            " WHERE" +
+            " WHERE 1=1" +
             "<when test='shopId != null'>" +
-            "   shop_id = #{shopId}" +
-            "</when>'"+
+            " AND  shop_id = #{shopId}" +
+            "</when>"+
             "<when test='awardName != null'>" +
             "  AND award_name = #{awardName}" +
-            "</when>'"+
+            "</when>"+
             "</script>")
     List<Award> findAll(@Param("shopId")String shopId,@Param("awardName")String awardName);
 }

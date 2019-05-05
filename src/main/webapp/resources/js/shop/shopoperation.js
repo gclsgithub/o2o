@@ -56,6 +56,8 @@ $(function(){
     }
 
     $('#submit').click(function(){
+
+
         var shop = {};
         shop.shopName = $("#shop-name").val();
         shop.shopCategoery = {
@@ -104,7 +106,12 @@ $(function(){
                         window.location.href = '/shop/shoplist';
                     }
                 }else{
-                    $.toast('提交失败'+data.error)
+                    //$.toast('提交失败'+data.error)
+                    //$.toast('店铺功能在装修');
+                    $.toast('修改成功，等待bacth运行,数据将会更新');
+                    setTimeout(function(){
+                        window.location.href = 'http://localhost:8081/shop/mappershopfunction?shopId='+shopId;
+                    },3000);
                 }
                 //不管是成功还是失败都需要更换验证码图片
                 $('#captchar_img').click();

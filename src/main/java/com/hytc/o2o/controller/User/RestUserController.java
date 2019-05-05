@@ -38,12 +38,14 @@ public class RestUserController {
     public Map<String, Object> login(HttpServletRequest request) {
         Map<String, Object> output = new HashMap<>();
 
+        //从请求中获取相应的数据ß
         String userName = HttpRequestUtil.getString(request, "userName");
 
         String passWord = HttpRequestUtil.getString(request, "passWord");
 
         String userType = HttpRequestUtil.getString(request, "userType");
 
+        //初期话这个对象
         LocalAuth localAuth = new LocalAuth();
 
         localAuth.setUserName(userName);

@@ -3,10 +3,7 @@ package com.hytc.o2o.service;
 import com.hytc.o2o.DTO.ImageHolder;
 import com.hytc.o2o.DTO.ProductAndCategoeryDto;
 import com.hytc.o2o.DTO.ProductExcution;
-import com.hytc.o2o.entity.Product;
-import com.hytc.o2o.entity.ProductCategory;
-import com.hytc.o2o.entity.ProductImg;
-import com.hytc.o2o.entity.ProductSellDaily;
+import com.hytc.o2o.entity.*;
 import com.hytc.o2o.exceptions.ProductRuntimeException;
 
 import java.io.InputStream;
@@ -67,5 +64,5 @@ public interface ProductService {
      * @param productSellDaily
      * @return
      */
-    int createProductSellInfo(ProductSellDaily productSellDaily);
+    int createProductSellInfo(ProductSellDaily productSellDaily, LocalAuth user );
 }

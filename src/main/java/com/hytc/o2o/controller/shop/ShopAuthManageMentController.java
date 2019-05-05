@@ -25,14 +25,14 @@ public class ShopAuthManageMentController {
     private ShopAuthMapService shopAuthMapService;
 
     @GetMapping("/initShopAuth")
-    public Map<String, Object> initShopAuth(HttpServletRequest request) {
+    public Map<String, Object> initShopAuth(HttpServletRequest request,@RequestParam("shopId")String myshopId) {
         Map<String, Object> output = new HashMap<>();
 
         int index = HttpRequestUtil.getInt(request, "index");
 
         int pageSize = HttpRequestUtil.getInt(request, "pageSize");
 
-        Long shopId = Long.valueOf((String) request.getSession().getAttribute("shopId"));
+        Long shopId = Long.valueOf(myshopId);
 
         if (ObjectUtils.isEmpty(shopId)) {
             output.put("success", false);
@@ -68,6 +68,8 @@ public class ShopAuthManageMentController {
 
     @PostMapping("/updateShopAuth")
     public Map<String, Object> updateShopAuth(HttpServletRequest request, String shopAuthStr) {
+
+
         Map<String, Object> output = new HashMap<>();
 
         //判断是二维码修改还是直接在网页上修改
@@ -91,18 +93,20 @@ public class ShopAuthManageMentController {
             return output;
         }
 
-        //非空判断
-        if (ObjectUtils.isEmpty(shopAuthMap)) {
-            output.put("success", false);
-            output.put("errorMsg", "输入的信息不正确");
-            return output;
-        }
+        if (shopAuthMap.getShopAuthId() != -1) {
+            //非空判断
+            if (ObjectUtils.isEmpty(shopAuthMap)) {
+                output.put("success", false);
+                output.put("errorMsg", "输入的信息不正确");
+                return output;
+            }
 
-        //检查做操的对方是否为店家本身，店家本身不支持修改
-        if (!checkPermission(shopAuthMap.getShopAuthId())) {
-            output.put("success", false);
-            output.put("errorMsg", "无法修改店家自己");
-            return output;
+            //检查做操的对方是否为店家本身，店家本身不支持修改
+            if (!checkPermission(shopAuthMap.getShopAuthId())) {
+                output.put("success", false);
+                output.put("errorMsg", "无法修改店家自己");
+                return output;
+            }
         }
 
         ShopAuthMapExcution shopAuthMapExcution = shopAuthMapService.updateShopAuthMap(shopAuthMap);

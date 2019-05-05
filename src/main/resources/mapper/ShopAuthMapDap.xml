@@ -150,4 +150,31 @@
         </where>
     </update>
 
+    <insert id="insertIntoShopMap">
+        INSERT INTO
+          tb_shop_auth_map(
+          employee_id,
+          shop_id,
+          title_flag,
+          create_time,
+          last_edit_time,
+          name
+        )VALUES (
+          #{condition.emmployee.userId},
+          #{condition.shop.shopId},
+          '1',
+          NOW(),
+          NOW(),
+          #{condition.jobName}
+        )
+    </insert>
+
+    <select id="findUserIdByName" resultType="java.lang.String">
+        SELECT
+          user_id AS userId
+        FROM
+          tb_local_auth
+        WHERE
+          user_name = #{name}
+    </select>
 </mapper>

@@ -26,13 +26,15 @@ $(function () {
                     })
                 }
                 $('#user-name').html(data.userName);
-                $('.shop-wrap').html(tempHtmlCompenx);
+                if (tempHtmlCompenx != '') {
+                    $('.shop-wrap').html(tempHtmlCompenx);
+                }
             })
         }
     }
 
     function goShop(status,id ) {
-        if (status != 1 && status != -1){
+        if (status != 0 && status != -1){
             return '<a href = "/shop/mappershopfunction?shopId='+id+'">进入</a>';
         }else{
             return '';

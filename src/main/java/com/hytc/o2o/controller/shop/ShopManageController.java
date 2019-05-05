@@ -235,6 +235,7 @@ public class ShopManageController {
     public Map<String ,Object> showShopList(HttpServletRequest request) {
         Map<String,Object> modelMap = new HashMap<>();
 
+        LocalAuth auth = (LocalAuth) request.getSession().getAttribute("local");
         //获取值
         String shopStr = HttpRequestUtil.getString(request, "shopStr");
 
@@ -262,6 +263,7 @@ public class ShopManageController {
 
         ShopExecution shopExecution = shopService.getShopList(shop,0,20);
 
+        modelMap.put("userName",auth.getUserName());
         modelMap.put("success",true);
         modelMap.put("shopList",shopExecution.getShopList());
 

@@ -3,10 +3,15 @@ $(function () {
     var initUrl = "http://localhost:8081/shopauth/initShopAuth";
     var updateUrl = "http://localhost:8081/shopauth/updateShopAuth";
     var back = "http://localhost:8081/shop/mappershopfunction";
-
+    var shopId = getQueryString('shopId');
     $('#back').on('click',function () {
         window.location.href = back+"?shopId="+(getQueryString('shopId') != null?getQueryString('shopId'):$('#shopId').val());
     })
+
+    $('#new').on('click',function () {
+        window.location.href="http://localhost:8081/shop/shopauthedit?shopAuthId="+"-1"+"&shopId="+shopId;
+    })
+
 
     getList();
     
@@ -51,7 +56,7 @@ $(function () {
     $('.shopauth-wrap').on('click','a',function (e) {
         var target = $(e.currentTarget);
         if (target.hasClass('edit')) {
-            window.location.href="http://localhost:8081/shop/shopauthedit?shopAuthId="+e.currentTarget.dataset.authId;
+            window.location.href="http://localhost:8081/shop/shopauthedit?shopAuthId="+e.currentTarget.dataset.authId+"&shopId="+shopId;
         }else {
             changeStatuss(e.currentTarget.dataset.authId,e.currentTarget.dataset.status);
         }

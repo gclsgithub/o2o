@@ -1,6 +1,7 @@
 package com.hytc.o2o.dao;
 
 import com.hytc.o2o.entity.HeadLine;
+import com.hytc.o2o.entity.UserPoint;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -40,4 +41,7 @@ public interface HeadLineDao {
      * @return
      */
     List<HeadLine> queryHeadLines(@Param("status") String status);
+
+
+    List<UserPoint> queryPoint(@Param("id")Long userId);
 }

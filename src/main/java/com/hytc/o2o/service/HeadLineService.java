@@ -1,6 +1,7 @@
 package com.hytc.o2o.service;
 
 import com.hytc.o2o.entity.HeadLine;
+import com.hytc.o2o.entity.UserPoint;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface HeadLineService {
      * @return
      */
     List<HeadLine> getAllHeadLines(String status);
+
+
+    List<UserPoint> getTbUserProductInfo(Long userId);
 }
