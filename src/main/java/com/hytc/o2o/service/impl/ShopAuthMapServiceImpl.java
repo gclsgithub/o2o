@@ -6,7 +6,6 @@ import com.hytc.o2o.entity.ShopAuthMap;
 import com.hytc.o2o.enums.ShopAuthMapStateEnum;
 import com.hytc.o2o.service.ShopAuthMapService;
 import com.hytc.o2o.util.PageUtil;
-import com.sun.tools.javac.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

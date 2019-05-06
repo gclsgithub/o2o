@@ -10,7 +10,7 @@ $(function() {
     $("#back").on("click",function(){
         //返回是因为这个方法使用的是Dom对象的上一个画面
 
-        var backUrl = "http://localhost:8081/shop/mappershopfunction?shopId="+shopId;
+        var backUrl = "http://localhost:8081/shop/mappershopfunction"+shopId;
         $("#back").attr("href",backUrl);
     })
     $("#addButton").on("click",function(){
